@@ -1,0 +1,90 @@
+{% extends 'public/user.html.twig' %}
+{% block title %}{{ 'oinfo'|trans }}{{parent()}}{% endblock %}
+{% block contentheader %}
+<section class="content-header">
+  <h1>
+    {{ 'oinfo'|trans }}
+    <small>{{ 'oinfo.base'|trans }}</small>
+  </h1>
+  <ol class="breadcrumb">
+    <li><a href="{{path('siteuser',{'web':app.request.attributes.get('web')})}}"><i class="fa fa-dashboard"></i>{{app.session.get('webinfo').title}}</a></li>
+    <li class="active">{{ 'oinfo'|trans }}</li>
+  </ol>
+</section>
+{% endblock %}
+{% block content %}
+<div class="row">
+  <div class="col-md-6">
+    <div class="box box-primary">
+      <div class="box-header with-border">
+        <h3 class="box-title">{{ 'oinfo.warn'|trans }}</h3>
+      </div>
+      {% if state is defined %}
+      <div class="callout {% if state == 1 %}callout-danger{% else %}callout-success{% endif %}">
+        {{content}}
+      </div>
+      {% endif %}
+      <form role="form" action="" method="post" name="form" enctype="multipart/form-data">
+        <div class="box-body">
+          <div class="form-group">
+            <label>{{ 'user.email'|trans }}</label>
+            <input type="text" name="email" class="form-control" value="{{ app.user.email }}" placeholder="{{ 'user.email'|trans }}">
+          </div>
+          <div class="form-group">
+            <label>{{ 'user.phone'|trans }}</label>
+            <input type="text" name="phone" class="form-control" value="{{ app.user.phone }}" placeholder="{{ 'user.phone'|trans }}">
+          </div>
+          <div class="form-group">
+            <label>{{ 'user.himg'|trans }}</label>
+            {% if app.user.himg == '' %}
+            <input type="file" name="himg" placeholder="{{ 'user.himg'|trans }}">
+            {% else %}
+            <img src="{{ asset(app.user.himg) }}" alt="" class="user-image">&nbsp;&nbsp;<a href="{{path('delhimg')}}" type="button" class="btn btn-danger"><i class="fa fa-close"></i></a>
+            {% endif %}
+          </div>
+        </div>
+        <div class="box-footer text-center">
+          <input type="hidden" name="_token" value="{{ csrf_token('upmyinfo') }}">
+          <button type="button" class="btn btn-primary butup">{{ 'subbut'|trans }}</button>
+        </div>
+      </form>
+    </div>
+  </div>
+  <div class="col-md-6">
+    <div class="box box-primary">
+      <div class="box-header with-border">
+        <h3 class="box-title">{{ 'warn'|trans }}</h3>
+      </div>
+      <div class="box-body">
+        <ul class="todo-list">
+          <li>{{ 'oinfo.warn.one'|trans }}</li>
+          <li>{{ 'warnc'|trans }}<a href="#" onclick="javascript:window.open('http://wpa.qq.com/msgrd?v=3&uin=380493570&site=qq&menu=yes', '_blank', 'height=502, width=644,toolbar=no,scrollbars=no,menubar=no,status=no');"> {{ 'manager'|trans }}</a></li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</div>
+{% endblock %}
+
+{% block bjs %}
+{{ parent() }}
+<script src="{{ asset('plugins/iCheck/icheck.min.js') }}"></script>
+<script src="{{ asset('plugins/cryptojs/md5.js') }}"></script>
+<script type="text/javascript">
+  $(function () {
+        $('.butup').click(function() {
+          subbox();
+        });
+    });
+
+document.onkeydown=function(){
+ if (event.keyCode == 13){
+    subbox();
+ }
+}
+
+  function subbox() {
+    $('[name="form"]').submit();
+  }
+</script>
+{% endblock %}

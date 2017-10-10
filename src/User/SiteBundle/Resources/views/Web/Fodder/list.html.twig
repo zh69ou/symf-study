@@ -1,0 +1,113 @@
+{% extends 'public/user.html.twig' %}
+{% block title %}{{ 'fodder.use'|trans }}{{parent()}}{% endblock %}
+{% set web = app.request.attributes.get('web') %}
+{% block contentheader %}
+<section class="content-header">
+  <h1>
+    {{ 'fodder.use'|trans }}
+    <small>{{ 'fodder.desc'|trans }}</small>
+  </h1>
+  <ol class="breadcrumb">
+    <li><a href="{{path('siteuser',{'web':web})}}"><i class="fa fa-dashboard"></i>{{app.session.get('webinfo').title}}</a></li>
+    <li class="active">{{ 'fodder.use'|trans }}</li>
+  </ol>
+</section>
+{% endblock %}
+{% block content %}
+<div class="row">
+  <div class="col-xs-12">
+    <div class="box">
+      <div class="box-header">
+        <div class="col-sm-3">
+        <h3 class="box-title">{{ 'fodder.desc'|trans }}</h3>
+        </div>
+        <div class="col-sm-9 text-right">
+          <a href="{{path('addfodder',{'web':web})}}" class="btn btn-default">{{ 'fodder.add'|trans }}</a>
+        </div>
+      </div>
+      <div class="box-body table-responsive no-padding">
+        <table class="table table-hover">
+          <tr>
+            <th>{{ 'id'|trans }}</th>
+            <th>{{ 'title'|trans }}</th>
+            <th>{{ 'type'|trans }}</th>
+            <th>{{ 'content'|trans }}</th>
+            <th>{{ 'size'|trans }}</th>
+            <th>{{ 'share'|trans }}</th>
+            <th>{{ 'state'|trans }}</th>
+            <th>{{ 'edit'|trans }}</th>
+          </tr>
+          {% for f in fodders %}
+          <tr>
+            <td>{{f.id}}</td>
+            <td>{{f.title}}</td>
+            <td>{% if f.type=='img' %}{{ 'image'|trans }}{% else %}{{ 'file'|trans }}{% endif %}</td>
+            <td>
+              {% if f.type=='img' %}
+              <img src="{{asset(f.content)}}" width="60px">
+              {% else %}
+              <a href="{{asset(f.content)}}" target="_brank">{{ 'file'|trans }}</a>
+              {% endif %}
+            </td>
+            <td>{{f.size}}</td>
+            <td>
+              {% if f.share == '1' %}
+                <span class="label label-success">{{ 'share'|trans }}</span>
+              {% else %}
+                <span class="label label-danger">{{ 'noshare'|trans }}</span>
+              {% endif%}
+            </td>
+            <td>
+              {% if f.state == '1' %}
+                <span class="label label-success">{{ 'use'|trans }}</span>
+              {% else %}
+                <span class="label label-danger">{{ 'nouse'|trans }}</span>
+              {% endif%}
+            </td>
+            <td>
+            {% if web~'_fodderdel' in userrole %}
+              <button data-toggle="modal" data-target="#delfo" data-whatever="{{path('delfodder',{'web':web,'id':f.id})}}" class="btn btn-sm btn-danger"><i class="fa fa-times"></i></button>
+            {% endif %}
+            </td>
+          </tr>
+          {% else %}
+          <tr><td colspan="7" class="text-center">{{ 'nofodder'|trans }}</td></tr>
+          {% endfor %}
+        </table>
+      </div>
+      <div class="box-footer clearfix no-border">
+        <div class="box-tools text-center">{{ pagerfanta(fodders, 'twitter_bootstrap3', { routeName: 'fodderlist',prev_message: '&laquo;',next_message: '&raquo;' }) }}</div>
+      </div>
+    </div>
+  </div>
+</div>
+<div class="modal modal-danger" id="delfo">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+        <h4 class="modal-title">{{ 'delete.danger'|trans }}</h4>
+      </div>
+      <div class="modal-body">
+        <p>{{ 'fodder.delete'|trans }}</p>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-outline pull-left" data-dismiss="modal">{{ 'btn.cancel'|trans }}</button>
+        <a type="button" class="btn btn-outline" id="delurl" href="#">{{ 'btn.confirm'|trans }}</a>
+      </div>
+    </div>
+  </div>
+</div>
+{% endblock %}
+
+{% block bjs %}
+{{ parent() }}
+<script type="text/javascript">
+  $('#delfo').on('show.bs.modal', function (event) {
+    var button = $(event.relatedTarget);
+    var recipient = button.data('whatever');
+    var modal = $(this);
+    modal.find('.modal-footer a').attr('href',recipient);
+  })
+</script>
+{% endblock %}

@@ -1,0 +1,243 @@
+<?xml version="1.0"?>
+<xliff version="1.2" xmlns="urn:oasis:names:tc:xliff:document:1.2">
+    <file source-language="en" target-language="zh" datatype="plaintext" original="file.ext">
+        <body>
+            <trans-unit id="addsuccess">
+                <source>addsuccess</source>
+                <target><![CDATA[添加成功]]></target>
+            </trans-unit>
+            <trans-unit id="adderror">
+                <source>adderror</source>
+                <target><![CDATA[添加失败]]></target>
+            </trans-unit>
+            <trans-unit id="editsuccess">
+                <source>editsuccess</source>
+                <target><![CDATA[修改成功]]></target>
+            </trans-unit>
+            <trans-unit id="editerror">
+                <source>editerror</source>
+                <target><![CDATA[修改失败]]></target>
+            </trans-unit>
+            <trans-unit id="delsuccess">
+                <source>delsuccess</source>
+                <target><![CDATA[删除成功]]></target>
+            </trans-unit>
+            <trans-unit id="delerror">
+                <source>delerror</source>
+                <target><![CDATA[删除失败]]></target>
+            </trans-unit>
+            <trans-unit id="baksuccess">
+                <source>baksuccess</source>
+                <target><![CDATA[还原成功]]></target>
+            </trans-unit>
+            <trans-unit id="bakerror">
+                <source>bakerror</source>
+                <target><![CDATA[还原失败]]></target>
+            </trans-unit>
+            <trans-unit id="delete.danger">
+                <source>delete.danger</source>
+                <target><![CDATA[删除警告]]></target>
+            </trans-unit>
+            <trans-unit id="danger.text">
+                <source>danger.text</source>
+                <target><![CDATA[警告]]></target>
+            </trans-unit>
+            <trans-unit id="btn.cancel">
+                <source>btn.cancel</source>
+                <target><![CDATA[取消]]></target>
+            </trans-unit>
+            <trans-unit id="btn.confirm">
+                <source>btn.confirm</source>
+                <target><![CDATA[确定]]></target>
+            </trans-unit>
+            <trans-unit id="agree">
+                <source>agree</source>
+                <target><![CDATA[同意]]></target>
+            </trans-unit>
+            <trans-unit id="subbut">
+                <source>subbut</source>
+                <target><![CDATA[提交]]></target>
+            </trans-unit>
+            <trans-unit id="warn">
+                <source>warn</source>
+                <target><![CDATA[注意事项]]></target>
+            </trans-unit>
+            <trans-unit id="warnc">
+                <source>warnc</source>
+                <target><![CDATA[如有什么疑问或建议请联系]]></target>
+            </trans-unit>
+            <trans-unit id="manager">
+                <source>manager</source>
+                <target><![CDATA[管理员]]></target>
+            </trans-unit>
+            <trans-unit id="user">
+                <source>user</source>
+                <target><![CDATA[用户]]></target>
+            </trans-unit>
+            <trans-unit id="type">
+                <source>type</source>
+                <target><![CDATA[分类]]></target>
+            </trans-unit>
+            <trans-unit id="image">
+                <source>image</source>
+                <target><![CDATA[图片]]></target>
+            </trans-unit>
+            <trans-unit id="file">
+                <source>file</source>
+                <target><![CDATA[文件]]></target>
+            </trans-unit>
+            <trans-unit id="id">
+                <source>id</source>
+                <target><![CDATA[编号]]></target>
+            </trans-unit>
+            <trans-unit id="name">
+                <source>name</source>
+                <target><![CDATA[名称]]></target>
+            </trans-unit>
+            <trans-unit id="content">
+                <source>content</source>
+                <target><![CDATA[内容]]></target>
+            </trans-unit>
+            <trans-unit id="size">
+                <source>size</source>
+                <target><![CDATA[大小]]></target>
+            </trans-unit>
+            <trans-unit id="baseprice">
+                <source>baseprice</source>
+                <target><![CDATA[成本]]></target>
+            </trans-unit>
+            <trans-unit id="sellprice">
+                <source>sellprice</source>
+                <target><![CDATA[销售价]]></target>
+            </trans-unit>
+            <trans-unit id="share">
+                <source>share</source>
+                <target><![CDATA[共享]]></target>
+            </trans-unit>
+            <trans-unit id="noshare">
+                <source>noshare</source>
+                <target><![CDATA[不共享]]></target>
+            </trans-unit>
+            <trans-unit id="state">
+                <source>state</source>
+                <target><![CDATA[状态]]></target>
+            </trans-unit>
+            <trans-unit id="edit">
+                <source>edit</source>
+                <target><![CDATA[编辑]]></target>
+            </trans-unit>
+            <trans-unit id="sort">
+                <source>sort</source>
+                <target><![CDATA[排序]]></target>
+            </trans-unit>
+            <trans-unit id="use">
+                <source>use</source>
+                <target><![CDATA[使用]]></target>
+            </trans-unit>
+            <trans-unit id="cuse">
+                <source>cuse</source>
+                <target><![CDATA[测试]]></target>
+            </trans-unit>
+            <trans-unit id="nouse">
+                <source>nouse</source>
+                <target><![CDATA[停用]]></target>
+            </trans-unit>
+            <trans-unit id="pad">
+                <source>pad</source>
+                <target><![CDATA[上级]]></target>
+            </trans-unit>
+            <trans-unit id="toppad">
+                <source>toppad</source>
+                <target><![CDATA[顶级]]></target>
+            </trans-unit>
+            <trans-unit id="tree">
+                <source>tree</source>
+                <target><![CDATA[结构]]></target>
+            </trans-unit>
+            <trans-unit id="yes">
+                <source>yes</source>
+                <target><![CDATA[是]]></target>
+            </trans-unit>
+            <trans-unit id="no">
+                <source>no</source>
+                <target><![CDATA[否]]></target>
+            </trans-unit>
+            <trans-unit id="title">
+                <source>title</source>
+                <target><![CDATA[标题]]></target>
+            </trans-unit>
+            <trans-unit id="kword">
+                <source>kword</source>
+                <target><![CDATA[关键词]]></target>
+            </trans-unit>
+            <trans-unit id="desc">
+                <source>desc</source>
+                <target><![CDATA[描述]]></target>
+            </trans-unit>
+            <trans-unit id="backups">
+                <source>backups</source>
+                <target><![CDATA[备注]]></target>
+            </trans-unit>
+            <trans-unit id="price">
+                <source>price</source>
+                <target><![CDATA[价格]]></target>
+            </trans-unit>
+            <trans-unit id="etime">
+                <source>etime</source>
+                <target><![CDATA[结束时间]]></target>
+            </trans-unit>
+            <trans-unit id="gtime">
+                <source>gtime</source>
+                <target><![CDATA[更新时间]]></target>
+            </trans-unit>
+            <trans-unit id="itime">
+                <source>itime</source>
+                <target><![CDATA[插入时间]]></target>
+            </trans-unit>
+            <trans-unit id="codenum">
+                <source>codenum</source>
+                <target><![CDATA[条码]]></target>
+            </trans-unit>
+            <trans-unit id="stock">
+                <source>stock</source>
+                <target><![CDATA[库存]]></target>
+            </trans-unit>
+            <trans-unit id="num">
+                <source>num</source>
+                <target><![CDATA[数量]]></target>
+            </trans-unit>
+            <trans-unit id="cplist">
+                <source>cplist</source>
+                <target><![CDATA[功能权限]]></target>
+            </trans-unit>
+            <trans-unit id="recommend">
+                <source>recommend</source>
+                <target><![CDATA[推荐]]></target>
+            </trans-unit>
+            <trans-unit id="nothor">
+                <source>nothor</source>
+                <target><![CDATA[无]]></target>
+            </trans-unit>
+            <trans-unit id="fodder">
+                <source>fodder</source>
+                <target><![CDATA[素材]]></target>
+            </trans-unit>
+            <trans-unit id="site">
+                <source>site</source>
+                <target><![CDATA[站点]]></target>
+            </trans-unit>
+            <trans-unit id="infinite">
+                <source>infinite</source>
+                <target><![CDATA[无限]]></target>
+            </trans-unit>
+            <trans-unit id="del_true">
+                <source>del_true</source>
+                <target><![CDATA[你确定要删除该条信息？]]></target>
+            </trans-unit>
+            <trans-unit id="nodata">
+                <source>nodata</source>
+                <target><![CDATA[没有数据]]></target>
+            </trans-unit>
+        </body>
+    </file>
+</xliff>

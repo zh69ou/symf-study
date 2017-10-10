@@ -1,0 +1,91 @@
+{% extends 'public/base.html.twig' %}
+
+{% block title %}{{ 'land'|trans }}{{ parent() }}{% endblock %}
+
+{% block tcss %}
+{{ parent() }}
+<link href="{{ asset('css/AdminLTE.min.css') }}" rel="stylesheet" />
+<link href="{{ asset('css/_all-skins.min.css') }}" rel="stylesheet" />
+<link href="{{ asset('plugins/iCheck/square/blue.css') }}" rel="stylesheet" />
+{% endblock %}
+
+{% block body %}
+	<div class="login-box">
+      <div class="login-logo">
+        <b>{{ 'land'|trans }}</b>
+      </div>
+      <div class="login-box-body">
+        <p class="login-box-msg">{{ 'land.point'|trans }} <a href="#" onclick="javascript:window.open('http://wpa.qq.com/msgrd?v=3&uin=380493570&site=qq&menu=yes', '_blank', 'height=502, width=644,toolbar=no,scrollbars=no,menubar=no,status=no');">{{ 'manager'|trans }}</a></p>
+        <form action="{{path('land')}}" method="post" name="form">
+          <div class="form-group has-feedback">
+            <input type="text" name="username" class="form-control" placeholder="{{ 'user.username'|trans }}">
+            <span class="fa fa-user form-control-feedback"></span>
+          </div>
+          <div class="form-group has-feedback">
+            <input type="password" name="password" class="form-control" placeholder="{{ 'user.psw'|trans }}">
+            <span class="fa fa-lock form-control-feedback"></span>
+          </div>
+          <div class="row">
+            <div class="col-xs-8">
+              <div class="checkbox icheck">
+                <label>
+                  <input type="checkbox" name="_remember_me"> {{ 'land.inpsw'|trans }}
+                </label>
+              </div>
+            </div>
+            <div class="col-xs-4">
+              <button type="button" class="btn btn-primary btn-block btn-flat butland">{{ 'land'|trans }}</button>
+            </div>
+          </div>
+          <input type="hidden" name="_token" value="{{ csrf_token('userlandcsrf') }}">
+        </form>
+        <div class="social-auth-links text-center">
+          <p>- OR -</p>
+          <a href="{{path('register')}}" class="btn btn-block btn-social btn-default btn-flat" title="">
+            <i class="fa fa-user-plus"></i>{{ 'register'|trans }}
+          </a>
+        </div>
+        <a href="{{path('forpsw')}}" title="{{ 'land.forpsw'|trans }}">{{ 'land.forpsw'|trans }}</a>
+      </div>
+	</div>
+{% endblock %}
+
+{% block bjs %}
+{{ parent() }}
+<script src="{{ asset('js/hinclude.js') }}"></script>
+<script src="{{ asset('plugins/cryptojs/md5.js') }}"></script>
+<script src="{{ asset('plugins/iCheck/icheck.min.js') }}"></script>
+<script type="text/javascript">
+	$('body').addClass('login-page');
+
+	$(function () {
+    $('[name="username"]').focus();
+        $('input').iCheck({
+          checkboxClass: 'icheckbox_square-blue',
+          radioClass: 'iradio_square-blue',
+          increaseArea: '20%' // optional
+        });
+
+        $('.butland').click(function() {
+          subbox();
+        });
+    });
+
+document.onkeydown=function(){
+  if (event.keyCode == 13){
+    subbox();
+  }
+}
+
+  function subbox() {
+    var name = $('[name="username"]').val();
+    var psw = $('[name="password"]').val();
+    if(name!=''&&psw!=''){
+          $('[name="password"]').val(String(CryptoJS.MD5($('[name="password"]').val())).substr(6,13));
+          $('[name="form"]').submit();
+    }else{
+      $('[name="username"]').focus();
+    }
+  }
+</script>
+{% endblock %}

@@ -1,0 +1,223 @@
+{% extends 'base.html.twig' %}
+{% block title %}企销联盟-首页{% endblock %}
+{% block tcss %}
+{{ parent() }}
+<link href="{{ asset('css/AdminLTE.min.css') }}" rel="stylesheet" />
+<link href="{{ asset('css/skin-black.min.css') }}" rel="stylesheet" />
+{% endblock %}
+{% block body %}
+<nav class="navbar navbar-default navbar-fixed-top" role="navigation">
+  <div class="container-fluid">
+    <div class="navbar-header">
+      <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#header-navbar">
+        <span class="sr-only">menu</span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+      </button>
+      <a class="navbar-brand" href="{{path('index')}}">企销联盟</a>
+    </div>
+    <div class="collapse navbar-collapse" id="header-navbar">
+      <ul class="nav navbar-nav">
+      <li class="active"><a>首页</a></li>
+      </ul>
+      <form class="navbar-form navbar-left" role="search">
+        <div class="form-group">
+          <input type="text" class="form-control" id="navbar-search-input" placeholder="搜索">
+        </div>
+      </form>
+      <ul class="nav navbar-nav navbar-right">
+        <li class="dropdown">
+          <a href="#" class="dropdown-toggle" data-toggle="dropdown">
+            {% if not(app.user) %}
+            欢迎来到企销联盟
+            {% else %}
+            {{ app.user.username }}
+            {% endif %}
+            <span class="caret"></span>
+          </a>
+          <ul class="dropdown-menu" role="menu">
+          	{% if not(app.user) %}
+            <li>
+              <a href="{{path('login',{'web':'index'})}}">登录</a>
+            </li>
+          	{% else %}
+          	<li>
+              <a href="{{path('siteuser',{'web':'index'})}}">会员中心</a>
+            </li>
+           	{% endif %}
+          </ul>
+        </li>
+      </ul>
+    </div>
+  </div>
+</nav>
+<div class="box">
+  <div class="box-header">
+    <a>&nbsp;</a>
+  </div>
+  <div class="box-body">
+    <div id="generic" class="carousel slide" data-ride="carousel">
+      <ol class="carousel-indicators">
+        <li data-target="#generic" data-slide-to="1" class="active"></li>
+        <li data-target="#generic" data-slide-to="2" class=""></li>
+      </ol>
+      <div class="carousel-inner">
+        <div class="item active">
+  		<div class="container">
+          <div class="row">
+          	<div class="col-sm-5 col-sm-offset-1">
+          		<ul class="list-group">
+		          <li class="list-group-item">Cras justo odioCras justo odioCras justo odioCras justo odioCras justo odioCras justo odio</li>
+		          <li class="list-group-item">Dapibus ac facilisis in</li>
+		          <li class="list-group-item">Morbi leo risus</li>
+		          <li class="list-group-item">Porta ac consectetur ac</li>
+		          <li class="list-group-item">Vestibulum at eros</li>
+		          <li class="list-group-item">Vestibulum at eros</li>
+		        </ul>
+          	</div>
+          	<div class="col-sm-5">
+          		<canvas id="pieChart"></canvas>
+          	</div>
+          </div>
+         </div>
+        </div>
+        <div class="item">
+  		<div class="container">
+          <div class="row">
+          	<div class="col-sm-5 col-sm-offset-1">
+  				<ul class="list-group">
+		          <li class="list-group-item">Cras justo odioCras justo odioCras justo odioCras justo odioCras justo odioCras justo odio</li>
+		          <li class="list-group-item">Dapibus ac facilisis in</li>
+		          <li class="list-group-item">Morbi leo risus</li>
+		          <li class="list-group-item">Porta ac consectetur ac</li>
+		          <li class="list-group-item">Vestibulum at eros</li>
+		          <li class="list-group-item">Vestibulum at eros</li>
+		        </ul>
+          	</div>
+          	<div class="col-sm-5">
+          	</div>
+          </div>
+        </div>
+        </div>
+      </div>
+      <a class="left carousel-control" href="#generic" data-slide="prev">
+        <span class="fa fa-angle-left"></span>
+      </a>
+      <a class="right carousel-control" href="#generic" data-slide="next">
+        <span class="fa fa-angle-right"></span>
+      </a>
+    </div>
+  </div>
+</div>
+<div class="container">
+<div class="row">
+	<div class="col-md-3 col-sm-6 col-xs-12">
+	  <div class="info-box bg-aqua">
+	    <span class="info-box-icon"><i class="fa fa-bookmark-o"></i></span>
+	    <div class="info-box-content">
+	      <span class="info-box-text">Bookmarks</span>
+	      <span class="info-box-number">41,410</span>
+	      <div class="progress">
+	        <div class="progress-bar" style="width: 70%"></div>
+	      </div>
+	      <span class="progress-description">
+	        70% Increase in 30 Days
+	      </span>
+	    </div>
+	  </div>
+	</div>
+	<div class="col-md-3 col-sm-6 col-xs-12">
+	  <div class="info-box bg-green">
+	    <span class="info-box-icon"><i class="fa fa-thumbs-o-up"></i></span>
+	    <div class="info-box-content">
+	      <span class="info-box-text">Likes</span>
+	      <span class="info-box-number">41,410</span>
+	      <div class="progress">
+	        <div class="progress-bar" style="width: 70%"></div>
+	      </div>
+	      <span class="progress-description">
+	        70% Increase in 30 Days
+	      </span>
+	    </div>
+	  </div>
+	</div>
+	<div class="col-md-3 col-sm-6 col-xs-12">
+	  <div class="info-box bg-yellow">
+	    <span class="info-box-icon"><i class="fa fa-calendar"></i></span>
+	    <div class="info-box-content">
+	      <span class="info-box-text">Events</span>
+	      <span class="info-box-number">41,410</span>
+	      <div class="progress">
+	        <div class="progress-bar" style="width: 70%"></div>
+	      </div>
+	      <span class="progress-description">
+	        70% Increase in 30 Days
+	      </span>
+	    </div>
+	  </div>
+	</div>
+	<div class="col-md-3 col-sm-6 col-xs-12">
+	  <div class="info-box bg-red">
+	    <span class="info-box-icon"><i class="fa fa-comments-o"></i></span>
+	    <div class="info-box-content">
+	      <span class="info-box-text">Comments</span>
+	      <span class="info-box-number">41,410</span>
+	      <div class="progress">
+	        <div class="progress-bar" style="width: 70%"></div>
+	      </div>
+	      <span class="progress-description">
+	        70% Increase in 30 Days
+	      </span>
+	    </div>
+	  </div>
+	</div>
+</div>
+<div class="row">
+	<div class="col-md-6">
+		<ul class="list-group">
+          <li class="list-group-item">Cras justo odioCras justo odioCras justo odioCras justo odioCras justo odioCras justo odio</li>
+          <li class="list-group-item">Dapibus ac facilisis in</li>
+          <li class="list-group-item">Morbi leo risus</li>
+          <li class="list-group-item">Porta ac consectetur ac</li>
+          <li class="list-group-item">Vestibulum at eros</li>
+        </ul>
+	</div>
+	<div class="col-md-6">
+		<ul class="list-group">
+          <li class="list-group-item">Cras justo odioCras justo odioCras justo odioCras justo odioCras justo odioCras justo odio</li>
+          <li class="list-group-item">Dapibus ac facilisis in</li>
+          <li class="list-group-item">Morbi leo risus</li>
+          <li class="list-group-item">Porta ac consectetur ac</li>
+          <li class="list-group-item">Vestibulum at eros</li>
+        </ul>
+	</div>
+</div>
+<ul class="users-list">
+	<li></li>
+</ul>
+</div>
+{% endblock %}
+{% block bjs %}
+{{ parent() }}
+<script src="{{ asset('plugins/chartjs/Chart.min.js') }}"></script>
+<script type="text/javascript">
+	var pieChartCanvas = $("#pieChart").get(0).getContext("2d");
+    var pieChart = new Chart(pieChartCanvas);
+    var PieData = [{value: 700, color: "#f56954", highlight: "#f56954", label: "Chrome"}, {value: 500, color: "#00a65a", highlight: "#00a65a", label: "IE"}, {value: 400, color: "#f39c12", highlight: "#f39c12", label: "FireFox"}, {value: 600, color: "#00c0ef", highlight: "#00c0ef", label: "Safari"}, {value: 300, color: "#3c8dbc", highlight: "#3c8dbc", label: "Opera"}, {value: 100, color: "#d2d6de", highlight: "#d2d6de", label: "Navigator"}];
+   	var pieOptions = {
+      segmentShowStroke: true,
+      segmentStrokeColor: "#fff",
+      segmentStrokeWidth: 2,
+      percentageInnerCutout: 50,
+      animationSteps: 100,
+      animationEasing: "easeOutBounce",
+      animateRotate: true,
+      animateScale: false,
+      responsive: true,
+      maintainAspectRatio: true,
+      legendTemplate: "<ul class=\"<%=name.toLowerCase()%>-legend\"><% for (var i=0; i<segments.length; i++){ %><li><span style=\"background-color:<%=segments[i].fillColor%>\"></span><%if(segments[i].label){ %><%=segments[i].label%><% }%></li><% }%></ul>"
+    };
+    pieChart.Doughnut(PieData, pieOptions);
+</script>
+{% endblock %}

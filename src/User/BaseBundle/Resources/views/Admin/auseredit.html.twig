@@ -1,0 +1,112 @@
+{% extends 'admin/index.html.twig' %}
+{% block title %}{{ 'ad_user_edit'|trans }}{{parent()}}{% endblock %}
+{% block contentheader %}
+<section class="content-header">
+  <h1>
+    {{ 'ad_user_edit'|trans }}
+    <small></small>
+  </h1>
+  <ol class="breadcrumb">
+    <li><a href="{{path('adindex')}}"><i class="fa fa-dashboard"></i>{{ 'ad.index'|trans }}</a></li>
+    <li class="active">{{ 'ad_user_edit'|trans }}</li>
+  </ol>
+</section>
+{% endblock %}
+{% block content %}
+<div class="row">
+  <div class="col-xs-12">
+    <div class="box">
+      <div class="box-header">
+        <div class="col-sm-3">
+        <h3 class="box-title">{{ 'ad_user_edit'|trans }}</h3>
+        </div>
+        <div class="col-sm-9 text-right">
+        </div>
+      </div>
+      <div class="box-body table-responsive no-padding">
+        {% if state is defined %}
+        <div class="callout {% if state == 1 %}callout-danger{% else %}callout-success{% endif %}">
+          {{content}}
+        </div>
+        {% endif %}
+        <form role="form" action="" method="post" name="form" enctype="multipart/form-data">
+        <div class="box-body">
+          <div class="col-md-6">
+            <dl class="dl-horizontal">
+              <dt>{{ 'username'|trans }}</dt>
+              <dd>
+                <div class="form-group">
+                  <input type="text" name="username" class="form-control" value="{{info.username}}" >
+                </div>
+              </dd>
+              <dt>{{ 'phone'|trans }}</dt>
+              <dd>
+                  <div class="form-group">
+                      <input type="text" name="phone" class="form-control" value="{{info.phone}}" >
+                  </div>
+              </dd>
+              <dt>{{ 'himg'|trans }}</dt>
+              <dd>
+                  <div class="form-group">
+                      <input type="file" name="himg" class="form-control" value="{{info.himg}}">
+                  </div>
+              </dd>
+              <dt>{{ 'approve'|trans }}</dt>
+              <dd>
+                  <div class="form-group">
+                  <input type="radio" name="approve" {%if info.approve=='1'%}checked="checked"{%endif%} value="1">
+                  {{'yes'|trans}}
+                  <input type="radio" name="approve" {%if info.approve!='1'%}checked="checked"{%endif%} value="0">
+                  {{'no'|trans}}
+                  </div>
+              </dd>
+              <dt>{{ 'state'|trans }}</dt>
+              <dd>
+                  <div class="form-group">
+                  <input type="radio" name="state" {%if info.state=='1'%}checked="checked"{%endif%} value="1">
+                  {{'yes'|trans}}
+                  <input type="radio" name="state" {%if info.state!='1'%}checked="checked"{%endif%} value="0">
+                  {{'no'|trans}}
+                  </div>
+              </dd>
+              <dt>{{ 'regtime'|trans }}</dt>
+              <dd>
+                  <div class="form-group">
+                  {{info.regtime|date("Y-m-d H:i:s")}}
+                  </div>
+              </dd>
+            </dl>
+          </div>
+          <div class="col-md-6">
+            <dl class="dl-horizontal">
+              <dt>{{ 'suser.email'|trans }}</dt>
+              <dd>
+                  <div class="form-group">
+                      <input type="text" name="email" class="form-control" value="" >
+                  </div>
+              </dd>
+              <dt>{{ 'suser.psw'|trans }}</dt>
+              <dd>
+                  <div class="form-group">
+                      <input type="text" name="password" class="form-control" value="" >
+                  </div>
+              </dd>
+              <dt>{{ 'suser.rpsw'|trans }}</dt>
+              <dd>
+                  <div class="form-group">
+                      <input type="text" name="npassword" class="form-control" value="" >
+                  </div>
+              </dd>
+            </dl>
+          </div>
+        </div>
+        <div class="box-footer text-center">
+          <input type="hidden" name="_token" value="{{ csrf_token('edituserps') }}">
+          <button type="submit" class="btn btn-primary butup">{{ 'subbut'|trans }}</button>
+        </div>
+      </form>
+      </div>
+    </div>
+  </div>
+</div>
+{% endblock %}

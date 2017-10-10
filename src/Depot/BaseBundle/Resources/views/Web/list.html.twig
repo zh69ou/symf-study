@@ -1,0 +1,90 @@
+{% extends 'public/user.html.twig' %}
+{% set web = app.request.attributes.get('web') %}
+{% block title %}{{ 'depot_list'|trans }}{{parent()}}{% endblock %}
+{% block contentheader %}
+<section class="content-header">
+  <h1>
+    {{ 'depot_list'|trans }}
+    <small>{{ 'depot_list'|trans }}</small>
+  </h1>
+  <ol class="breadcrumb">
+    <li><a href="{{path('siteuser',{'web':web})}}"><i class="fa fa-dashboard"></i>{{app.session.get('webinfo').title}}</a></li>
+    <li class="active">{{ 'depot_list'|trans }}</li>
+  </ol>
+</section>
+{% endblock %}
+{% block content %}
+<div class="row">
+  <div class="col-xs-12">
+    <div class="box">
+      <div class="box-header">
+        <div class="col-sm-3">
+        <h3 class="box-title">{{ 'depot_list'|trans }}</h3>
+        </div>
+        <div class="col-sm-9 text-right">
+          <a href="{{path('depotiadd',{'web':web})}}" class="btn btn-default">{{ 'depoti_add'|trans }}</a>
+        </div>
+      </div>
+      <div class="box-body table-responsive no-padding">
+      {% for fm in app.session.flashBag.get('error') %}
+      <div class="callout callout-danger">
+        {{fm|trans}}
+      </div>
+      {% endfor %}
+      {% for fm in app.session.flashBag.get('success') %}
+      <div class="callout callout-success">
+        {{fm|trans}}
+      </div>
+      {% endfor %}
+        <table class="table table-hover">
+          <tr>
+            <th>{{ 'id'|trans }}</th>
+            <th>{{ 'name'|trans }}</th>
+            <th>{{ 'codenum'|trans }}</th>
+            <th>{{ 'stock'|trans }}</th>
+            <th>{{ 'type'|trans }}</th>
+            <th>{{ 'gtime'|trans }}</th>
+            <th>{{ 'sort'|trans }}</th>
+            <th>{{ 'state'|trans }}</th>
+            <th>{{ 'edit'|trans }}</th>
+          </tr>
+          {% for f in depot %}
+          <tr>
+            <td>{{ loop.index }}</td>
+            <td>{{f.name}}</td>
+            <td>{{f.codenum}}</td>
+            <td>{{f.stock}}</td>
+            <td>
+              {% for t in depottype %}
+              {% if t.id in f.type %}{{t.name}}{% endif %}
+              {% endfor %}
+            </td>
+            <td>{{f.gtime|date('Y-m-d H:i:s')}}</td>
+            <td>{{f.sort}}</td>
+            <td>
+              {% if f.state == '1' %}
+                <span class="label label-success">{{ 'use'|trans }}</span>
+              {% else %}
+                <span class="label label-danger">{{ 'nouse'|trans }}</span>
+              {% endif%}
+            </td>
+            <td>
+              <button class="btn btn-sm btn-danger"><i class="fa fa-times"></i></button>
+            </td>
+          </tr>
+          {% else %}
+          <tr><td colspan="9" class="text-center">{{ 'nousedepot'|trans }}</td></tr>
+          {% endfor %}
+        </table>
+      </div>
+      <div class="box-footer clearfix no-border">
+        <div class="box-tools text-center">{{ pagerfanta(depot, 'twitter_bootstrap3', { routeName: 'depotlist',prev_message: '&laquo;',next_message: '&raquo;' }) }}</div>
+      </div>
+    </div>
+  </div>
+</div>
+{% endblock %}
+
+{% block bjs %}
+{{ parent() }}
+{% endblock %}

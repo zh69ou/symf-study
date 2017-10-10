@@ -1,0 +1,89 @@
+{% extends 'public/user.html.twig' %}
+{% block title %}{{ 'tool.list'|trans }}{{parent()}}{% endblock %}
+{% block contentheader %}
+<section class="content-header">
+  <h1>
+    {{ 'tool.list'|trans }}
+    <small>该站点功能列表</small>
+  </h1>
+  <ol class="breadcrumb">
+    <li><a href="{{path('siteuser',{'web':web})}}"><i class="fa fa-dashboard"></i>{{app.session.get('webinfo').title}}</a></li>
+    <li class="active">{{ 'tool.list'|trans }}</li>
+  </ol>
+</section>
+{% endblock %}
+{% block content %}
+<div class="row">
+  <div class="col-xs-12">
+    <div class="box">
+      <div class="box-header">
+        <div class="col-sm-3">
+          <h3 class="box-title">{{ 'tool.list'|trans }}</h3>
+        </div>
+        <div class="col-sm-9 text-right">
+        </div>
+      </div>
+      <div class="box-body table-responsive no-padding">
+      {% for fm in app.session.flashBag.get('error') %}
+      <div class="callout callout-danger">
+        {{fm|trans}}
+      </div>
+      {% endfor %}
+      {% for fm in app.session.flashBag.get('success') %}
+      <div class="callout callout-success">
+        {{fm|trans}}
+      </div>
+      {% endfor %}
+        <table class="table table-hover">
+          <tr>
+            <th>{{ 'id'|trans }}</th>
+            <th>{{ 'name'|trans }}</th>
+            <th>{{ 'desc'|trans }}</th>
+            <th>{{ 'price'|trans }}</th>
+            <th>{{ 'state'|trans }}</th>
+            <th>{{ 'use'|trans }}</th>
+            <th>{{ 'edit'|trans }}</th>
+          </tr>
+          {% for t in toollist %}
+          <tr>
+            <td>{{t.id}}</td>
+            <td>{{t.name}}</td>
+            <td>{{t.dword}}</td>
+            <td>{{t.price}}</td>
+            <td>
+              {% if t.state == '1' %}
+                <span class="label label-success">可用</span>
+              {% elseif t.state == '2' %}
+                <span class="label label-warning">测试</span>
+              {% else %}
+                <span class="label label-danger">停用</span>
+              {% endif%}
+            </td>
+            <td>
+              {% if t.codenum in toolsite %}
+              <span class="label label-success"><i class="fa fa-check"></i></span>
+              {% else %}
+              <span class="label label-danger"><i class="fa fa-close"></i></span>
+              {% endif%}
+            </td>
+            <td>
+              <a href="" class="btn btn-sm btn-default"><i class="fa fa-file-text-o"></i></a>
+              {% if t.codenum in toolsite %}
+                <a href="" class="btn btn-sm btn-success"><i class="fa fa-bars"></i></a>
+              {% else %}
+                <a href="{{path('atooladd',{'web':web,'code':t.codenum})}}" class="btn btn-sm btn-success"><i class="fa fa-shopping-cart"></i></a>
+              {% endif%}
+            </td>
+          </tr>
+          {% else %}
+          <tr><td colspan="7" class="text-center">{{ 'tool.no_use'|trans }}</td></tr>
+          {% endfor %}
+        </table>
+      </div>
+      <div class="box-footer clearfix no-border">
+        <div class="box-tools text-center">{{ pagerfanta(toollist, 'twitter_bootstrap3', { routeName: 'atoollist',prev_message: '&laquo;',next_message: '&raquo;' }) }}</div>
+      </div>
+    </div>
+  </div>
+</div>
+{% endblock %}

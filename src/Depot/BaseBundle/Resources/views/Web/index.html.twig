@@ -1,0 +1,129 @@
+{% extends 'public/user.html.twig' %}
+{% block title %}{{ 'depot.statistics'|trans }}{{parent()}}{% endblock %}
+{% set web = app.request.attributes.get('web') %}
+{% block tcss %}
+{{ parent() }}
+<link href="{{ asset('plugins/morris/morris.css') }}" rel="stylesheet" />
+<link href="{{ asset('plugins/datatables/dataTables.bootstrap.css') }}" rel="stylesheet" />
+{% endblock %}
+{% block contentheader %}
+<section class="content-header">
+  <h1>
+    {{ 'depot.statistics'|trans }}
+  </h1>
+  <ol class="breadcrumb">
+    <li><a href="{{path('siteindex',{'web':web})}}"><i class="fa fa-dashboard"></i>{{app.session.get('webinfo').title}}</a></li>
+    <li class="active">{{ 'depot.statistics'|trans }}</li>
+  </ol>
+</section>
+{% endblock %}
+{% block content %}
+  <div class="box box-info">
+    <div class="box-header with-border">
+      <h3 class="box-title">总统计</h3>
+      <div class="box-tools pull-right">
+        <button class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-minus"></i></button>
+        <button class="btn btn-box-tool" data-widget="remove"><i class="fa fa-times"></i></button>
+      </div>
+    </div>
+    <div class="box-body chart-responsive">
+      <div class="chart" id="line-chart" style="height: 300px;"></div>
+    </div>
+  </div>
+  <div class="box box-info">
+    <div class="box-header with-border">
+      <h3 class="box-title">货品统计</h3>
+      <div class="box-tools pull-right">
+        <button class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-minus"></i></button>
+        <button class="btn btn-box-tool" data-widget="remove"><i class="fa fa-times"></i></button>
+      </div>
+    </div>
+    <div class="box-body chart-responsive">
+    <table id="depotdata" class="table table-bordered table-hover">
+      <thead>
+        <tr>
+          <th>名称</th>
+          <th>一季度</th>
+          <th>二季度</th>
+          <th>三季度</th>
+          <th>四季度</th>
+        </tr>
+      </thead>
+      <tbody>
+      {% for d in depotdata %}
+        <tr>
+          <td>{{d.name}}</td>
+          <td>
+            入库:{{d.oneinnum}}:{{d.oneinprice}}<br>
+            出库:{{d.oneoutnum}}:{{d.oneoutprice}}<br>
+            报废:{{d.onedelnum}}:{{d.onedelprice}}
+          </td>
+          <td>
+            入库:{{d.twoinnum}}:{{d.twoinprice}}<br>
+            出库:{{d.twooutnum}}:{{d.twooutprice}}<br>
+            报废:{{d.twodelnum}}:{{d.twodelprice}}
+          </td>
+          <td>
+            入库:{{d.threeinnum}}:{{d.threeinprice}}<br>
+            出库:{{d.threeoutnum}}:{{d.threeoutprice}}<br>
+            报废:{{d.threedelnum}}:{{d.threedelprice}}
+          </td>
+          <td>
+            入库:{{d.fourinnum}}:{{d.fourinprice}}<br>
+            出库:{{d.fouroutnum}}:{{d.fouroutprice}}<br>
+            报废:{{d.fourdelnum}}:{{d.fourdelprice}}
+          </td>
+        </tr>
+      {% endfor %}
+      </tbody>
+    </table>
+    </div>
+  </div>
+{% endblock %}
+
+{% block bjs %}
+{{ parent() }}
+<script src="{{ asset('plugins/morris/morris.min.js') }}"></script>
+<script src="{{ asset('plugins/morris/raphael-min.js') }}"></script>
+<script src="{{ asset('plugins/datatables/jquery.dataTables.min.js') }}"></script>
+<script src="{{ asset('plugins/datatables/dataTables.bootstrap.min.js') }}"></script>
+<script type="text/javascript">
+  $(function(){
+     var line = new Morris.Line({
+      element: 'line-chart',
+      resize: true,
+      data: [
+      {% for k,d in depot %}
+        {% if k!=0 %},{% endif %}{y: '{{d.day}}', item1: {% if d.innum==''%}0{% else %}{{d.innum}}{% endif %}, item2: {% if d.outnum==''%}0{% else %}{{d.outnum}}{% endif %}, item3: {% if d.delnum==''%}0{% else %}{{d.delnum}}{% endif %}}
+      {% endfor %}
+      ],
+      xkey: 'y',
+      ykeys: ['item1', 'item2', 'item3'],
+      labels: ['入库', '出库', '报废'],
+      lineColors: ['#3c8dbc', '#008d00', '#ff0000'],
+      hideHover: 'auto'
+    });
+   $('#depotdata').DataTable({
+      "paging": true,
+      "lengthChange": true,
+      "searching": true,
+      "ordering": true,
+      "info": true,
+      "autoWidth": false,
+      "language": {
+        "info": "显示从 _START_ 到 _END_ 共 _TOTAL_ 条",
+        "emptyTable": "无信息",
+        "lengthMenu": "显示 _MENU_ 条",
+        "search": "搜索:",
+        "infoEmpty": "没有你想要的信息",
+        "zeroRecords": "没有你该信息",
+        "infoFiltered": "(从 _MAX_ 条信息中查询)",
+        "paginate": {
+          "next": "下一页",
+          "previous": "上一页",
+        }
+      }
+    });
+  });
+</script>
+{% endblock %}

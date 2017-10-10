@@ -1,0 +1,184 @@
+{% extends 'admin/base.html.twig' %}
+{% set route = app.request.attributes.get('_route') %}
+{% set userrole = app.user.roles %}
+{% block body %}
+<div class="wrapper">
+    <header class="main-header">
+        <a href="{{path('adindex')}}" class="logo">
+            <span class="logo-mini">
+                A6VI
+            </span>
+            <span class="logo-lg">
+                平台管理
+            </span>
+        </a>
+        <nav class="navbar navbar-static-top" role="navigation">
+            <a href="#" class="sidebar-toggle" data-toggle="offcanvas" role="button">
+                <span class="sr-only">
+                    菜单按钮
+                </span>
+            </a>
+            {{ render_hinclude(url('adinfo')) }}
+        </nav>
+    </header>
+    <aside class="main-sidebar">
+        <section class="sidebar">
+            <form action="#" method="get" class="sidebar-form" style="display: none;">
+                <div class="input-group">
+                    <input type="text" name="q" class="form-control" placeholder="Search..."/>
+                    <span class="input-group-btn">
+                        <button type="submit" name="search" id="search-btn" class="btn btn-flat">
+                            <i class="fa fa-search">
+                            </i>
+                        </button>
+                    </span>
+                </div>
+            </form>
+            <ul class="sidebar-menu">
+                <li class="header">
+                    统计数据
+                </li>
+                <li class="{% if route=='adindex' %}active{% endif %}">
+                    <a href="{{path('adindex')}}">
+                        <i class="fa fa-pie-chart">
+                        </i>
+                        <span>
+                            预览
+                        </span>
+                    </a>
+                </li>
+                <li class="header">
+                    功能模块
+                </li>
+                <li class="treeview {% if route=='adsitelist' or route=='auserlist' or route=='adsiteedit' or route=='aduseredit' or route=='amenulist' or route=='amenuedit' or route=='amenuadd' %}active{% endif %}">
+                    <a href="#">
+                        <i class="fa fa-user">
+                        </i>
+                        <span>
+                            用户管理
+                        </span>
+                        <i class="fa fa-angle-left pull-right">
+                        </i>
+                    </a>
+                    <ul class="treeview-menu">
+                        <li class="{% if route=='auserlist' or route=='aduseredit' %}active{% endif %}">
+                            <a href="{{path('auserlist')}}">
+                                <i class="fa fa-group">
+                                </i>
+                                用户列表
+                            </a>
+                        </li>
+                        <li class="{% if route=='suserlist' and app.request.attributes.get('state')=='1' %}active{% endif %}">
+                            <a href="">
+                                <i class="fa fa-check">
+                                </i>
+                                等待认证
+                            </a>
+                        </li>
+                        <li class="{% if route=='postlist' or route=='addspost' or route=='editpost' %}active{% endif %}">
+                            <a href="">
+                                <i class="fa fa-tasks">
+                                </i>
+                                职位列表
+                            </a>
+                        </li>
+                        <li class="{% if route=='adsitelist' or route=='adsiteedit' %}active{% endif %}">
+                            <a href="{{path('adsitelist')}}">
+                                <i class="fa fa-globe">
+                                </i>
+                                站点列表
+                            </a>
+                        </li>
+                        <li class="{% if route=='amenulist' or route=='amenuedit' or route=='amenuadd' %}active{% endif %}">
+                            <a href="{{path('amenulist')}}">
+                                <i class="fa fa-bars">
+                                </i>
+                                菜单列表
+                            </a>
+                        </li>
+                        <li class="{% if app.request.pathInfo=='aduadd' %}active{% endif %}">
+                            <a href="">
+                                <i class="fa fa-copyright">
+                                </i>
+                                站点申请
+                            </a>
+                        </li>
+                        <li class="{% if app.request.pathInfo=='aduadd' %}active{% endif %}">
+                            <a href="">
+                                <i class="fa fa-list">
+                                </i>
+                                操作日志
+                            </a>
+                        </li>
+                    </ul>
+                </li>
+                <li class="treeview {% if route=='adtoollist' or route=='adtooladd' %}active{% endif %}">
+                    <a href="#">
+                        <i class="fa fa-cube">
+                        </i>
+                        <span>
+                            功能管理
+                        </span>
+                        <i class="fa fa-angle-left pull-right">
+                        </i>
+                    </a>
+                    <ul class="treeview-menu">
+                        <li class="{% if route=='adtoollist' or route=='adtooladd' %}active{% endif %}">
+                            <a href="{{path('adtoollist')}}">
+                                <i class="fa fa-list">
+                                </i>
+                                功能列表
+                            </a>
+                        </li>
+                        <li class="{% if route=='suserlist' and app.request.attributes.get('state')=='1' %}active{% endif %}">
+                            <a href="">
+                                <i class="fa fa-star">
+                                </i>
+                                使用列表
+                            </a>
+                        </li>
+                        <li class="{% if route=='suserlist' and app.request.attributes.get('state')=='0' %}active{% endif %}">
+                            <a href="">
+                                <i class="fa fa-shopping-cart">
+                                </i>
+                                购买列表
+                            </a>
+                        </li>
+                        <li class="{% if route=='postlist' or route=='addspost' or route=='editpost' %}active{% endif %}">
+                            <a href="">
+                                <i class="fa fa-tasks">
+                                </i>
+                                类型列表
+                            </a>
+                        </li>
+                    </ul>
+                </li>
+            </ul>
+        </section>
+    </aside>
+    <div class="content-wrapper">
+        <section class="content-header">
+            {% block contentheader %}{% endblock %}
+        </section>
+        <section class="content">
+            {% block content %}{% endblock %}
+        </section>
+    </div>
+    <footer class="main-footer">
+        <div class="pull-right hidden-xs">
+            <b>
+                Version
+            </b>
+            1.0
+        </div>
+        <strong>
+            Copyright &copy; 2016-2017
+            <a href="http://a6vi.com">
+                A6VI
+            </a>
+            .
+        </strong>
+        All rights reserved.
+    </footer>
+</div>
+{% endblock %}

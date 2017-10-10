@@ -1,0 +1,113 @@
+{% extends 'public/user.html.twig' %}
+{% block title %}{{ 'fodder.add'|trans }}{{parent()}}{% endblock %}
+{% block tcss %}
+<link href="{{ asset('plugins/select2/select2.min.css') }}" rel="stylesheet" />
+<link href="{{ asset('plugins/iCheck/all.css') }}" rel="stylesheet" />
+{{ parent() }}
+{% endblock %}
+{% block contentheader %}
+<section class="content-header">
+  <h1>
+    {{ 'fodder.add'|trans }}
+    <small>{{ 'fodder.desc'|trans }}</small>
+  </h1>
+  <ol class="breadcrumb">
+    <li><a href="{{path('siteuser',{'web':app.request.attributes.get('web')})}}"><i class="fa fa-dashboard"></i>{{app.session.get('webinfo').title}}</a></li>
+    <li class="active">{{ 'fodder.add'|trans }}</li>
+  </ol>
+</section>
+{% endblock %}
+{% block content %}
+    <div class="box box-primary">
+      <div class="box-header with-border">
+        <h3 class="box-title">{{ 'fodder.add'|trans }}</h3>
+      </div>
+      {% if state is defined %}
+      <div class="callout {% if state == 1 %}callout-danger{% else %}callout-success{% endif %}">
+        {{content}}
+      </div>
+      {% endif %}
+      <form role="form" action="" method="post" name="form" enctype="multipart/form-data">
+        <div class="box-body">
+          <div class="col-md-6">
+            <dl class="dl-horizontal">
+              <dt>{{ 'type'|trans }}</dt>
+              <dd>
+                <div class="form-group">
+                  <select name="type" class="form-control select2">
+                    <option value="img">{{ 'image'|trans }}</option>
+                    <option value="file">{{ 'file'|trans }}</option>
+                  </select>
+                </div>
+              </dd>
+              <dt>{{ 'name'|trans }}</dt>
+              <dd>
+                <div class="form-group">
+                  <input type="text" name="title" class="form-control" value="" >
+                </div>
+              </dd>
+              <dt>{{ 'file'|trans }}</dt>
+              <dd>
+                <div class="form-group">
+                  <input type="file" name="fname" value="" >
+                </div>
+              </dd>
+              <dt></dt>
+              <dd>
+                  <div class="form-group">
+                      <label>
+                        <input type="checkbox" name="share" class="minimal" value="1">
+                        {{ 'fodder.share'|trans }}
+                      </label>
+                  </div>
+              </dd>
+              <dt></dt>
+              <dd>
+                  <div class="form-group">
+                      <label>
+                        <input type="checkbox" name="state" class="minimal" value="1" checked="checked">
+                        {{ 'fodder.use'|trans }}
+                      </label>
+                  </div>
+              </dd>
+            </dl>
+          </div>
+        </div>
+        <div class="box-footer text-center">
+          <input type="hidden" name="_token" value="{{ csrf_token('afodder') }}">
+          <button type="button" class="btn btn-primary butup">{{ 'subbut'|trans }}</button>
+        </div>
+      </form>
+    </div>
+{% endblock %}
+
+{% block bjs %}
+{{ parent() }}
+<script src="{{ asset('plugins/iCheck/icheck.min.js') }}"></script>
+<script src="{{ asset('plugins/cryptojs/md5.js') }}"></script>
+<script src="{{ asset('plugins/select2/select2.full.min.js') }}"></script>
+<script type="text/javascript">
+  $(function () {
+    $(".select2").select2();
+
+    $('input[type="checkbox"].minimal, input[type="radio"].minimal').iCheck({
+          checkboxClass: 'icheckbox_minimal-blue',
+          radioClass: 'iradio_minimal-blue'
+        });
+
+    $('.butup').click(function() {
+      subbox();
+    });
+  });
+
+document.onkeydown=function(){
+ if (event.keyCode == 13){
+    subbox();
+ }
+}
+
+  function subbox() {
+    $('[name="form"]').submit();
+  }
+</script>
+{% endblock %}

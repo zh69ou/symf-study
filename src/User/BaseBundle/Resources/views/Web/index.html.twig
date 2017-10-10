@@ -1,0 +1,162 @@
+{% extends 'public/base.html.twig' %}
+{% set web = app.request.attributes.get('web') %}
+{% set winfo = app.session.get('webinfo') %}
+{% set route = app.request.attributes.get('_route') %}
+{% block tcss %}
+{{ parent() }}
+<link href="{{ asset('css/AdminLTE.min.css') }}" rel="stylesheet" />
+<link href="{{ asset('css/skin-black.min.css') }}" rel="stylesheet" />
+{% endblock %}
+{% block body %}
+<nav class="navbar navbar-default navbar-fixed-top" role="navigation">
+  <div class="container-fluid">
+    <div class="navbar-header">
+      <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#header-navbar">
+        <span class="sr-only">menu</span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+      </button>
+      <a class="navbar-brand" href="{{ path('siteindex',{'web':web}) }}">{{winfo.title}}</a>
+    </div>
+    <div class="collapse navbar-collapse" id="header-navbar">
+      <ul class="nav navbar-nav">
+      {% if winfo.menuls %}
+        {% set i=0 %}
+        {% for k,me in winfo.menuls.cnum%}
+          <li class="{% if route==winfo.menuls.selurl[k] %}active{% endif %} {% if winfo.menuls.seltype[k]=='sel' %}dropdown{% endif %}">
+            <a {% if winfo.menuls.seltype[k]=='sel' %} class="dropdown-toggle" data-toggle="dropdown" href="#" {% else %} href="{% if winfo.menuls.selurl[k]!='' and  winfo.menuls.selurl[k]!='0'%}{{path(winfo.menuls.selurl[k],{'web':web})}}{% endif %}"{% endif %} >
+              {{winfo.menuls.selname[k]}}
+              {% if winfo.menuls.seltype[k]=='sel' %}
+              <span class="caret"></span>
+              {% endif %}
+            </a>
+            {% if winfo.menuls.cselname is defined and winfo.menuls.seltype[k]=='sel' %}
+            <ul class="dropdown-menu" role="menu">
+              {% set snum=i %}
+              {% set cn=1 %}
+              {% for ke,info in winfo.menuls.cselname %}
+                {% if ke >= i and ke < snum+winfo.menuls.cnum[k] %}
+                  <li><a href="{% if winfo.menuls.cselurl[ke]!='' and  winfo.menuls.cselurl[ke]!='0'%}{{path(winfo.menuls.cselurl[ke],{'web':web})}}{% endif %}">{{winfo.menuls.cselname[ke]}}</a></li>
+                {% set i=i+1 %}
+                {% set cn=cn+1 %}
+                {% endif %}
+              {% endfor %}
+            </ul>
+            {% endif %}
+          </li>
+        {% endfor %}
+      {% endif %}
+      </ul>
+      <ul class="nav navbar-nav navbar-right">
+        <li>
+          <a href="{{path('index')}}" target="_break">A6VI</a>
+        </li>
+        <li class="dropdown">
+          <a href="#" class="dropdown-toggle" data-toggle="dropdown">
+            {% if not(app.user) %}
+            欢迎来到{{winfo.title}}
+            {% else %}
+            {{ app.user.username }}
+            {% endif %}
+            <span class="caret"></span>
+          </a>
+          <ul class="dropdown-menu" role="menu">
+            {% if not(app.user) %}
+            <li>
+              <a href="{{path('login',{'web':web})}}">登录</a>
+            </li>
+            <li>
+              <a href="{{path('register',{'web':web})}}">注册</a>
+            </li>
+            {% else %}
+            <li>
+              <a href="{{path('logout',{'web':web})}}">退出</a>
+            </li>
+            {% endif %}
+          </ul>
+        </li>
+      </ul>
+    </div>
+  </div>
+</nav>
+<div class="box">
+  <div class="box-header">
+    <a>&nbsp;</a>
+  </div>
+  <div class="box-body">
+    <div id="generic" class="carousel slide" data-ride="carousel">
+      <ol class="carousel-indicators">
+        {% for k,im in winfo.setcon.flashnum %}
+        <li data-target="#generic" data-slide-to="{{k}}" {%if k=='0'%}class="active"{%endif%}></li>
+        {% endfor %}
+      </ol>
+      <div class="carousel-inner">
+        {% for k,im in winfo.setcon.flashnum %}
+        <div class="item {%if k=='0'%}active{%endif%}">
+          <a href="{{path(winfo.setcon.durl[k],{'web':web})}}">
+            {% for f in fodders %}
+              {% if f.id==winfo.setcon.flashimg[k] %}
+              <img src="/{{f.content}}" alt="">
+              {% endif %}
+            {% endfor %}
+            <div class="carousel-caption">{{winfo.setcon.dword[k]}}</div>
+          </a>
+        </div>
+        {% endfor %}
+      </div>
+      <a class="left carousel-control" href="#generic" data-slide="prev">
+        <span class="fa fa-angle-left"></span>
+      </a>
+      <a class="right carousel-control" href="#generic" data-slide="next">
+        <span class="fa fa-angle-right"></span>
+      </a>
+    </div>
+  </div>
+</div>
+{% set i=0 %}
+<div class="container">
+  {% for k,si in winfo.setcon.trnum%}
+  <div class="row">
+    {% set snum=i %}
+    {% for ke,info in winfo.setcon.datatype %}
+    {% if ke >= i and ke < snum+winfo.setcon.rownum[k] %}
+    {% set i=i+1 %}
+    <div class="col-md-{{12/winfo.setcon.rownum[k]}}">
+        {% if winfo.setcon.datatype[ke]=='img' %}
+          {% for f in fodders %}
+            {% if f.id==winfo.setcon.datainfo[ke] %}
+            <div class="thumbnail">
+              <img src="/{{f.content}}" alt="{{winfo.setcon.title[ke]}}">
+              <div class="carousel-caption">
+                <h3>{{winfo.setcon.title[ke]}}</h3>
+                <p>{{winfo.setcon.dwords[ke]}}</p>
+              </div>
+            </div>
+            {% endif %}
+          {% endfor %}
+        {% elseif winfo.setcon.datatype[ke]=='text' %}
+        <div class="media">
+          <div class="media-body">
+            <h4 class="media-heading">{{winfo.setcon.title[ke]}}</h4>
+            <p>{{winfo.setcon.dwords[ke]}}</p>
+            <p>{{winfo.setcon.datainfo[ke]}}</p>
+          </div>
+        </div>
+        {% elseif winfo.setcon.datatype[ke]=='db' %}
+        <ul class="list-group">
+          <li class="list-group-item">Cras justo odioCras justo odioCras justo odioCras justo odioCras justo odioCras justo odio</li>
+          <li class="list-group-item">Dapibus ac facilisis in</li>
+          <li class="list-group-item">Morbi leo risus</li>
+          <li class="list-group-item">Porta ac consectetur ac</li>
+          <li class="list-group-item">Vestibulum at eros</li>
+        </ul>
+        {% endif %}
+    </div>
+    {% endif %}
+    {% endfor %}
+  </div>
+  {% endfor %}
+</div>
+
+{% endblock %}

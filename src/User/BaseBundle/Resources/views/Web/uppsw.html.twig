@@ -1,0 +1,97 @@
+{% extends 'public/user.html.twig' %}
+{% block title %}{{ 'uppsw'|trans }}{{parent()}}{% endblock %}
+{% block contentheader %}
+<section class="content-header">
+  <h1>
+    {{ 'uppsw'|trans }}
+    <small>{{ 'uppsw.warn'|trans }}</small>
+  </h1>
+  <ol class="breadcrumb">
+    <li><a href="{{path('siteuser',{'web':app.request.attributes.get('web')})}}"><i class="fa fa-dashboard"></i>{{app.session.get('webinfo').title}}</a></li>
+    <li class="active">{{ 'uppsw'|trans }}</li>
+  </ol>
+</section>
+{% endblock %}
+{% block content %}
+<div class="row">
+  <div class="col-md-6">
+    <div class="box box-primary">
+      <div class="box-header with-border">
+        <h3 class="box-title">{{ 'uppsw.bef'|trans }}</h3>
+      </div>
+      {% if state is defined %}
+      <div class="callout {% if state == 1 %}callout-danger{% else %}callout-success{% endif %}">
+        {{content}}
+      </div>
+      {% endif %}
+      <form role="form" action="" method="post" name="form">
+        <div class="box-body">
+          <div class="form-group">
+            <label>{{ 'uppsw.opsw'|trans }}</label>
+            <input type="password" name="opassword" class="form-control" placeholder="{{ 'uppsw.opsw'|trans }}">
+          </div>
+          <div class="form-group">
+            <label>{{ 'uppsw.npsw'|trans }}</label>
+            <input type="password" name="password" class="form-control" placeholder="{{ 'uppsw.npsw'|trans }}">
+          </div>
+          <div class="form-group">
+            <label>{{ 'uppsw.xpsw'|trans }}</label>
+            <input type="password" name="npassword" class="form-control" placeholder="{{ 'uppsw.xpsw'|trans }}">
+          </div>
+        </div>
+        <div class="box-footer text-center">
+          <input type="hidden" name="_token" value="{{ csrf_token('uppassword') }}">
+          <button type="button" class="btn btn-primary butup">{{ 'subbut'|trans }}</button>
+        </div>
+      </form>
+    </div>
+  </div>
+  <div class="col-md-6">
+    <div class="box box-primary">
+      <div class="box-header with-border">
+        <h3 class="box-title">{{ 'warn'|trans }}</h3>
+      </div>
+        <div class="box-body">
+          <ul class="todo-list">
+            <li>{{ 'warnc'|trans }}<a href="#" onclick="javascript:window.open('http://wpa.qq.com/msgrd?v=3&uin=380493570&site=qq&menu=yes', '_blank', 'height=502, width=644,toolbar=no,scrollbars=no,menubar=no,status=no');"> {{ 'manager'|trans }}</a></li>
+          </ul>
+        </div>
+    </div>
+  </div>
+</div>
+{% endblock %}
+
+{% block bjs %}
+{{ parent() }}
+<script src="{{ asset('plugins/iCheck/icheck.min.js') }}"></script>
+<script src="{{ asset('plugins/cryptojs/md5.js') }}"></script>
+<script type="text/javascript">
+  $(function () {
+        $('.butup').click(function() {
+          subbox();
+        });
+    });
+
+document.onkeydown=function(){
+ if (event.keyCode == 13){
+    subbox();
+ }
+}
+
+  function subbox() {
+    $('.butup').unbind();
+    document.onkeydown=function(){};
+    var opsw = $('[name="opassword"]').val();
+    var psw = $('[name="password"]').val();
+    var npsw = $('[name="npassword"]').val();
+    if(opsw!=''&&psw!=''&&npsw!=''&&psw==npsw&&opsw!=psw){
+          $('[name="password"]').val(String(CryptoJS.MD5($('[name="password"]').val())).substr(6,13));
+          $('[name="opassword"]').val(String(CryptoJS.MD5($('[name="opassword"]').val())).substr(6,13));
+          $('[name="npassword"]').val(String(CryptoJS.MD5($('[name="npassword"]').val())).substr(6,13));
+          $('[name="form"]').submit();
+    }else{
+      $('[name="opassword"]').focus();
+    }
+  }
+</script>
+{% endblock %}

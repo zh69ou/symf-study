@@ -1,0 +1,462 @@
+{% extends 'public/user.html.twig' %}
+{% block title %}站点首页设置{{parent()}}{% endblock %}
+{% block tcss %}
+<link href="{{ asset('plugins/select2/select2.min.css') }}" rel="stylesheet" />
+{{ parent() }}
+{% endblock %}
+{% block contentheader %}
+<section class="content-header">
+  <h1>
+    站点首页设置
+    <small>首页内容配置</small>
+  </h1>
+  <ol class="breadcrumb">
+    <li><a href="{{path('siteuser',{'web':web})}}"><i class="fa fa-dashboard"></i>{{site.title}}</a></li>
+    <li class="active">站点首页设置</li>
+  </ol>
+</section>
+{% endblock %}
+
+{% block content %}
+  {% for fm in app.session.flashBag.get('error') %}
+    <div class="callout callout-danger">
+      {{fm|trans}}
+    </div>
+    {% endfor %}
+    {% for fm in app.session.flashBag.get('success') %}
+    <div class="callout callout-success">
+      {{fm|trans}}
+    </div>
+  {% endfor %}
+<div class="row">
+  <div class="col-md-12">
+    {% if state is defined %}
+      <div class="callout {% if state == 1 %}callout-danger{% else %}callout-success{% endif %}">
+        {{content}}
+      </div>
+    {% endif %}
+    <form role="form" action="" method="post" name="form" enctype="multipart/form-data" class="form-horizontal">
+    <div class="nav-tabs-custom">
+      <ul class="nav nav-tabs">
+        <li class="active">
+          <a href="#tab_1" data-toggle="tab">轮播设置</a>
+        </li>
+        <li>
+          <a href="#tab_2" data-toggle="tab">栏目设置</a>
+        </li>
+        <li>
+          <a href="#tab_3" data-toggle="tab">其它信息</a>
+        </li>
+      </ul>
+      <div class="tab-content">
+        <div class="tab-pane active" id="tab_1">
+          {% if site.setcon %}
+            {% for k,si in site.setcon.flashnum%}
+            <div class="row box-body">
+              <span class="form-group col-md-1" onclick="{% if loop.index==1 %}addbox(this){% else %}removebox(this){% endif %}">
+              <button type="button" class="btn"><i class="fa {% if loop.index==1 %}fa-plus{% else %}fa-remove{% endif %}"></i></button>
+              </span>
+              <div class="form-group col-md-5">
+                <select class="form-control select2" name="setc[flashimg][]" style="display: none;width:100%;">
+                  <option value="">选择图片</option>
+                  {% for f in fodders %}
+                    <option value="{{f.id}}" {% if f.id==site.setcon.flashimg[k] %}selected="selected"{% endif %}>{{f.title}}</option>
+                  {% else %}
+                    <option value="0">无素材</option>
+                  {% endfor %}
+                </select>
+              </div>
+              <div class="form-group col-md-6">
+                <span>调整顺序</span>
+                <button type="button" class="btn up-but"><i class="fa  fa-arrow-up"></i></button>
+                <button type="button" class="btn down-but"><i class="fa  fa-arrow-down"></i></button>
+              </div>
+              <div class="box-info" style="clear: both;">
+                <div class="form-group col-md-6">
+                  <label class="col-sm-2 control-label">描述</label>
+                  <div class="col-sm-10">
+                    <input type="text" class="form-control" name="setc[dword][]" value="{{site.setcon.dword[k]}}" >
+                  </div>
+                </div>
+                <div class="form-group col-md-6">
+                  <label class="col-sm-2 control-label">链接</label>
+                  <div class="col-sm-10">
+                    <select class="form-control select2" name="setc[durl][]" style="display: none;width:100%;">
+                      <option value="">选择链接</option>
+                      {% for m in menu %}
+                        <option value="{{m.url}}" {% if m.url==site.setcon.durl[k] %}selected="selected"{% endif %}>{{m.name}}</option>
+                      {% else %}
+                        <option value="0">无链接</option>
+                      {% endfor %}
+                    </select>
+                  </div>
+                </div>
+              </div>
+              <input type="hidden" name="setc[flashnum][]" value="1">
+            </div>
+            {% endfor %}
+          {% else %}
+            <div class="row box-body">
+              <span class="form-group col-md-1" onclick="addbox(this)">
+              <button type="button" class="btn"><i class="fa fa-plus"></i></button>
+              </span>
+              <div class="form-group col-md-5">
+                <select class="form-control select2" name="setc[flashimg][]" style="display: none;width:100%;">
+                  <option value="">选择图片</option>
+                  {% for f in fodders %}
+                    <option value="{{f.id}}">{{f.title}}</option>
+                  {% else %}
+                    <option value="0">无素材</option>
+                  {% endfor %}
+                </select>
+              </div>
+              <div class="form-group col-md-6">
+                <span>调整顺序</span>
+                <button type="button" class="btn up-but"><i class="fa  fa-arrow-up"></i></button>
+                <button type="button" class="btn down-but"><i class="fa  fa-arrow-down"></i></button>
+              </div>
+              <div class="box-info" style="clear: both;">
+                <div class="form-group col-md-6">
+                  <label class="col-sm-2 control-label">描述</label>
+                  <div class="col-sm-10">
+                    <input type="text" class="form-control" name="setc[dword][]"  >
+                  </div>
+                </div>
+                <div class="form-group col-md-6">
+                  <label class="col-sm-2 control-label">链接</label>
+                  <div class="col-sm-10">
+                    <select class="form-control select2" name="setc[durl][]" style="display: none;width:100%;">
+                      <option value="">选择链接</option>
+                      {% for m in menu %}
+                        <option value="{{m.url}}">{{m.name}}</option>
+                      {% else %}
+                        <option value="0">无链接</option>
+                      {% endfor %}
+                    </select>
+                  </div>
+                </div>
+              </div>
+              <input type="hidden" name="setc[flashnum][]" value="1">
+            </div>
+          {% endif %}
+        </div>
+        <div class="tab-pane" id="tab_2">
+          {% if site.setcon %}
+          {% set i=0 %}
+            {% for k,si in site.setcon.trnum%}
+            <div class="row box-body">
+              <span class="form-group col-md-1" onclick="{% if loop.index==1 %}addbox(this){% else %}removebox(this){% endif %}">
+              <button type="button" class="btn"><i class="fa {% if loop.index==1 %}fa-plus{% else %}fa-remove{% endif %}"></i></button>
+              </span>
+              <div class="form-group col-md-3">
+                <div class="btn-group">
+                  <button type="button" class="btn btn-default">
+                  {% if site.setcon.rownum[k]=='1' %}
+                    单列
+                    {% elseif site.setcon.rownum[k]=='2' %}
+                    二列
+                    {% elseif site.setcon.rownum[k]=='3' %}
+                    三列
+                    {% elseif site.setcon.rownum[k]=='4' %}
+                    四列
+                    {% elseif site.setcon.rownum[k]=='6' %}
+                    六列
+                    {% elseif site.setcon.rownum[k]=='8' %}
+                    八列
+                    {% else %}
+                    选择结构
+                    {% endif %}
+                  </button>
+                  <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown" aria-expanded="false">
+                    <span class="caret"></span>
+                    <span class="sr-only"> 下拉 </span>
+                  </button>
+                  <ul class="dropdown-menu" role="menu">
+                    <li><a data-num="6">六列</a></li>
+                    <li><a data-num="4">四列</a></li>
+                    <li><a data-num="3">三列</a></li>
+                    <li><a data-num="2">二列</a></li>
+                    <li><a data-num="1">单列</a></li>
+                  </ul>
+                  <input type="hidden" name="setc[rownum][]" value="{{site.setcon.rownum[k]}}">
+                </div>
+              </div>
+              <div class="form-group col-md-8">
+              <span>调整顺序</span>
+              <button type="button" class="btn up-but"><i class="fa fa-arrow-up"></i></button>
+              <button type="button" class="btn down-but"><i class="fa fa-arrow-down"></i></button>
+              </div>
+              <div class="box-info">
+              {% set snum=i %}
+              {% for ke,info in site.setcon.datatype %}
+              {% if ke >= i and ke < snum+site.setcon.rownum[k] %}
+              {% set i=i+1 %}
+                <div class="form-group col-md-12">
+                  <div class="input-group col-md-6">
+                    <div class="input-group-btn">
+                      <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown" aria-expanded="false">
+                        <span class="data">
+                        {% if site.setcon.datatype[ke]=='img' %}
+                        图片
+                        {% elseif site.setcon.datatype[ke]=='db' %}
+                        数据
+                        {% elseif site.setcon.datatype[ke]=='text' %}
+                        文字
+                        {% endif %}
+                        </span>
+                        <span class="fa fa-caret-down"></span>
+                      </button>
+                      <ul class="dropdown-menu data-type">
+                        <li>
+                          <a data-info="img">图片</a>
+                        </li>
+                        <li>
+                          <a data-info="db">数据</a>
+                        </li>
+                        <li>
+                          <a data-info="text">文字</a>
+                        </li>
+                      </ul>
+                      <input type="hidden" name="setc[datatype][]" value="{{site.setcon.datatype[ke]}}">
+                    </div>
+                    <div class="data-box">
+                      {% if site.setcon.datatype[ke]=='img' %}
+                      <select class="form-control select2" name="setc[datainfo][]" style="display: none;width: 100%;">
+                        <option value="">选择图片</option>
+                        {% for f in fodders %}
+                          <option value="{{f.id}}" {% if f.id==site.setcon.datainfo[ke] %}selected="selected"{% endif %}>{{f.title}}</option>
+                        {% else %}
+                          <option value="0">无素材</option>
+                        {% endfor %}
+                      </select>
+                      {% elseif site.setcon.datatype[ke]=='db' %}
+                      <select class="form-control select2" name="setc[datainfo][]" style="display: none;width: 100%;">
+                        <option>选择数据</option>
+                      </select>
+                      {% elseif site.setcon.datatype[ke]=='text' %}
+                      <input type="text" class="form-control" name="setc[datainfo][]" value="{{site.setcon.datainfo[ke]}}" placeholder="">
+                      {% endif %}
+                    </div>
+                  </div>
+                  <div class="input-group col-md-6">
+                    <label class="col-sm-2 control-label">标题</label>
+                    <div class="col-sm-10">
+                      <input type="text" class="form-control" name="setc[title][]" value="{{site.setcon.title[ke]}}"  >
+                    </div>
+                  </div>
+                  <div class="input-group col-md-6">
+                    <label class="col-sm-2 control-label">描述</label>
+                    <div class="col-sm-10">
+                      <input type="text" class="form-control" name="setc[dwords][]" value="{{site.setcon.dwords[ke]}}"  >
+                    </div>
+                  </div>
+                </div>
+                {% endif %}
+                {% endfor %}
+              </div>
+              <input type="hidden" name="setc[trnum][]" value="1">
+            </div>
+            {% endfor %}
+          {% else %}
+            <div class="row box-body">
+              <span class="form-group col-md-1" onclick="addbox(this)">
+              <button type="button" class="btn"><i class="fa fa-plus"></i></button>
+              </span>
+              <div class="form-group col-md-3">
+                <div class="btn-group">
+                  <button type="button" class="btn btn-default">选择结构</button>
+                  <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown" aria-expanded="false">
+                    <span class="caret"></span>
+                    <span class="sr-only">下拉</span>
+                  </button>
+                  <ul class="dropdown-menu" role="menu">
+                    <li><a data-num="6">六列</a></li>
+                    <li><a data-num="4">四列</a></li>
+                    <li><a data-num="3">三列</a></li>
+                    <li><a data-num="2">二列</a></li>
+                    <li><a data-num="1">单列</a></li>
+                  </ul>
+                  <input type="hidden" name="setc[rownum][]" value="">
+                </div>
+              </div>
+              <div class="form-group col-md-8">
+              <span>调整顺序</span>
+              <button type="button" class="btn up-but"><i class="fa fa-arrow-up"></i></button>
+              <button type="button" class="btn down-but"><i class="fa fa-arrow-down"></i></button>
+              </div>
+              <div class="box-info"></div>
+              <input type="hidden" name="setc[trnum][]" value="1">
+            </div>
+          {% endif %}
+        </div>
+        <div class="tab-pane" id="tab_3"></div>
+      </div>
+      <div class="box-footer text-center">
+        <input type="hidden" name="_token" value="{{ csrf_token('uindexset') }}">
+        <button type="submit" class="btn btn-primary butup">{{ 'subbut'|trans }}</button>
+      </div>
+    </div>
+    </form>
+  </div>
+</div>
+<div class="box-demo" style="display: none;">
+  <div class="form-group col-md-12">
+    <div class="input-group col-md-6">
+      <div class="input-group-btn">
+        <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown" aria-expanded="false">
+          <span class="data-name">图片</span>
+          <span class="fa fa-caret-down"></span>
+        </button>
+        <ul class="dropdown-menu data-type">
+          <li>
+            <a data-info="img">图片</a>
+          </li>
+          <li>
+            <a data-info="db">数据</a>
+          </li>
+          <li>
+            <a data-info="text">文字</a>
+          </li>
+        </ul>
+        <input type="hidden" name="setc[datatype][]" value="img">
+      </div>
+      <div class="data-box">
+      <select class="form-control selectdemo" name="setc[datainfo][]" style="display: none;width: 100%;">
+        <option value="">选择图片</option>
+        {% for f in fodders %}
+          <option value="{{f.id}}">{{f.title}}</option>
+        {% else %}
+          <option value="0">无素材</option>
+        {% endfor %}
+      </select>
+      </div>
+    </div>
+    <div class="input-group col-md-6">
+      <label class="col-sm-2 control-label">标题</label>
+      <div class="col-sm-10">
+        <input type="text" class="form-control" name="setc[title][]" value=""  >
+      </div>
+    </div>
+    <div class="input-group col-md-6">
+      <label class="col-sm-2 control-label">描述</label>
+      <div class="col-sm-10">
+        <input type="text" class="form-control" name="setc[dwords][]" value=""  >
+      </div>
+    </div>
+  </div>
+</div>
+<div class="data-box-demo-img" style="display: none;">
+  <select class="form-control selectdemo" name="setc[datainfo][]" style="display: none;width: 100%;">
+    <option value="">选择图片</option>
+    {% for f in fodders %}
+      <option value="{{f.id}}">{{f.title}}</option>
+    {% else %}
+      <option value="0">无素材</option>
+    {% endfor %}
+  </select>
+</div>
+<div class="data-box-demo-db" style="display: none;">
+  <select class="form-control selectdemo" name="setc[datainfo][]" style="display: none;width: 100%;">
+    <option>选择数据</option>
+  </select>
+</div>
+<div class="data-box-demo-text" style="display: none;">
+  <input type="text" class="form-control" name="setc[datainfo][]" value="" placeholder="">
+</div>
+{% endblock %}
+
+{% block bjs %}
+{{ parent() }}
+<script src="{{ asset('plugins/select2/select2.full.min.js') }}"></script>
+<script type="text/javascript">
+$(function(){
+  addmenudrop();
+  upmove();
+  seletype();
+});
+
+function seletype() {
+  $('.data-type>li').unbind('click');
+  $('.data-type>li').click(function(){
+    $(this).parent().siblings('button').find('.data-name').html($(this).find('a').html());
+    var ty=$(this).find('a').attr('data-info');
+    var hstr='';
+    if(ty=='img')
+    {
+      hstr=$('.data-box-demo-img').clone().html().replace('selectdemo','select2');
+    }else if(ty=='db')
+    {
+      hstr=$('.data-box-demo-db').clone().html().replace('selectdemo','select2');
+    }else
+    {
+      hstr=$('.data-box-demo-text').children().clone();
+    }
+    $(this).parent().siblings('input').val(ty);
+    $(this).parent().parent().siblings('.data-box').html(hstr);
+    if(ty=='img'||ty=='db'){
+      $(this).parent().parent().siblings('.data-box').children('select').select2();
+    }
+  });
+}
+
+function upmove(){
+  $('.up-but').unbind('click');
+  $('.up-but').click(function() {
+    var mybox=$(this).parent().parent();
+    var upbox=mybox.prev();
+    if(upbox){
+      upbox.before(mybox);
+      upmove();
+    }
+  });
+  $('.down-but').unbind('click');
+  $('.down-but').click(function() {
+    var mybox=$(this).parent().parent();
+    var upbox=mybox.next();
+    if(upbox){
+      upbox.after(mybox);
+      upmove();
+    }
+  });
+}
+
+function addmenudrop(){
+  $(".dropdown-menu li").unbind('click');
+  $(".dropdown-menu li").click(function() {
+    var st=$(this).find('a').html();
+    $(this).parent().siblings('button').first().html(st);
+    var num=$(this).find('a').attr('data-num');
+    var box='';
+    if(num>0){
+      $(this).parent().siblings('input').val(num);
+      var newbox=$('.box-demo').clone().html().replace('selectdemo','select2');
+      for(i=0;i<num;i++){
+        box+=newbox;
+      }
+    }
+    $(this).parent().parent().parent().parent().find('.box-info').html(box);
+    seletype();
+    $(".select2").select2();
+  });
+  $(".select2").select2();
+}
+
+function addbox(obj){
+  var box = $(obj).parent();
+  var newbox = box.clone();
+  newbox.find('.fa-plus').attr('class','fa fa-remove');
+  newbox.find('span').first().attr('onclick','removebox(this)');
+  newbox.find('.select2-container').remove();
+  newbox.find('.select2').select2();
+  box.after(newbox);
+  addmenudrop();
+  upmove();
+  seletype();
+}
+
+function removebox(obj){
+  var box =$(obj).parent();
+  box.remove();
+}
+</script>
+{% endblock %}

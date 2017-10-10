@@ -1,0 +1,80 @@
+{% extends 'public/base.html.twig' %}
+
+{% block title %}忘记密码{{ parent() }}{% endblock %}
+
+{% block tcss %}
+{{ parent() }}
+<link href="{{ asset('css/AdminLTE.min.css') }}" rel="stylesheet" />
+<link href="{{ asset('css/_all-skins.min.css') }}" rel="stylesheet" />
+<link href="{{ asset('plugins/iCheck/square/blue.css') }}" rel="stylesheet" />
+{% endblock %}
+
+{% block body %}
+	<div class="login-box">
+      <div class="login-logo">
+        <b>忘记密码</b>
+      </div>
+      <div class="login-box-body">
+        <p class="login-box-msg">
+          {% if state is defined %}
+          <span class="{% if state == 1 %}text-danger{% else %}text-success{% endif %}">
+            {{content}}
+          </span>
+          {% endif %}
+        </p>
+        <form action="{{path('forpsw')}}" method="post" name="form">
+          <div class="form-group has-feedback">
+            <input type="text" name="username" class="form-control" placeholder="用户名">
+            <span class="fa fa-user form-control-feedback"></span>
+          </div>
+          <div class="form-group has-feedback">
+            <input type="test" name="email" class="form-control" placeholder="邮箱">
+            <span class="fa fa-envelope form-control-feedback"></span>
+          </div>
+          <div class="row">
+            <div class="col-xs-12 text-center">
+              <button type="button" class="btn btn-primary butland">&nbsp;发&nbsp;&nbsp;送&nbsp;</button>
+            </div>
+          </div>
+          <input type="hidden" name="_token" value="{{ csrf_token('forpswcsrf') }}">
+        </form>
+        <br><p class="text-danger">请正确填写账号和邮箱，我们将通过发送邮件修改账号密码。</p>
+        <p>有什么疑问或建议请联系 <a href="#" onclick="javascript:window.open('http://wpa.qq.com/msgrd?v=3&uin=380493570&site=qq&menu=yes', '_blank', 'height=502, width=644,toolbar=no,scrollbars=no,menubar=no,status=no');">管理员</a></p>
+      </div>
+	</div>
+{% endblock %}
+
+{% block bjs %}
+{{ parent() }}
+<script src="{{ asset('js/hinclude.js') }}">
+</script>
+<script src="{{ asset('plugins/cryptojs/md5.js') }}"></script>
+<script type="text/javascript">
+	$('body').addClass('login-page');
+
+	$(function () {
+        $('.butland').click(function() {
+          subbox();
+        });
+    });
+
+document.onkeydown=function(){
+  if (event.keyCode == 13){
+    subbox();
+  }
+}
+
+  function subbox() {
+    $('.butland').unbind();
+    document.onkeydown=function(){};
+    var name = $('[name="username"]').val();
+    var psw = $('[name="password"]').val();
+    if(name!=''&&psw!=''){
+          $('[name="password"]').val(String(CryptoJS.MD5($('[name="password"]').val())).substr(6,13));
+          $('[name="form"]').submit();
+    }else{
+      $('[name="username"]').focus();
+    }
+  }
+</script>
+{% endblock %}

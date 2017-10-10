@@ -1,0 +1,90 @@
+{% extends 'public/user.html.twig' %}
+{% block title %}站点列表{{parent()}}{% endblock %}
+{% block contentheader %}
+<section class="content-header">
+  <h1>
+    站点列表
+    <small>个人可用站点</small>
+  </h1>
+  <ol class="breadcrumb">
+    <li><a href="{{path('siteuser',{'web':web})}}"><i class="fa fa-dashboard"></i>{{app.session.get('webinfo').title}}</a></li>
+    <li class="active">站点列表</li>
+  </ol>
+</section>
+{% endblock %}
+{% block content %}
+<div class="row">
+  <div class="col-xs-12">
+    <div class="nav-tabs-custom">
+      <ul class="nav nav-tabs">
+        <li class="active"><a href="#tab_ow" data-toggle="tab">拥有列表</a></li>
+        <li><a href="#tab_use" data-toggle="tab">可用列表</a></li>
+      </ul>
+      <div class="tab-content">
+        <div class="tab-pane active" id="tab_ow">
+        <table class="table table-hover">
+          <tr>
+            <th>编号</th>
+            <th>名称</th>
+            <th>标题</th>
+            <th>关键词</th>
+            <th>结束时间</th>
+            <th>状态</th>
+            <th>操作</th>
+          </tr>
+          {% for si in sites %}
+          <tr>
+            <td>{{si.id}}</td>
+            <td><a href="{{url('siteindex',{'web':si.name})}}" target="_break">{{si.name}}</a></td>
+            <td>{{si.title[0:8]}}</td>
+            <td>{{si.kword[0:16]}}</td>
+            <td>
+            {% if si.endtime.date != '-0001-11-30 00:00:00' %}
+            {{si.endtime.date|date('Y-m-d')}}
+            {% else %}
+            无限
+            {% endif%}
+            </td>
+            <td>
+            {% if si.state == '1' %}
+              <span class="label label-success">使用</span>
+            {% else %}
+              <span class="label label-danger">停用</span>
+            {% endif%}
+            </td>
+            <td><a href="{{path('atoollist',{'web':web})}}" class="btn btn-sm btn-default"><i class="fa fa-tasks"></i></a></td>
+          </tr>
+          {% else %}
+          <tr><td colspan="7" class="text-center">无站点</td></tr>
+          {% endfor %}
+        </table>
+        </div>
+        <div class="tab-pane" id="tab_use">
+        <table class="table table-hover">
+          <tr>
+            <th>编号</th>
+            <th>编码</th>
+            <th>操作</th>
+          </tr>
+          {% for k,su in usites %}
+          {% if su.state == '2' %}
+          <tr>
+            <td>{{k+1}}</td>
+            <td><a href="{{url('siteindex',{'web':su.site})}}" target="_break">{{su.site}}</a></td>
+            <td><a href="{{url('siteindex',{'web':su.site})}}" target="_break" class="btn btn-sm btn-default"><i class="fa fa-sign-in"></i></a></td>
+          </tr>
+          {% endif%}
+          {% else %}
+          <tr><td colspan="7" class="text-center">无站点</td></tr>
+          {% endfor %}
+        </table>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+{% endblock %}
+
+{% block bjs %}
+{{ parent() }}
+{% endblock %}

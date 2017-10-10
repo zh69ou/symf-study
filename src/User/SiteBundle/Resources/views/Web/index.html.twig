@@ -1,0 +1,321 @@
+{% extends 'public/user.html.twig' %}
+{% block title %}{{ 'site.set'|trans }}{{parent()}}{% endblock %}
+{% block tcss %}
+<link href="{{ asset('plugins/select2/select2.min.css') }}" rel="stylesheet" />
+{{ parent() }}
+{% endblock %}
+{% block contentheader %}
+<section class="content-header">
+  <h1>
+    {{ 'site.set'|trans }}
+    <small>{{ 'site.settitle'|trans }}</small>
+  </h1>
+  <ol class="breadcrumb">
+    <li><a href="{{path('siteindex',{'web':web})}}"><i class="fa fa-dashboard"></i>{{site.title}}</a></li>
+    <li class="active">{{ 'site.set'|trans }}</li>
+  </ol>
+</section>
+{% endblock %}
+
+{% block content %}
+<div class="row">
+  <div class="col-md-12">
+    {% if state is defined %}
+      <div class="callout {% if state == 1 %}callout-danger{% else %}callout-success{% endif %}">
+        {{content}}
+      </div>
+    {% endif %}
+    <form role="form" action="" method="post" name="form" enctype="multipart/form-data">
+    <div class="nav-tabs-custom">
+      <ul class="nav nav-tabs">
+        <li class="active">
+          <a href="#tab_1" data-toggle="tab">站点信息</a>
+        </li>
+        <li>
+          <a href="#tab_2" data-toggle="tab">菜单设置</a>
+        </li>
+        <li>
+          <a href="#tab_3" data-toggle="tab">其它信息</a>
+        </li>
+      </ul>
+      <div class="tab-content">
+        <div class="tab-pane active" id="tab_1">
+            <div class="row">
+              <div class="form-group col-md-6">
+                <label>{{ 'title'|trans }}</label>
+                <input type="text" name="title" class="form-control" value="{{ site.title }}" placeholder="{{ 'title'|trans }}">
+              </div>
+              <div class="form-group col-md-6">
+                <label>{{ 'kword'|trans }}</label>
+                <input type="text" name="kword" class="form-control" value="{{ site.kword }}" placeholder="{{ 'kword'|trans }}">
+              </div>
+            </div>
+        </div>
+        <div class="tab-pane" id="tab_2">
+        {% if site.menuls %}
+          {% set i=0 %}
+          {% for k,me in site.menuls.cnum%}
+          <div class="row box-body">
+            <span class="form-group col-md-1" onclick="{% if loop.index==1 %}addbox(this){% else %}removebox(this){% endif %}">
+              <button type="button" class="btn"><i class="fa {% if loop.index==1 %}fa-plus{% else %}fa-remove{% endif %}"></i></button>
+            </span>
+            <div class="form-group col-md-2">
+              <div class="input-group-btn">
+                <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown" aria-expanded="false">
+                  <span class="data">{% if site.menuls.seltype[k]=='sel' %}下拉{% else %}链接{% endif %}</span>
+                  <span class="fa fa-caret-down"></span>
+                </button>
+                <ul class="dropdown-menu data-type">
+                  <li>
+                    <a data-info="link">链接</a>
+                  </li>
+                  <li>
+                    <a data-info="sel">下拉</a>
+                  </li>
+                </ul>
+                <input type="hidden" name="mls[seltype][]" value="{{site.menuls.seltype[k]}}">
+              </div>
+            </div>
+            <div class="form-group col-md-2">
+              <input type="text" class="form-control" name="mls[selname][]" placeholder="名称" value="{{site.menuls.selname[k]}}" >
+            </div>
+            <div class="form-group col-md-4">
+              <select class="form-control select2" name="mls[selurl][]" style="display: none;width:100%;">
+                <option value="">选择链接</option>
+                {% for m in menu %}
+                  <option value="{{m.url}}" {% if m.url==site.menuls.selurl[k] %}selected="selected"{% endif %}>{{m.name}}</option>
+                {% else %}
+                  <option value="0">无链接</option>
+                {% endfor %}
+              </select>
+            </div>
+            <div class="form-group col-md-3">
+              <span>调整顺序</span>
+              <button type="button" class="btn up-but"><i class="fa  fa-arrow-up"></i></button>
+              <button type="button" class="btn down-but"><i class="fa  fa-arrow-down"></i></button>
+            </div>
+            <div class="child">
+              {% if site.menuls.cnum[k]!='0' and site.menuls.cselname is defined %}
+                {% set snum=i %}
+                {% set cn=1 %}
+                {% for ke,info in site.menuls.cselname %}
+                  {% if ke >= i and ke < snum+site.menuls.cnum[k] %}
+                  <div class="col-md-12">
+                    <div class="col-md-1">&nbsp;</div>
+                    <span class="form-group col-md-1" onclick="{% if cn==1 %}addbox(this){% else %}removebox(this){% endif %}">
+                      <button type="button" class="btn"><i class="fa {% if cn==1 %}fa-plus{% else %}fa-remove{% endif %}"></i></button>
+                    </span>
+                    <div class="form-group col-md-2">
+                      <input type="text" class="form-control" name="mls[cselname][]" placeholder="名称" value="{{site.menuls.cselname[ke]}}" >
+                    </div>
+                    <div class="form-group col-md-4">
+                      <select class="form-control select2" name="mls[cselurl][]" style="display: none;width:100%;">
+                        <option value="">选择链接</option>
+                        {% for m in menu %}
+                          <option value="{{m.url}}" {% if m.url==site.menuls.cselurl[ke] %}selected="selected"{% endif %}>{{m.name}}</option>
+                        {% else %}
+                          <option value="0">无链接</option>
+                        {% endfor %}
+                      </select>
+                    </div>
+                    <div class="form-group col-md-3">
+                      <span>调整顺序</span>
+                      <button type="button" class="btn up-but"><i class="fa  fa-arrow-up"></i></button>
+                      <button type="button" class="btn down-but"><i class="fa  fa-arrow-down"></i></button>
+                    </div>
+                  </div>
+                  {% set i=i+1 %}
+                  {% set cn=cn+1 %}
+                  {% endif %}
+                {% endfor %}
+              {% endif %}
+            </div>
+            <input type="hidden" class="num" name="mls[cnum][]" value="{{site.menuls.cnum[k]}}">
+          </div>
+          {% endfor %}
+        {% else %}
+          <div class="row box-body">
+              <span class="form-group col-md-1" onclick="addbox(this)">
+                <button type="button" class="btn"><i class="fa fa-plus"></i></button>
+              </span>
+              <div class="form-group col-md-2">
+                <div class="input-group-btn">
+                  <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown" aria-expanded="false">
+                    <span class="data">链接</span>
+                    <span class="fa fa-caret-down"></span>
+                  </button>
+                  <ul class="dropdown-menu data-type">
+                    <li>
+                      <a data-info="link">链接</a>
+                    </li>
+                    <li>
+                      <a data-info="sel">下拉</a>
+                    </li>
+                  </ul>
+                  <input type="hidden" name="mls[seltype][]" value="link">
+                </div>
+              </div>
+              <div class="form-group col-md-2">
+                <input type="text" class="form-control" name="mls[selname][]" placeholder="名称" >
+              </div>
+              <div class="form-group col-md-4">
+                <select class="form-control select2" name="mls[selurl][]" style="display: none;width:100%;">
+                  <option value="">选择链接</option>
+                  {% for m in menu %}
+                    <option value="{{m.url}}">{{m.name}}</option>
+                  {% else %}
+                    <option value="0">无链接</option>
+                  {% endfor %}
+                </select>
+              </div>
+              <div class="form-group col-md-3">
+                <span>调整顺序</span>
+                <button type="button" class="btn up-but"><i class="fa  fa-arrow-up"></i></button>
+                <button type="button" class="btn down-but"><i class="fa  fa-arrow-down"></i></button>
+              </div>
+              <div class="child"></div>
+              <input type="hidden" class="num" name="mls[cnum][]" value="0">
+            </div>
+        {% endif %}
+        </div>
+        <div class="tab-pane" id="tab_3"></div>
+      </div>
+      <div class="box-footer text-center">
+        <input type="hidden" name="_token" value="{{ csrf_token('upsite') }}">
+        <button type="button" class="btn btn-primary butup">{{ 'subbut'|trans }}</button>
+      </div>
+    </div>
+    </form>
+  </div>
+</div>
+<div class="menudemo" style="display: none;">
+  <div class="col-md-12">
+    <div class="col-md-1">&nbsp;</div>
+    <span class="form-group col-md-1" onclick="addbox(this)">
+      <button type="button" class="btn"><i class="fa fa-plus"></i></button>
+    </span>
+    <div class="form-group col-md-2">
+      <input type="text" class="form-control" name="mls[cselname][]" placeholder="名称" >
+    </div>
+    <div class="form-group col-md-4">
+      <select class="form-control selectdemo" name="mls[cselurl][]" style="display: none;width:100%;">
+        <option value="">选择链接</option>
+        {% for m in menu %}
+          <option value="{{m.id}}">{{m.name}}</option>
+        {% else %}
+          <option value="0">无链接</option>
+        {% endfor %}
+      </select>
+    </div>
+    <div class="form-group col-md-3">
+      <span>调整顺序</span>
+      <button type="button" class="btn up-but"><i class="fa  fa-arrow-up"></i></button>
+      <button type="button" class="btn down-but"><i class="fa  fa-arrow-down"></i></button>
+    </div>
+  </div>
+</div>
+{% endblock %}
+
+{% block bjs %}
+{{ parent() }}
+<script src="{{ asset('plugins/iCheck/icheck.min.js') }}"></script>
+<script src="{{ asset('plugins/cryptojs/md5.js') }}"></script>
+<script src="{{ asset('plugins/select2/select2.full.min.js') }}"></script>
+<script type="text/javascript">
+  $(function () {
+        $('.butup').click(function() {
+          subbox();
+        });
+    });
+
+document.onkeydown=function(){
+ if (event.keyCode == 13){
+    subbox();
+ }
+}
+
+  function subbox() {
+    $('[name="form"]').submit();
+  }
+</script>
+<script type="text/javascript">
+$(function(){
+  addmenudrop();
+  upmove();
+  seletype();
+});
+
+function seletype() {
+  $('.data-type>li').unbind('click');
+  $('.data-type>li').click(function(){
+    $(this).parent().siblings('button').find('.data').html($(this).find('a').html());
+    var ty=$(this).find('a').attr('data-info');
+    $(this).parent().siblings('input').val(ty);
+    var hstr='';
+    if(ty=='sel')
+    {
+      hstr=$('.menudemo').clone().html().replace('selectdemo','select2');
+      if($(this).parent().parent().parent().siblings('.num').length>0)
+      {
+        $(this).parent().parent().parent().siblings('.num').val(1);
+      }
+    }else{
+      $(this).parent().parent().parent().siblings('.num').val(0);
+    }
+    $(this).parent().parent().parent().siblings('.child').html(hstr);
+    $(".select2").select2();
+  });
+}
+
+function upmove(){
+  $('.up-but').unbind('click');
+  $('.up-but').click(function() {
+    var mybox=$(this).parent().parent();
+    var upbox=mybox.prev();
+    if(upbox){
+      upbox.before(mybox);
+      upmove();
+    }
+  });
+  $('.down-but').unbind('click');
+  $('.down-but').click(function() {
+    var mybox=$(this).parent().parent();
+    var upbox=mybox.next();
+    if(upbox){
+      upbox.after(mybox);
+      upmove();
+    }
+  });
+}
+
+function addmenudrop(){
+  $(".select2").select2();
+}
+
+function addbox(obj){
+  var box = $(obj).parent();
+  var newbox = box.clone();
+  newbox.find('.fa-plus').first().attr('class','fa fa-remove');
+  newbox.find('span').first().attr('onclick','removebox(this)');
+  newbox.find('.select2-container').remove();
+  newbox.find('.select2').select2();
+  box.after(newbox);
+  if(box.parent('div').siblings('.num').length>0)
+  {
+    box.parent('div').siblings('.num').val(parseInt(parseInt(box.parent('div').siblings('.num').val())+1));
+  }
+  addmenudrop();
+  upmove();
+  seletype();
+}
+
+function removebox(obj){
+  var box =$(obj).parent();
+  if(box.parent('div').siblings('.num').length>0)
+  {
+    box.parent('div').siblings('.num').val(parseInt(parseInt(box.parent('div').siblings('.num').val())-1));
+  }
+  box.remove();
+}
+</script>
+{% endblock %}

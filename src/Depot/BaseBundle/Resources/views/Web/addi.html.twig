@@ -1,0 +1,219 @@
+{% extends 'public/user.html.twig' %}
+{% block title %}{{ 'depoti_add'|trans }}{{parent()}}{% endblock %}
+{% set web = app.request.attributes.get('web') %}
+{% block tcss %}
+<link href="{{ asset('plugins/select2/select2.min.css') }}" rel="stylesheet" />
+<link href="{{ asset('plugins/iCheck/all.css') }}" rel="stylesheet" />
+{{ parent() }}
+{% endblock %}
+{% block contentheader %}
+<section class="content-header">
+  <h1>
+    {{ 'depoti_add'|trans }}
+    <!-- <small>{{ 'depot.addlist'|trans }}</small> -->
+  </h1>
+  <ol class="breadcrumb">
+    <li><a href="{{path('siteindex',{'web':web})}}"><i class="fa fa-dashboard"></i>{{app.session.get('webinfo').title}}</a></li>
+    <li class="active">{{ 'depot.addlist'|trans }}</li>
+  </ol>
+</section>
+{% endblock %}
+{% block content %}
+<div class="box box-primary">
+      <div class="box-header with-border">
+        <h3 class="box-title">{{ 'depoti_add'|trans }}</h3>
+      </div>
+      {% for fm in app.session.flashBag.get('error') %}
+      <div class="callout callout-danger">
+        {{fm|trans}}
+      </div>
+      {% endfor %}
+      {% for fm in app.session.flashBag.get('success') %}
+      <div class="callout callout-success">
+        {{fm|trans}}
+      </div>
+      {% endfor %}
+      <form role="form" action="" method="post" name="form" enctype="multipart/form-data">
+        <div class="box-body">
+          <div class="col-md-6">
+            <dl class="dl-horizontal">
+              <dt></dt>
+              <dd>
+                  <div class="form-group">&nbsp;</div>
+              </dd>
+              <dt>{{ 'name'|trans }}</dt>
+              <dd>
+                  <div class="form-group">
+                      <input type="text" name="name" class="form-control" value="" >
+                  </div>
+              </dd>
+              <dt>{{ 'codenum'|trans }}</dt>
+              <dd>
+                <div class="form-group">
+                  <input type="text" name="codenum" class="form-control" value="" >
+                </div>
+              </dd>
+              <dt>{{ 'stock'|trans }}</dt>
+              <dd>
+                <div class="form-group">
+                  <input type="text" name="stock" class="form-control" value="0" >
+                </div>
+              </dd>
+              <dt>{{ 'type'|trans }}</dt>
+              <dd>
+                  <div class="form-group">
+                  	<select name="type[]" class="form-control select2" multiple="multiple" style="width: 100%;">
+                      {% for t in type %}
+                        <option value="{{t.id}}">{{t.name}}</option>
+                      {% else %}
+                        <option value="0">无分类</option>
+                      {% endfor %}
+                  	</select>
+                  </div>
+              </dd>
+              <dt><a class="btn btn-default btn-xs" data-toggle="modal" data-target="#addfo" title="{{ 'depoti_add_fodder'|trans }}"><i class="fa fa-plus"></i></a>&nbsp;&nbsp;{{ 'fodder'|trans }}</dt>
+              <dd>
+                	<div class="form-group">
+                    <select name="fodder" class="form-control select2" style="width: 100%;">
+                  		<option value="0">无素材</option>
+                    {% for f in fodders %}
+                      <option value="{{f.id}}">{{f.title}}</option>
+                    {% endfor %}
+                  	</select>
+                  </div>
+              </dd>
+              <dt>{{ 'sort'|trans }}</dt>
+              <dd>
+                  <div class="form-group">
+                      <input type="text" name="sort" class="form-control" value="0" >
+                  </div>
+              </dd>
+              <dt>{{ 'state'|trans }}</dt>
+              <dd>
+                  <div class="form-group">
+                    <input type="radio" name="state" class="minimal" value="0">{{ 'nouse'|trans }}
+                    <input type="radio" name="state" class="minimal" checked="checked" value="1" >{{ 'use'|trans }}
+                  </div>
+              </dd>
+            </dl>
+          </div>
+        </div>
+        <div class="box-footer text-center">
+          <input type="hidden" name="_token" value="{{ csrf_token('adddepoticsrf') }}">
+          <button type="button" class="btn btn-primary butup">{{ 'subbut'|trans }}</button>
+        </div>
+      </form>
+    </div>
+<div class="modal modal-default" id="addfo">
+  <div class="modal-dialog">
+    <div class="modal-content">
+    <form action="{{path('api_addfodder',{'web':web})}}" method="post" id="addfodderform" accept-charset="utf-8" enctype="multipart/form-data">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+        <h4 class="modal-title">{{ 'depot_add_fodder'|trans }}</h4>
+      </div>
+      <div class="modal-body">
+        <dl class="dl-horizontal">
+          <dt>{{ 'name'|trans }}</dt>
+          <dd>
+            <div class="form-group">
+              <input type="text" name="title" class="form-control" value="" >
+            </div>
+          </dd>
+          <dt>{{ 'file'|trans }}</dt>
+          <dd>
+            <div class="form-group">
+              <input type="file" name="content" value="" >
+            </div>
+          </dd>
+        </dl>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-default" data-dismiss="modal">{{ 'btn.cancel'|trans }}</button>
+        <button type="button" class="btn btn-primary" id="addfor">{{ 'btn.confirm'|trans }}</button>
+      </div>
+      <input type="hidden" name="type" value="img">
+      <input type="hidden" name="state" value="1">
+      <input type="hidden" name="_token" value="{{ csrf_token('api_afodder') }}">
+    </form>
+    </div>
+  </div>
+</div>
+{% endblock %}
+
+{% block bjs %}
+{{ parent() }}
+<script src="{{ asset('plugins/jQuery/jquery.form.min.js') }}"></script>
+<script src="{{ asset('plugins/iCheck/icheck.min.js') }}"></script>
+<script src="{{ asset('plugins/cryptojs/md5.js') }}"></script>
+<script src="{{ asset('plugins/select2/select2.full.min.js') }}"></script>
+<script src="{{ asset('plugins/iCheck/icheck.min.js') }}"></script>
+<script type="text/javascript">
+  $(function () {
+    $(".select2").select2();
+
+    $('input[type="checkbox"].minimal, input[type="radio"].minimal').iCheck({
+        checkboxClass: 'icheckbox_square-blue',
+        radioClass: 'iradio_square-blue'
+      });
+
+    $('.butup').click(function() {
+      subbox();
+    });
+
+    $('#addfor').click(function(){
+      addfodder();
+    });
+
+  });
+
+function addfodder(){
+      var ti = $('#addfo').find('[name="title"]');
+      if(ti.val()=='')
+      {
+        ti.focus();
+      }else{
+        $('#addfor').unbind('click');
+        $('#addfodderform').ajaxSubmit({
+          dataType:'json',
+          success:function(re){
+            if(re.error=='0'){
+              $('[name="fodder"]').append('<option value="'+re.fodder.id+'" selected="selected" >'+re.fodder.title+'</option>');
+              $(".select2").select2();
+            }else{
+              alert('上传失败！');
+            }
+            $('#addfo').modal('hide');
+            $('#addfor').click(function(){
+              addfodder();
+            });
+          }
+        });
+      }
+    }
+
+document.onkeydown=function(){
+ if (event.keyCode == 13){
+    subbox();
+ }
+}
+
+  function subbox()
+  {
+    if($('[name="name"]').val()==''){
+      $('[name="name"]').focus();
+      return false;
+    }
+    if($('[name="codenum"]').val()=='')
+    {
+      $('[name="codenum"]').focus();
+      return false;
+    }
+    if($('[name="type[]"]').val()==null){
+      $('[name="type[]"]').siblings('.select2').find('.select2-selection').css({'border':'1px solid red'});
+      return false;
+    }
+    $('[name="form"]').submit();
+  }
+</script>
+{% endblock %}

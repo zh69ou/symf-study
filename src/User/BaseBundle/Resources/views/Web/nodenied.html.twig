@@ -1,0 +1,15 @@
+{% extends 'public/base.html.twig' %}
+
+{% block title %}无权限{{ parent() }}{% endblock %}
+
+{% block tcss %}
+{{ parent() }}
+{% endblock %}
+
+{% block body %}
+	<div class="login-box">没有权限</div>
+{% endblock %}
+
+{% block bjs %}
+{{ parent() }}
+{% endblock %}

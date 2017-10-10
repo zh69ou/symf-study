@@ -1,0 +1,195 @@
+<?xml version="1.0"?>
+<xliff version="1.2" xmlns="urn:oasis:names:tc:xliff:document:1.2">
+    <file source-language="en" target-language="zh" datatype="plaintext" original="file.ext">
+        <body>
+            <trans-unit id="user.username">
+                <source>user.username</source>
+                <target><![CDATA[用户名]]></target>
+            </trans-unit>
+            <trans-unit id="user.psw">
+                <source>user.psw</source>
+                <target><![CDATA[密 码]]></target>
+            </trans-unit>
+            <trans-unit id="register.rpsw">
+                <source>register.rpsw</source>
+                <target><![CDATA[确认密码]]></target>
+            </trans-unit>
+            <trans-unit id="user.email">
+                <source>user.email</source>
+                <target><![CDATA[邮 箱]]></target>
+            </trans-unit>
+            <trans-unit id="user.phone">
+                <source>user.phone</source>
+                <target><![CDATA[电 话]]></target>
+            </trans-unit>
+            <trans-unit id="user.himg">
+                <source>user.himg</source>
+                <target><![CDATA[头 像]]></target>
+            </trans-unit>
+            <trans-unit id="land">
+                <source>land</source>
+                <target><![CDATA[登 陆]]></target>
+            </trans-unit>
+            <trans-unit id="land.title">
+                <source>land.title</source>
+                <target><![CDATA[企业集成系统]]></target>
+            </trans-unit>
+            <trans-unit id="land.point">
+                <source>land.point</source>
+                <target><![CDATA[登陆过程中有什么疑问或建议请联系]]></target>
+            </trans-unit>
+            <trans-unit id="land.inpsw">
+                <source>land.inpsw</source>
+                <target><![CDATA[记住密码！]]></target>
+            </trans-unit>
+            <trans-unit id="land.forpsw">
+                <source>land.forpsw</source>
+                <target><![CDATA[忘记密码？]]></target>
+            </trans-unit>
+            <trans-unit id="register">
+                <source>register</source>
+                <target><![CDATA[注 册]]></target>
+            </trans-unit>
+            <trans-unit id="register.point">
+                <source>register.point</source>
+                <target><![CDATA[欢迎注册本系统！如有疑问请联系]]></target>
+            </trans-unit>
+            <trans-unit id="register.webdeal">
+                <source>register.webdeal</source>
+                <target><![CDATA[《网站使用协议》]]></target>
+            </trans-unit>
+            <trans-unit id="register.readdeal">
+                <source>register.readdeal</source>
+                <target><![CDATA[请阅读协议并同意该协议]]></target>
+            </trans-unit>
+            <trans-unit id="oinfo">
+                <source>oinfo</source>
+                <target><![CDATA[个人信息]]></target>
+            </trans-unit>
+            <trans-unit id="oinfo.base">
+                <source>oinfo.base</source>
+                <target><![CDATA[个人基础资料]]></target>
+            </trans-unit>
+            <trans-unit id="oinfo.warn">
+                <source>oinfo.warn</source>
+                <target><![CDATA[请先查看注意事项！]]></target>
+            </trans-unit>
+            <trans-unit id="oinfo.warn.one">
+                <source>oinfo.warn.one</source>
+                <target><![CDATA[请正确填写邮箱，我们会第一时间发送站点上关于你的相关信息！]]></target>
+            </trans-unit>
+            <trans-unit id="repsw">
+                <source>repsw</source>
+                <target><![CDATA[重置密码]]></target>
+            </trans-unit>
+            <trans-unit id="repsw.newpsw">
+                <source>repsw.newpsw</source>
+                <target><![CDATA[新密码]]></target>
+            </trans-unit>
+            <trans-unit id="repsw.rnewpsw">
+                <source>repsw.rnewpsw</source>
+                <target><![CDATA[确认密码]]></target>
+            </trans-unit>
+            <trans-unit id="uppsw">
+                <source>uppsw</source>
+                <target><![CDATA[修改密码]]></target>
+            </trans-unit>
+            <trans-unit id="uppsw.warn">
+                <source>uppsw.warn</source>
+                <target><![CDATA[请谨记密码！]]></target>
+            </trans-unit>
+            <trans-unit id="uppsw.bef">
+                <source>uppsw.bef</source>
+                <target><![CDATA[请先查看注意事项！]]></target>
+            </trans-unit>
+            <trans-unit id="uppsw.npsw">
+                <source>uppsw.npsw</source>
+                <target><![CDATA[新密码]]></target>
+            </trans-unit>
+            <trans-unit id="uppsw.opsw">
+                <source>uppsw.opsw</source>
+                <target><![CDATA[旧密码]]></target>
+            </trans-unit>
+            <trans-unit id="uppsw.xpsw">
+                <source>uppsw.xpsw</source>
+                <target><![CDATA[确认密码]]></target>
+            </trans-unit>
+            <trans-unit id="ad_user_list">
+                <source>ad_user_list</source>
+                <target><![CDATA[用户列表]]></target>
+            </trans-unit>
+            <trans-unit id="ad_user_edit">
+                <source>ad_user_edit</source>
+                <target><![CDATA[编辑用户]]></target>
+            </trans-unit>
+            <trans-unit id="ad_menu_list">
+                <source>ad_menu_list</source>
+                <target><![CDATA[菜单列表]]></target>
+            </trans-unit>
+            <trans-unit id="ad_menu_edit">
+                <source>ad_menu_edit</source>
+                <target><![CDATA[编辑菜单]]></target>
+            </trans-unit>
+            <trans-unit id="ad_menu_add">
+                <source>ad_menu_add</source>
+                <target><![CDATA[添加菜单]]></target>
+            </trans-unit>
+            <trans-unit id="username">
+                <source>username</source>
+                <target><![CDATA[用户名]]></target>
+            </trans-unit>
+            <trans-unit id="email">
+                <source>email</source>
+                <target><![CDATA[邮件]]></target>
+            </trans-unit>
+            <trans-unit id="phone">
+                <source>phone</source>
+                <target><![CDATA[电话]]></target>
+            </trans-unit>
+            <trans-unit id="himg">
+                <source>himg</source>
+                <target><![CDATA[头像]]></target>
+            </trans-unit>
+            <trans-unit id="regtime">
+                <source>regtime</source>
+                <target><![CDATA[注册时间]]></target>
+            </trans-unit>
+            <trans-unit id="approve">
+                <source>approve</source>
+                <target><![CDATA[是否认证]]></target>
+            </trans-unit>
+            <trans-unit id="state">
+                <source>state</source>
+                <target><![CDATA[状态]]></target>
+            </trans-unit>
+            <trans-unit id="roles">
+                <source>roles</source>
+                <target><![CDATA[权限]]></target>
+            </trans-unit>
+            <trans-unit id="menu.name">
+                <source>menu.name</source>
+                <target><![CDATA[名称]]></target>
+            </trans-unit>
+            <trans-unit id="menu.url">
+                <source>menu.url</source>
+                <target><![CDATA[地址]]></target>
+            </trans-unit>
+            <trans-unit id="menu.title">
+                <source>menu.title</source>
+                <target><![CDATA[标题]]></target>
+            </trans-unit>
+            <trans-unit id="menu.kword">
+                <source>menu.kword</source>
+                <target><![CDATA[关键词]]></target>
+            </trans-unit>
+            <trans-unit id="menu.sort">
+                <source>menu.sort</source>
+                <target><![CDATA[排序]]></target>
+            </trans-unit>
+            <trans-unit id="menu.state">
+                <source>menu.state</source>
+                <target><![CDATA[状态]]></target>
+            </trans-unit>
+        </body>
+    </file>
+</xliff>

@@ -1,0 +1,145 @@
+{% extends 'public/user.html.twig' %}
+{% block title %}{{ 'tool.add'|trans }}{{parent()}}{% endblock %}
+{% block tcss %}
+<link href="{{ asset('plugins/iCheck/all.css') }}" rel="stylesheet" />
+<link href="{{ asset('plugins/daterangepicker/daterangepicker-bs3.css') }}" rel="stylesheet" />
+{{ parent() }}
+{% endblock %}
+{% block contentheader %}
+<section class="content-header">
+  <h1>
+    {{ 'tool.add'|trans }}
+    <small>{{ 'tool.addtitle'|trans }}</small>
+  </h1>
+  <ol class="breadcrumb">
+    <li><a href="{{path('siteuser',{'web':web})}}"><i class="fa fa-dashboard"></i>{{app.session.get('webinfo').title}}</a></li>
+    <li class="active">{{ 'tool.add'|trans }}</li>
+  </ol>
+</section>
+{% endblock %}
+{% block content %}
+    <div class="box box-primary">
+      <div class="box-header with-border">
+        <h3 class="box-title">{{ 'tool.add'|trans }}</h3>
+      </div>
+      {% if state is defined %}
+      <div class="callout {% if state == 1 %}callout-danger{% else %}callout-success{% endif %}">
+        {{content}}
+      </div>
+      {% endif %}
+      <form action="" method="post" name="form" enctype="multipart/form-data">
+        <div class="box-body">
+          <div class="col-md-6">
+            <dl class="dl-horizontal">
+              <dt>{{ 'tool.betime'|trans }}</dt>
+              <dd>
+                <div class="form-group">
+                  <input type="text" name="tooltime" class="form-control" id="reservation" >
+                </div>
+              </dd>
+              <dt>{{ 'backups'|trans }}</dt>
+              <dd>
+                <div class="form-group">
+                  <input type="text" name="backups" class="form-control" >
+                </div>
+              </dd>
+              <dt>{{ 'price'|trans }}</dt>
+              <dd>
+                <div class="form-group">
+                  ￥<span class="allprice">0</span>元
+                </div>
+              </dd>
+              <dt></dt>
+              <dd>
+                  <div class="form-group">
+                    <input type="checkbox" name="pact" class="minimal" value="1">&nbsp;同意<a href="" title="网站功能使用协议">《网站功能使用协议》</a>协议
+                  </div>
+              </dd>
+            </dl>
+          </div>
+          <div class="col-md-6">
+            <dl class="dl-horizontal">
+              <dt>{{ 'name'|trans }}</dt>
+              <dd>{{info.name}}</dd>
+            </dl>
+            <dl class="dl-horizontal">
+              <dt>{{ 'desc'|trans }}</dt>
+              <dd>{{info.dword}}</dd>
+            </dl>
+            <dl class="dl-horizontal">
+              <dt>{{ 'content'|trans }}</dt>
+              <dd>{{info.content}}</dd>
+            </dl>
+            <dl class="dl-horizontal">
+              <dt>{{ 'price'|trans }}</dt>
+              <dd>每天￥<span class="price">{{info.price}}</span>元</dd>
+            </dl>
+          </div>
+        </div>
+        <div class="box-footer text-center">
+          <input type="hidden" name="btime" value="">
+          <input type="hidden" name="etime" value="">
+          <input type="hidden" name="_token" value="{{ csrf_token('atoolts') }}">
+          <button type="button" class="btn btn-primary butup">{{ 'subbut'|trans }}</button>
+        </div>
+      </form>
+    </div>
+{% endblock %}
+
+{% block bjs %}
+{{ parent() }}
+<script src="{{ asset('plugins/iCheck/icheck.min.js') }}"></script>
+<script src="{{ asset('plugins/daterangepicker/moment.min.js') }}"></script>
+<script src="{{ asset('plugins/daterangepicker/daterangepicker.js') }}"></script>
+<script type="text/javascript">
+  $(function () {
+    $('#reservation').daterangepicker({
+      format:'YYYY-MM-DD',
+      separator:',',
+      showDropdowns:true,
+      minDate:new Date(),
+      locale:{
+        applyLabel:'确定',
+        cancelLabel: '取消',
+        fromLabel: '从',
+        toLabel: '到',
+        monthNames:['一月','二月','三月','四月','五月','六月','七月','八月','九月','十月','十一月','十二月'],
+        daysOfWeek:['日','一','二','三','四','五','六']
+      }
+    },function(){
+      var st = $('[name="daterangepicker_start"]').val();
+      var ed = $('[name="daterangepicker_end"]').val();
+      $('[name="btime"]').val(st);
+      $('[name="etime"]').val(ed);
+      var dates = Math.abs((new Date(Date.parse(st)).getTime() - new Date(Date.parse(ed)).getTime()))/(1000*60*60*24);
+      $('.allprice').html(dates*parseInt($('.price').html()));
+    });
+    $('input[type="checkbox"].minimal, input[type="radio"].minimal').on('ifChanged', function(e){
+      }).iCheck({
+        checkboxClass: 'icheckbox_square-blue',
+        radioClass: 'iradio_square-blue'
+    });
+
+    $('.butup').click(function() {
+      subbox();
+    });
+  });
+
+document.onkeydown=function(){
+ if (event.keyCode == 13){
+    subbox();
+ }
+}
+
+  function subbox() {
+    var t = $('[name="tooltime"]').val();
+    var pact = $('[name="pact"]:checked').val();
+    if(t!=''&&pact=='1'){
+      $('[name="form"]').submit();
+    }else{
+      $('[name="tooltime"]').focus();
+      return false;
+    }
+  }
+</script>
+{% endblock %}

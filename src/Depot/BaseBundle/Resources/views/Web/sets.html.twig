@@ -1,0 +1,14 @@
+{% extends 'public/user.html.twig' %}
+{% block title %}{{ 'depot_out'|trans }}{{parent()}}{% endblock %}
+{% set web = app.request.attributes.get('web') %}
+{% block tcss %}
+{{ parent() }}
+{% endblock %}
+{% block contentheader %}
+{% endblock %}
+{% block content %}
+{% endblock %}
+
+{% block bjs %}
+{{ parent() }}
+{% endblock %}

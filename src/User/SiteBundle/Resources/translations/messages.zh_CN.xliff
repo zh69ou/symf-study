@@ -1,0 +1,219 @@
+<?xml version="1.0"?>
+<xliff version="1.2" xmlns="urn:oasis:names:tc:xliff:document:1.2">
+    <file source-language="en" target-language="zh" datatype="plaintext" original="file.ext">
+        <body>
+            <trans-unit id="fodder.add">
+                <source>fodder.add</source>
+                <target><![CDATA[添加素材]]></target>
+            </trans-unit>
+            <trans-unit id="fodder.desc">
+                <source>fodder.desc</source>
+                <target><![CDATA[站点使用素材]]></target>
+            </trans-unit>
+            <trans-unit id="fodder.share">
+                <source>fodder.share</source>
+                <target><![CDATA[共享该素材]]></target>
+            </trans-unit>
+            <trans-unit id="fodder.use">
+                <source>fodder.use</source>
+                <target><![CDATA[是否使用]]></target>
+            </trans-unit>
+            <trans-unit id="fodder.list">
+                <source>fodder.list</source>
+                <target><![CDATA[素材列表]]></target>
+            </trans-unit>
+            <trans-unit id="nofodder">
+                <source>nofodder</source>
+                <target><![CDATA[无素材]]></target>
+            </trans-unit>
+            <trans-unit id="fodder.delete">
+                <source>fodder.delete</source>
+                <target><![CDATA[你确定要删除该条素材！]]></target>
+            </trans-unit>
+            <trans-unit id="post">
+                <source>post</source>
+                <target><![CDATA[站点职位]]></target>
+            </trans-unit>
+            <trans-unit id="post.add">
+                <source>post.add</source>
+                <target><![CDATA[添加职位]]></target>
+            </trans-unit>
+            <trans-unit id="post.edit">
+                <source>post.edit</source>
+                <target><![CDATA[编辑职位]]></target>
+            </trans-unit>
+            <trans-unit id="post.list">
+                <source>post.list</source>
+                <target><![CDATA[职位列表]]></target>
+            </trans-unit>
+            <trans-unit id="nopost">
+                <source>nopost</source>
+                <target><![CDATA[职位列表]]></target>
+            </trans-unit>
+            <trans-unit id="post.delete">
+                <source>post.delete</source>
+                <target><![CDATA[你确定要删除该职位！]]></target>
+            </trans-unit>
+            <trans-unit id="suser.add">
+                <source>suser.add</source>
+                <target><![CDATA[添加用户]]></target>
+            </trans-unit>
+            <trans-unit id="suser">
+                <source>suser</source>
+                <target><![CDATA[站点用户]]></target>
+            </trans-unit>
+            <trans-unit id="suser.email">
+                <source>suser.email</source>
+                <target><![CDATA[邮箱]]></target>
+            </trans-unit>
+            <trans-unit id="suser.psw">
+                <source>suser.psw</source>
+                <target><![CDATA[密码]]></target>
+            </trans-unit>
+            <trans-unit id="suser.rpsw">
+                <source>suser.rpsw</source>
+                <target><![CDATA[确认密码]]></target>
+            </trans-unit>
+            <trans-unit id="suser.state0">
+                <source>suser.state0</source>
+                <target><![CDATA[停职]]></target>
+            </trans-unit>
+            <trans-unit id="suser.state1">
+                <source>suser.state1</source>
+                <target><![CDATA[审核]]></target>
+            </trans-unit>
+            <trans-unit id="suser.state2">
+                <source>suser.state2</source>
+                <target><![CDATA[在职]]></target>
+            </trans-unit>
+            <trans-unit id="suser.edit">
+                <source>suser.edit</source>
+                <target><![CDATA[编辑用户]]></target>
+            </trans-unit>
+            <trans-unit id="suser.list">
+                <source>suser.list</source>
+                <target><![CDATA[站点用户列表]]></target>
+            </trans-unit>
+            <trans-unit id="suser.nouser">
+                <source>suser.nouser</source>
+                <target><![CDATA[无用户]]></target>
+            </trans-unit>
+            <trans-unit id="suser.info">
+                <source>suser.info</source>
+                <target><![CDATA[用户信息]]></target>
+            </trans-unit>
+            <trans-unit id="allotpower">
+                <source>allotpower</source>
+                <target><![CDATA[分配权限]]></target>
+            </trans-unit>
+            <trans-unit id="allotpower.title">
+                <source>allotpower.title</source>
+                <target><![CDATA[站点用户分配权限]]></target>
+            </trans-unit>
+            <trans-unit id="site.set">
+                <source>site.set</source>
+                <target><![CDATA[站点设置]]></target>
+            </trans-unit>
+            <trans-unit id="site.settitle">
+                <source>site.settitle</source>
+                <target><![CDATA[站点基础信息]]></target>
+            </trans-unit>
+            <trans-unit id="site.act_true">
+                <source>site.act_true</source>
+                <target><![CDATA[站点基础信息更新成功]]></target>
+            </trans-unit>
+            <trans-unit id="site.act_false">
+                <source>site.act_false</source>
+                <target><![CDATA[站点基础信息更新失败]]></target>
+            </trans-unit>
+
+            <!-- 权限 -->
+            <trans-unit id="power_base">
+                <source>power_base</source>
+                <target><![CDATA[基础权限]]></target>
+            </trans-unit>
+            <trans-unit id="power_base_webset">
+                <source>power_base_webset</source>
+                <target><![CDATA[站点设置]]></target>
+            </trans-unit>
+            <trans-unit id="power_base_indexset">
+                <source>power_base_indexset</source>
+                <target><![CDATA[首页设置]]></target>
+            </trans-unit>
+            <trans-unit id="power_base_navset">
+                <source>power_base_navset</source>
+                <target><![CDATA[栏目设置]]></target>
+            </trans-unit>
+            <trans-unit id="power_base_fodderlist">
+                <source>power_base_fodderlist</source>
+                <target><![CDATA[素材列表]]></target>
+            </trans-unit>
+            <trans-unit id="power_base_fodderadd">
+                <source>power_base_fodderadd</source>
+                <target><![CDATA[素材添加]]></target>
+            </trans-unit>
+            <trans-unit id="power_base_fodderup">
+                <source>power_base_fodderup</source>
+                <target><![CDATA[素材修改]]></target>
+            </trans-unit>
+            <trans-unit id="power_base_fodderdel">
+                <source>power_base_fodderdel</source>
+                <target><![CDATA[素材删除]]></target>
+            </trans-unit>
+            <trans-unit id="power_siteuser_manage">
+                <source>power_siteuser_manage</source>
+                <target><![CDATA[成员管理]]></target>
+            </trans-unit>
+            <trans-unit id="power_siteuser_add">
+                <source>power_siteuser_add</source>
+                <target><![CDATA[添加成员]]></target>
+            </trans-unit>
+            <trans-unit id="power_siteuser_edit">
+                <source>power_siteuser_edit</source>
+                <target><![CDATA[编辑成员]]></target>
+            </trans-unit>
+            <trans-unit id="power_siteuser_del">
+                <source>power_siteuser_del</source>
+                <target><![CDATA[删除成员]]></target>
+            </trans-unit>
+            <trans-unit id="power_siteuser_clist">
+                <source>power_siteuser_clist</source>
+                <target><![CDATA[成员列表]]></target>
+            </trans-unit>
+            <trans-unit id="power_siteuser_slist">
+                <source>power_siteuser_slist</source>
+                <target><![CDATA[审核列表]]></target>
+            </trans-unit>
+            <trans-unit id="power_siteuser_llist">
+                <source>power_siteuser_llist</source>
+                <target><![CDATA[离职列表]]></target>
+            </trans-unit>
+            <trans-unit id="power_siteuser_zlist">
+                <source>power_siteuser_zlist</source>
+                <target><![CDATA[职位列表]]></target>
+            </trans-unit>
+            <trans-unit id="power_siteuser_plist">
+                <source>power_siteuser_plist</source>
+                <target><![CDATA[权限列表]]></target>
+            </trans-unit>
+
+            <!-- 后台 -->
+            <trans-unit id="ad.index">
+                <source>ad.index</source>
+                <target><![CDATA[后台首页]]></target>
+            </trans-unit>
+            <trans-unit id="ad.site_list">
+                <source>ad.site_list</source>
+                <target><![CDATA[站点列表]]></target>
+            </trans-unit>
+            <trans-unit id="ad.site_listinfo">
+                <source>ad.site_listinfo</source>
+                <target><![CDATA[站点信息列表概述]]></target>
+            </trans-unit>
+            <trans-unit id="ad.site_edit">
+                <source>ad.site_edit</source>
+                <target><![CDATA[站点修改]]></target>
+            </trans-unit>
+        </body>
+    </file>
+</xliff>

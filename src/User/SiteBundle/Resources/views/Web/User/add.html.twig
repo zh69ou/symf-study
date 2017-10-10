@@ -1,0 +1,171 @@
+{% extends 'public/user.html.twig' %}
+{% block title %}{{ 'suser.add'|trans }}{{parent()}}{% endblock %}
+{% block tcss %}
+<link href="{{ asset('plugins/select2/select2.min.css') }}" rel="stylesheet" />
+<link href="{{ asset('plugins/iCheck/all.css') }}" rel="stylesheet" />
+{{ parent() }}
+{% endblock %}
+{% block contentheader %}
+<section class="content-header">
+  <h1>
+    {{ 'suser.add'|trans }}
+    <small>{{ 'suser'|trans }}</small>
+  </h1>
+  <ol class="breadcrumb">
+    <li><a href="{{path('siteuser',{'web':app.request.attributes.get('web')})}}"><i class="fa fa-dashboard"></i>{{app.session.get('webinfo').title}}</a></li>
+    <li class="active">{{ 'suser.add'|trans }}</li>
+  </ol>
+</section>
+{% endblock %}
+{% block content %}
+    <div class="box box-primary">
+      <div class="box-header with-border">
+        <h3 class="box-title">{{ 'suser.add'|trans }}</h3>
+      </div>
+      {% if state is defined %}
+      <div class="callout {% if state == 1 %}callout-danger{% else %}callout-success{% endif %}">
+        {{content}}
+      </div>
+      {% endif %}
+      <form role="form" action="" method="post" name="form" enctype="multipart/form-data">
+        <div class="box-body">
+          <div class="col-md-6">
+            <dl class="dl-horizontal">
+              <dt>{{ 'suser.add'|trans }}</dt>
+              <dd>
+                  <div class="form-group">
+                      <input type="radio" name="newuser" class="minimal" value="1"> {{ 'yes'|trans }}
+                      <input type="radio" name="newuser" class="minimal" value="0" checked="checked"> {{ 'no'|trans }}
+                  </div>
+              </dd>
+              <dt>{{ 'name'|trans }}</dt>
+              <dd>
+                <div class="form-group">
+                  <input type="text" name="username" class="form-control" value="" >
+                </div>
+              </dd>
+              <dt>{{ 'post'|trans }}</dt>
+              <dd>
+                  <div class="form-group">
+                    <select class="form-control select2" name="post[]" multiple="multiple" size="6" style="width: 100%;">
+                    {% for s in spost %}
+                    <option value="{{s.id}}">{{s.name}}</option>
+                    {% endfor %}
+                    </select>
+                  </div>
+              </dd>
+              {% for k,t in text %}
+              <dt>{{t}}</dt>
+              <dd>
+                  <div class="form-group">
+                    <input type="text" name="content[{{k}}]" class="form-control" value="" >
+                  </div>
+              </dd>
+              {% endfor %}
+              <dt>{{ 'sort'|trans }}</dt>
+              <dd>
+                  <div class="form-group">
+                      <input type="text" name="sort" class="form-control" value="0" >
+                  </div>
+              </dd>
+              <dt>{{ 'state'|trans }}</dt>
+              <dd>
+                  <div class="form-group">
+                    <input type="radio" name="state" class="minimal" value="0">{{ 'suser.state0'|trans }}
+                    <input type="radio" name="state" class="minimal" value="1" >{{ 'suser.state1'|trans }}
+                    <input type="radio" name="state" class="minimal" value="2" checked="checked">{{ 'suser.state2'|trans }}
+                  </div>
+              </dd>
+            </dl>
+          </div>
+          <div class="col-md-6 newbox" style="display: none;">
+            <dl class="dl-horizontal">
+              <dt></dt>
+              <dd>
+                  <div class="form-group">&nbsp;</div>
+              </dd>
+              <dt>{{ 'suser.email'|trans }}</dt>
+              <dd>
+                  <div class="form-group">
+                      <input type="text" name="email" class="form-control" value="" >
+                  </div>
+              </dd>
+              <dt>{{ 'suser.psw'|trans }}</dt>
+              <dd>
+                  <div class="form-group">
+                      <input type="text" name="password" class="form-control" value="" >
+                  </div>
+              </dd>
+              <dt>{{ 'suser.rpsw'|trans }}</dt>
+              <dd>
+                  <div class="form-group">
+                      <input type="text" name="npassword" class="form-control" value="" >
+                  </div>
+              </dd>
+            </dl>
+          </div>
+        </div>
+        <div class="box-footer text-center">
+          <input type="hidden" name="_token" value="{{ csrf_token('asuser') }}">
+          <button type="button" class="btn btn-primary butup">{{ 'subbut'|trans }}</button>
+        </div>
+      </form>
+    </div>
+{% endblock %}
+
+{% block bjs %}
+{{ parent() }}
+<script src="{{ asset('plugins/iCheck/icheck.min.js') }}"></script>
+<script src="{{ asset('plugins/cryptojs/md5.js') }}"></script>
+<script src="{{ asset('plugins/select2/select2.full.min.js') }}"></script>
+<script src="{{ asset('plugins/iCheck/icheck.min.js') }}"></script>
+<script type="text/javascript">
+  $(function () {
+    $(".select2").select2();
+
+    $('input[type="checkbox"].minimal, input[type="radio"].minimal').on('ifChanged', function(e){
+        if($('[name="newuser"]:checked').val()=='1'){
+          $('.newbox').css('display','block');
+        }else{
+          $('.newbox').css('display','none');
+        }
+      }).iCheck({
+        checkboxClass: 'icheckbox_square-blue',
+        radioClass: 'iradio_square-blue'
+      });
+
+        $('.butup').click(function() {
+          subbox();
+        });
+    });
+
+document.onkeydown=function(){
+ if (event.keyCode == 13){
+    subbox();
+ }
+}
+
+  function subbox() {
+    if($('[name="username"]').val()=='')
+    {
+      $('[name="username"]').focus();
+      return false;
+    }
+    if($('[name="newuser"]:checked').val()=='1'){
+      if($('[name="email"]').val()=='')
+      {
+        $('[name="email"]').focus();
+        return false;
+      }
+      if($('[name="password"]').val()!=$('[name="npassword"]').val()||$('[name="password"]').val()=='')
+      {
+        $('[name="password"]').focus();
+        return false;
+      }
+      $('[name="password"]').val(String(CryptoJS.MD5($('[name="password"]').val())).substr(6,13));
+      $('[name="npassword"]').val(String(CryptoJS.MD5($('[name="npassword"]').val())).substr(6,13));
+    }
+    $('[name="form"]').submit();
+  }
+</script>
+{% endblock %}

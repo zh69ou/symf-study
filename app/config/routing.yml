@@ -1,3 +1,29 @@
-app:
-    resource: '@AppBundle/Controller/'
-    type: annotation
+user_tool:
+    resource: "@UserToolBundle/Controller/"
+    type:     annotation
+    prefix:   /
+
+user_site:
+    resource: "@UserSiteBundle/Controller/"
+    type:     annotation
+    prefix:   /
+
+user_base:
+    resource: "@UserBaseBundle/Controller/"
+    type:     annotation
+    prefix:   /
+
+depot_base:
+    resource: "@DepotBaseBundle/Controller/"
+    type:     annotation
+    prefix:   /
+
+index_base:
+    resource: "@IndexBaseBundle/Controller/"
+    type:     annotation
+    prefix:   /
+
+admin_base:
+    resource: "@AdminBaseBundle/Controller/"
+    type:     annotation
+    prefix:   /

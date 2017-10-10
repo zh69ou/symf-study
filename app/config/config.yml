@@ -2,18 +2,25 @@ imports:
     - { resource: parameters.yml }
     - { resource: security.yml }
     - { resource: services.yml }
+    - { resource: "@AdminBaseBundle/Resources/config/services.yml" }
+    - { resource: "@IndexBaseBundle/Resources/config/services.yml" }
+    - { resource: "@DepotBaseBundle/Resources/config/services.yml" }
+    - { resource: "@UserBaseBundle/Resources/config/services.yml" }
+    - { resource: "@UserSiteBundle/Resources/config/services.yml" }
+    - { resource: "@UserToolBundle/Resources/config/services.yml" }
 
 # Put parameters here that don't need to change on each machine where the app is deployed
 # https://symfony.com/doc/current/best_practices/configuration.html#application-related-configuration
 parameters:
-    locale: en
+    locale: zh_CN
 
 framework:
     #esi: ~
-    #translator: { fallbacks: ['%locale%'] }
+    translator: { fallbacks: ['%locale%'] }
     secret: '%secret%'
     router:
         resource: '%kernel.project_dir%/app/config/routing.yml'
+        # resource: "%kernel.root_dir%/config/routing.yml"
         strict_requirements: ~
     form: ~
     csrf_protection: ~
@@ -22,7 +29,8 @@ framework:
     templating:
         engines: ['twig']
     default_locale: '%locale%'
-    trusted_hosts: ~
+    # trusted_hosts: ~
+    trusted_hosts:   ['symf.131.com','127.0.0.1']
     session:
         # https://symfony.com/doc/current/reference/configuration/framework.html#handler-id
         handler_id: session.handler.native_file

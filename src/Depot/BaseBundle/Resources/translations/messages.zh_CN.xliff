@@ -1,0 +1,99 @@
+<?xml version="1.0"?>
+<xliff version="1.2" xmlns="urn:oasis:names:tc:xliff:document:1.2">
+    <file source-language="en" target-language="zh" datatype="plaintext" original="file.ext">
+        <body>
+            <trans-unit id="depot.list">
+                <source>depot.list</source>
+                <target><![CDATA[库存列表]]></target>
+            </trans-unit>
+            <trans-unit id="depot.add_new">
+                <source>depot.add_new</source>
+                <target><![CDATA[新建货品]]></target>
+            </trans-unit>
+            <trans-unit id="depot.statistics">
+                <source>depot.statistics</source>
+                <target><![CDATA[库存统计]]></target>
+            </trans-unit>
+            <trans-unit id="depot.addlist">
+                <source>depot.addlist</source>
+                <target><![CDATA[入库列表]]></target>
+            </trans-unit>
+            <trans-unit id="depot.outlist">
+                <source>depot.outlist</source>
+                <target><![CDATA[出库列表]]></target>
+            </trans-unit>
+            <trans-unit id="depot.dellist">
+                <source>depot.dellist</source>
+                <target><![CDATA[报废列表]]></target>
+            </trans-unit>
+            <trans-unit id="depot_add">
+                <source>depot_add</source>
+                <target><![CDATA[添加入库]]></target>
+            </trans-unit>
+            <trans-unit id="depoti_add">
+                <source>depoti_add</source>
+                <target><![CDATA[添加货品]]></target>
+            </trans-unit>
+            <trans-unit id="depot_out">
+                <source>depot_out</source>
+                <target><![CDATA[添加出库]]></target>
+            </trans-unit>
+            <trans-unit id="depot_del">
+                <source>depot_del</source>
+                <target><![CDATA[添加报废]]></target>
+            </trans-unit>
+            <trans-unit id="depot_add_fodder">
+                <source>depot_add_fodder</source>
+                <target><![CDATA[添加素材]]></target>
+            </trans-unit>
+            <trans-unit id="addstock">
+                <source>addstock</source>
+                <target><![CDATA[入库数量]]></target>
+            </trans-unit>
+            <trans-unit id="outstock">
+                <source>outstock</source>
+                <target><![CDATA[出库数量]]></target>
+            </trans-unit>
+            <trans-unit id="delstock">
+                <source>delstock</source>
+                <target><![CDATA[报废数量]]></target>
+            </trans-unit>
+            <trans-unit id="depot_list">
+                <source>depot_list</source>
+                <target><![CDATA[货品列表]]></target>
+            </trans-unit>
+            <trans-unit id="depottype_list">
+                <source>depottype_list</source>
+                <target><![CDATA[货品分类]]></target>
+            </trans-unit>
+            <trans-unit id="depottype_add">
+                <source>depottype_add</source>
+                <target><![CDATA[添加货品分类]]></target>
+            </trans-unit>
+            <trans-unit id="nodepottype">
+                <source>nodepottype</source>
+                <target><![CDATA[无货品分类]]></target>
+            </trans-unit>
+            <trans-unit id="depottype.delete">
+                <source>depottype.delete</source>
+                <target><![CDATA[你确定要删除该分类？]]></target>
+            </trans-unit>
+            <trans-unit id="nodepot">
+                <source>nodepot</source>
+                <target><![CDATA[没有找到该库存，请核对添加信息，或选择新建库存！]]></target>
+            </trans-unit>
+            <trans-unit id="olddepot">
+                <source>olddepot</source>
+                <target><![CDATA[该货品已经存在，请核对添加信息！]]></target>
+            </trans-unit>
+            <trans-unit id="nousedepot">
+                <source>nousedepot</source>
+                <target><![CDATA[无货品]]></target>
+            </trans-unit>
+            <trans-unit id="lackdepot">
+                <source>lackdepot</source>
+                <target><![CDATA[库存不足，请核对库存信息！]]></target>
+            </trans-unit>
+        </body>
+    </file>
+</xliff>

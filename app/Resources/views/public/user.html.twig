@@ -1,0 +1,370 @@
+{% extends 'public/base.html.twig' %}
+{% set web = app.request.attributes.get('web') %}
+{% set site = app.session.get('webinfo') %}
+{% set route = app.request.attributes.get('_route') %}
+{% set userrole = app.user.roles %}
+{% block tcss %}
+{{ parent() }}
+<link href="{{ asset('css/AdminLTE.min.css') }}" rel="stylesheet" />
+<link href="{{ asset('css/skin-blank.min.css') }}" rel="stylesheet" />
+<link href="{{ asset('plugins/iCheck/flat/orange.css') }}" rel="stylesheet" />
+{% endblock %}
+{% block body %}
+<div class="wrapper">
+    <header class="main-header">
+        <a href="{{path('siteindex',{'web':web})}}" class="logo">
+            <span class="logo-mini">
+                {{site.title}}
+            </span>
+            <span class="logo-lg">
+                管理中心-{{site.title}}
+            </span>
+        </a>
+        <nav class="navbar navbar-static-top" role="navigation">
+            <a href="#" class="sidebar-toggle" data-toggle="offcanvas" role="button">
+                <span class="sr-only">
+                    菜单按钮
+                </span>
+            </a>
+            {{ render_hinclude(url('siteinfo',{'web':web})) }}
+        </nav>
+    </header>
+    <aside class="main-sidebar">
+        <section class="sidebar">
+            <form action="#" method="get" class="sidebar-form" style="display: none;">
+                <div class="input-group">
+                    <input type="text" name="q" class="form-control" placeholder="Search..."/>
+                    <span class="input-group-btn">
+                        <button type="submit" name="search" id="search-btn" class="btn btn-flat">
+                            <i class="fa fa-search">
+                            </i>
+                        </button>
+                    </span>
+                </div>
+            </form>
+            <ul class="sidebar-menu">
+                <li class="header">
+                    统计数据
+                </li>
+                <li class="{% if route=='siteindex' %}active{% endif %}">
+                    <a href="{{path('siteindex',{'web':web})}}">
+                        <i class="fa fa-pie-chart">
+                        </i>
+                        <span>
+                            预览
+                        </span>
+                    </a>
+                </li>
+                <li class="header">
+                    功能模块
+                </li>
+                {% if web~'depotindex' in userrole or web~'depotlist' in userrole or web~'depotiadd' in userrole or web~'depotadd' in userrole or web~'depotaddlist' in userrole or web~'depotout' in userrole or web~'depotoutlist' in userrole or web~'depotdel' in userrole or web~'depotdellist' in userrole or web~'depottype' in userrole or web~'depottypeadd' in userrole or web~'depottypedel' in userrole or web~'depottypestate' in userrole or web~'depotsql' in userrole or web~'depotset' in userrole %}
+                <li class="treeview {% if route=='depotindex' or route=='depotadd' or route=='depotout' or route=='depotaddlist' or route=='depotoutlist' or route=='depotdel' or route=='depotdellist' or route=='depotlist' or route=='depotiadd' or route=='depottype' or route=='depottypeadd' or route=='depotsql' or route=='depotset' %}active{% endif %}">
+                    <a href="#">
+                        <i class="fa fa-truck">
+                        </i>
+                        <span>
+                            进销存
+                        </span>
+                        <i class="fa fa-angle-left pull-right">
+                        </i>
+                    </a>
+                    <ul class="treeview-menu">
+                        {% if web~'depotindex' in userrole %}
+                        <li class="{% if route=='depotindex' %}active{% endif %}">
+                            <a href="{{ path('depotindex',{'web':web}) }}">
+                                <i class="fa fa-bar-chart">
+                                </i>
+                                统计
+                            </a>
+                        </li>
+                        {% endif %}
+                        {% if web~'depotadd' in userrole %}
+                        <li class="{% if route=='depotadd' %}active{% endif %}">
+                            <a href="{{ path('depotadd',{'web':web}) }}">
+                                <i class="fa fa-plus">
+                                </i>
+                                入库
+                            </a>
+                        </li>
+                        {% endif %}
+                        {% if web~'depotout' in userrole %}
+                        <li class="{% if route=='depotout' %}active{% endif %}">
+                            <a href="{{ path('depotout',{'web':web}) }}">
+                                <i class="fa fa-minus">
+                                </i>
+                                出库
+                            </a>
+                        </li>
+                        {% endif %}
+                        {% if web~'depotdel' in userrole %}
+                        <li class="{% if route=='depotdel' %}active{% endif %}">
+                            <a href="{{ path('depotdel',{'web':web}) }}">
+                                <i class="fa fa-remove">
+                                </i>
+                                报废
+                            </a>
+                        </li>
+                        {% endif %}
+                        {% if web~'depotaddlist' in userrole %}
+                        <li class="{% if route=='depotaddlist' %}active{% endif %}">
+                            <a href="{{ path('depotaddlist',{'web':web}) }}">
+                                <i class="fa fa-sign-in">
+                                </i>
+                                入库列表
+                            </a>
+                        </li>
+                        {% endif %}
+                        {% if web~'depotoutlist' in userrole %}
+                        <li class="{% if route=='depotoutlist' %}active{% endif %}">
+                            <a href="{{ path('depotoutlist',{'web':web}) }}">
+                                <i class="fa fa-sign-out">
+                                </i>
+                                出库列表
+                            </a>
+                        </li>
+                        {% endif %}
+                        {% if web~'depotdellist' in userrole %}
+                        <li class="{% if route=='depotdellist' %}active{% endif %}">
+                            <a href="{{ path('depotdellist',{'web':web}) }}">
+                                <i class="fa fa-times">
+                                </i>
+                                报废列表
+                            </a>
+                        </li>
+                        {% endif %}
+                        {% if web~'depottype' in userrole %}
+                        <li class="{% if route=='depottype' or route=='depottypeadd' %}active{% endif %}">
+                            <a href="{{ path('depottype',{'web':web}) }}">
+                                <i class="fa fa-tags">
+                                </i>
+                                分类
+                            </a>
+                        </li>
+                        {% endif %}
+                        {% if web~'depotlist' in userrole %}
+                        <li class="{% if route=='depotlist' or route=='depotiadd' %}active{% endif %}">
+                            <a href="{{ path('depotlist',{'web':web}) }}">
+                                <i class="fa fa-circle-o">
+                                </i>
+                                货品列表
+                            </a>
+                        </li>
+                        {% endif %}
+                        {% if web~'depotsql' in userrole %}
+                        <li class="{% if route=='depotsql' %}active{% endif %}">
+                            <a href="{{ path('depotsql',{'web':web}) }}">
+                                <i class="fa fa-save">
+                                </i>
+                                备份
+                            </a>
+                        </li>
+                        {% endif %}
+                        {% if web~'depotset' in userrole %}
+                        <li class="{% if route=='depotset' %}active{% endif %}">
+                            <a href="{{ path('depotset',{'web':web}) }}">
+                                <i class="fa fa-cog">
+                                </i>
+                                基本配置
+                            </a>
+                        </li>
+                        {% endif %}
+                    </ul>
+                </li>
+                {% endif %}
+                <li class="treeview {% if app.request.pathInfo=='adulist' or app.request.pathInfo=='aduadd' %}active{% endif %}">
+                    <a href="#">
+                        <i class="fa fa-wechat">
+                        </i>
+                        <span>
+                            微信站
+                        </span>
+                        <i class="fa fa-angle-left pull-right">
+                        </i>
+                    </a>
+                    <ul class="treeview-menu">
+                        <li class="{% if app.request.pathInfo=='adulist' %}active{% endif %}">
+                            <a href="{{ path('siteindex') }}">
+                                <i class="fa fa-users">
+                                </i>
+                                用户列表
+                            </a>
+                        </li>
+                        <li class="{% if app.request.pathInfo=='adulist' %}active{% endif %}">
+                            <a href="{{ path('siteindex') }}">
+                                <i class="fa fa-calendar-o">
+                                </i>
+                                留言列表
+                            </a>
+                        </li>
+                        <li class="{% if app.request.pathInfo=='aduadd' %}active{% endif %}">
+                            <a href="{{ path('siteindex') }}">
+                                <i class="fa fa-cube">
+                                </i>
+                                素材列表
+                            </a>
+                        </li>
+                        <li class="{% if app.request.pathInfo=='aduadd' %}active{% endif %}">
+                            <a href="{{ path('siteindex') }}">
+                                <i class="fa fa-navicon">
+                                </i>
+                                菜单管理
+                            </a>
+                        </li>
+                        <li class="{% if app.request.pathInfo=='adulist' %}active{% endif %}">
+                            <a href="{{ path('siteindex') }}">
+                                <i class="fa fa-cog">
+                                </i>
+                                基本配置
+                            </a>
+                        </li>
+                    </ul>
+                </li>
+                <li class="header">
+                    基础模块
+                </li>
+                {% if web~'_suserclist' in userrole or web~'_suserslist' in userrole or web~'_suserllist' in userrole or web~'_suserzlist' in userrole or web~'_suserplist' in userrole %}
+                <li class="treeview {% if route=='suserlist' or route=='addsuser' or route=='editsuser' or route=='postlist' or route=='addspost' or route=='editpost' or route=='userpower' %}active{% endif %}">
+                    <a href="#">
+                        <i class="fa fa-user">
+                        </i>
+                        <span>
+                            站点用户
+                        </span>
+                        <i class="fa fa-angle-left pull-right">
+                        </i>
+                    </a>
+                    <ul class="treeview-menu">
+                        {% if web~'_suserclist' in userrole %}
+                        <li class="{% if route=='suserlist' and app.request.attributes.get('state')=='2' or route=='addsuser' or route=='editsuser' or route=='userpower' %}active{% endif %}">
+                            <a href="{{ path('suserlist',{'web':web,'state':2}) }}">
+                                <i class="fa fa-group">
+                                </i>
+                                成员列表
+                            </a>
+                        </li>
+                        {% endif %}
+                        {% if web~'_suserslist' in userrole %}
+                        <li class="{% if route=='suserlist' and app.request.attributes.get('state')=='1' %}active{% endif %}">
+                            <a href="{{ path('suserlist',{'web':web,'state':1}) }}">
+                                <i class="fa fa-check">
+                                </i>
+                                等待审核
+                            </a>
+                        </li>
+                        {% endif %}
+                        {% if web~'_suserllist' in userrole %}
+                        <li class="{% if route=='suserlist' and app.request.attributes.get('state')=='0' %}active{% endif %}">
+                            <a href="{{ path('suserlist',{'web':web,'state':0}) }}">
+                                <i class="fa fa-sign-out">
+                                </i>
+                                离职人员
+                            </a>
+                        </li>
+                        {% endif %}
+                        {% if web~'_suserzlist' in userrole %}
+                        <li class="{% if route=='postlist' or route=='addspost' or route=='editpost' %}active{% endif %}">
+                            <a href="{{ path('postlist',{'web':web}) }}">
+                                <i class="fa fa-tasks">
+                                </i>
+                                职位列表
+                            </a>
+                        </li>
+                        {% endif %}
+                        <li class="{% if app.request.pathInfo=='aduadd' %}active{% endif %}">
+                            <a href="{{ path('siteindex') }}">
+                                <i class="fa fa-list">
+                                </i>
+                                操作日志
+                            </a>
+                        </li>
+                    </ul>
+                </li>
+                {% endif %}
+                {% if web~'_webset' in userrole or web~'_indexset' in userrole or web~'_navset' in userrole or web~'_fodderlist' in userrole %}
+                <li class="treeview {% if route=='s_index' or route=='fodderlist' or route=='addfodder' or route=='fiset' %}active{% endif %}">
+                    <a href="#">
+                        <i class="fa fa-cogs">
+                        </i>
+                        <span>
+                            站点管理
+                        </span>
+                        <i class="fa fa-angle-left pull-right">
+                        </i>
+                    </a>
+                    <ul class="treeview-menu">
+                     {% if web~'_fodderlist' in userrole %}
+                        <li class="{% if route=='fodderlist' or route=='addfodder' %}active{% endif %}">
+                            <a href="{{path('fodderlist',{'web':web})}}">
+                                <i class="fa fa-cube">
+                                </i>
+                                <span>
+                                    素材管理
+                                </span>
+                            </a>
+                        </li>
+                        {% endif %}
+                        {% if web~'_webset' in userrole %}
+                        <li class="{% if route=='s_index' %}active{% endif %}">
+                            <a href="{{ path('s_index',{'web':web}) }}">
+                                <i class="fa fa-cog">
+                                </i>
+                                基本设置
+                            </a>
+                        </li>
+                        {% endif %}
+                        {% if web~'_indexset' in userrole %}
+                        <li class="{% if route=='fiset' %}active{% endif %}">
+                            <a href="{{ path('fiset',{'web':web}) }}">
+                                <i class="fa fa-bank">
+                                </i>
+                                首页设置
+                            </a>
+                        </li>
+                        {% endif %}
+                        {% if web~'_navset' in userrole %}
+                        <li class="{% if route=='aduadd' %}active{% endif %}">
+                            <a href="{{ path('siteindex',{'web':web}) }}">
+                                <i class="fa fa-map">
+                                </i>
+                                功能设置
+                            </a>
+                        </li>
+                        {% endif %}
+                    </ul>
+                </li>
+                {% endif %}
+            </ul>
+        </section>
+    </aside>
+    <div class="content-wrapper">
+        <section class="content-header">
+            {% block contentheader %}{% endblock %}
+        </section>
+        <section class="content">
+            {% block content %}{% endblock %}
+        </section>
+    </div>
+    <footer class="main-footer">
+        <div class="pull-right hidden-xs">
+            <b>
+                Version
+            </b>
+            1.0
+        </div>
+        <strong>
+            Copyright &copy; 2016-2017
+            <a href="http://a6vi.com">
+                A6VI
+            </a>
+            .
+        </strong>
+        All rights reserved.
+    </footer>
+</div>
+{% endblock %}
+{% block bjs %}
+{{ parent() }}
+<script src="{{ asset('js/hinclude.js') }}">
+</script>
+{% endblock %}

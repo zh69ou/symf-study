@@ -1,0 +1,45 @@
+<?xml version="1.0"?>
+<xliff version="1.2" xmlns="urn:oasis:names:tc:xliff:document:1.2">
+    <file source-language="en" target-language="zh" datatype="plaintext" original="file.ext">
+        <body>
+            <trans-unit id="tool.add">
+                <source>tool.add</source>
+                <target><![CDATA[添加功能]]></target>
+            </trans-unit>
+            <trans-unit id="tool.addtitle">
+                <source>tool.addtitle</source>
+                <target><![CDATA[给指定站点添加功能]]></target>
+            </trans-unit>
+            <trans-unit id="tool.betime">
+                <source>tool.betime</source>
+                <target><![CDATA[起止时间]]></target>
+            </trans-unit>
+            <trans-unit id="tool.list">
+                <source>tool.list</source>
+                <target><![CDATA[功能列表]]></target>
+            </trans-unit>
+            <trans-unit id="tool.no_use">
+                <source>tool.no_use</source>
+                <target><![CDATA[无功能]]></target>
+            </trans-unit>
+
+            <!-- 后台 -->
+            <trans-unit id="ad.add_tool">
+                <source>ad.add_tool</source>
+                <target><![CDATA[添加功能]]></target>
+            </trans-unit>
+            <trans-unit id="ad.add_tooltitle">
+                <source>ad.add_tooltitle</source>
+                <target><![CDATA[添加用户可使用功能]]></target>
+            </trans-unit>
+            <trans-unit id="ad.edit_tool">
+                <source>ad.edit_tool</source>
+                <target><![CDATA[修改功能]]></target>
+            </trans-unit>
+            <trans-unit id="ad.edit_tooltitle">
+                <source>ad.edit_tooltitle</source>
+                <target><![CDATA[修改用户可使用功能]]></target>
+            </trans-unit>
+        </body>
+    </file>
+</xliff>

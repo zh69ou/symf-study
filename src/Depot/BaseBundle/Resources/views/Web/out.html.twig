@@ -1,0 +1,121 @@
+{% extends 'public/user.html.twig' %}
+{% block title %}{{ 'depot_out'|trans }}{{parent()}}{% endblock %}
+{% set web = app.request.attributes.get('web') %}
+{% block tcss %}
+<link href="{{ asset('plugins/select2/select2.min.css') }}" rel="stylesheet" />
+<link href="{{ asset('plugins/iCheck/all.css') }}" rel="stylesheet" />
+{{ parent() }}
+{% endblock %}
+{% block contentheader %}
+<section class="content-header">
+  <h1>
+    {{ 'depot_out'|trans }}
+    <!-- <small>{{ 'depot.outlist'|trans }}</small> -->
+  </h1>
+  <ol class="breadcrumb">
+    <li><a href="{{path('siteindex',{'web':web})}}"><i class="fa fa-dashboard"></i>{{app.session.get('webinfo').title}}</a></li>
+    <li class="active">{{ 'depot.outlist'|trans }}</li>
+  </ol>
+</section>
+{% endblock %}
+{% block content %}
+<div class="box box-primary">
+      <div class="box-header with-border">
+        <h3 class="box-title">{{ 'depot_out'|trans }}</h3>
+      </div>
+      {% for fm in app.session.flashBag.get('error') %}
+      <div class="callout callout-danger">
+        {{fm|trans}}
+      </div>
+      {% endfor %}
+      {% for fm in app.session.flashBag.get('success') %}
+      <div class="callout callout-success">
+        {{fm|trans}}
+      </div>
+      {% endfor %}
+      <form role="form" action="" method="post" name="form" enctype="multipart/form-data">
+        <div class="box-body">
+          <div class="col-md-6">
+            <dl class="dl-horizontal">
+              <dt>{{ 'codenum'|trans }}</dt>
+              <dd>
+                <div class="form-group">
+                  <select name="codenum" class="form-control select2" style="width: 100%;">
+                    {% for d in depot %}
+                      <option value="{{d.codenum}}">{{d.codenum}}</option>
+                    {% else %}
+                      <option value="0">{{ 'nousedepot'|trans }}</option>
+                    {% endfor %}
+                  </select>
+                </div>
+              </dd>
+              <dt>{{ 'outstock'|trans }}</dt>
+              <dd>
+                <div class="form-group">
+                  <input type="text" name="num" class="form-control" value="" >
+                </div>
+              </dd>
+              <dt>{{ 'baseprice'|trans }}</dt>
+              <dd>
+                  <div class="form-group">
+                      <input type="text" name="baseprice" class="form-control" value="0" >
+                  </div>
+              </dd>
+              <dt>{{ 'sellprice'|trans }}</dt>
+              <dd>
+                  <div class="form-group">
+                      <input type="text" name="sellprice" class="form-control" value="0" >
+                  </div>
+              </dd>
+              <dt>{{ 'backups'|trans }}</dt>
+              <dd>
+                  <div class="form-group">
+                      <input type="text" name="backups" class="form-control" value="" >
+                  </div>
+              </dd>
+            </dl>
+          </div>
+          <div class="col-md-6 newbox" style="display: none;"></div>
+        </div>
+        <div class="box-footer text-center">
+          <input type="hidden" name="_token" value="{{ csrf_token('outdepotcsrf') }}">
+          <button type="button" class="btn btn-primary butup">{{ 'subbut'|trans }}</button>
+        </div>
+      </form>
+    </div>
+{% endblock %}
+
+{% block bjs %}
+{{ parent() }}
+<script src="{{ asset('plugins/jQuery/jquery.form.min.js') }}"></script>
+<script src="{{ asset('plugins/iCheck/icheck.min.js') }}"></script>
+<script src="{{ asset('plugins/cryptojs/md5.js') }}"></script>
+<script src="{{ asset('plugins/select2/select2.full.min.js') }}"></script>
+<script src="{{ asset('plugins/iCheck/icheck.min.js') }}"></script>
+<script type="text/javascript">
+  $(function () {
+    $(".select2").select2();
+    $('.butup').click(function() {
+      subbox();
+    });
+
+  });
+
+
+document.onkeydown=function(){
+ if (event.keyCode == 13){
+    subbox();
+ }
+}
+
+  function subbox()
+  {
+    if($('[name="num"]').val()=='')
+    {
+      $('[name="num"]').focus();
+      return false;
+    }
+    $('[name="form"]').submit();
+  }
+</script>
+{% endblock %}

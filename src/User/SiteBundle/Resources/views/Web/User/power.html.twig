@@ -1,0 +1,237 @@
+{% extends 'public/user.html.twig' %}
+{% block title %}{{ 'allotpower'|trans }}{{parent()}}{% endblock %}
+{% block tcss %}
+<link href="{{ asset('plugins/select2/select2.min.css') }}" rel="stylesheet" />
+<link href="{{ asset('plugins/iCheck/all.css') }}" rel="stylesheet" />
+{{ parent() }}
+<style type="text/css">
+  .col-xs-6,.checkbox,.checkbox label{padding: 0px;}
+</style>
+{% endblock %}
+{% block contentheader %}
+<section class="content-header">
+  <h1>
+    {{ 'allotpower'|trans }}
+    <small>{{ 'allotpower.title'|trans }}</small>
+  </h1>
+  <ol class="breadcrumb">
+    <li><a href="{{path('siteuser',{'web':web})}}"><i class="fa fa-dashboard"></i>{{app.session.get('webinfo').title}}</a></li>
+    <li class="active">{{ 'allotpower'|trans }}</li>
+  </ol>
+</section>
+{% endblock %}
+{% block content %}
+    <div class="box box-primary">
+      <div class="box-header with-border">
+        <h3 class="box-title">{{ 'allotpower'|trans }}</h3>
+      </div>
+      {% if state is defined %}
+      <div class="callout {% if state == 1 %}callout-danger{% else %}callout-success{% endif %}">
+        {{content}}
+      </div>
+      {% endif %}
+      <form role="form" action="" method="post" name="form" enctype="multipart/form-data">
+        <div class="box-body">
+          {% if web~'_webset' in userrole or web~'_indexset' in userrole or web~'_navset' in userrole or web~'_fodderlist' in userrole or web~'_fodderadd' in userrole or web~'_fodderdel' in userrole %}
+            <dl class="dl-horizontal">
+              <dt>{{ 'power_base'|trans }}</dt>
+              <dd>
+                  <div class="form-group">
+                    {% if web~'_webset' in userrole %}
+                    <div class="col-xs-6 col-md-3">
+                      <div class="checkbox">
+                        <label>
+                        <input type="checkbox" name="power[]" class="minimal" value="{{web}}_webset" {% if web~'_webset' in info.user.roles %}checked="checked"{% endif %}>{{ 'power_base_webset'|trans }}
+                        </label>
+                      </div>
+                    </div>
+                    {% endif %}
+                    {% if web~'_indexset' in userrole %}
+                    <div class="col-xs-6 col-md-3">
+                      <div class="checkbox">
+                        <label>
+                        <input type="checkbox" name="power[]" class="minimal" value="{{web}}_indexset" {% if web~'_indexset' in info.user.roles %}checked="checked"{% endif %}>{{ 'power_base_indexset'|trans }}
+                        </label>
+                      </div>
+                    </div>
+                    {% endif %}
+                    {% if web~'_navset' in userrole %}
+                    <div class="col-xs-6 col-md-3">
+                      <div class="checkbox">
+                        <label>
+                        <input type="checkbox" name="power[]" class="minimal" value="{{web}}_navset" {% if web~'_navset' in info.user.roles %}checked="checked"{% endif %}>{{ 'power_base_navset'|trans }}
+                        </label>
+                      </div>
+                    </div>
+                    {% endif %}
+                    {% if web~'_fodderlist' in userrole %}
+                    <div class="col-xs-6 col-md-3">
+                      <div class="checkbox">
+                        <label>
+                        <input type="checkbox" name="power[]" class="minimal" value="{{web}}_fodderlist" {% if web~'_fodderlist' in info.user.roles %}checked="checked"{% endif %}>{{ 'power_base_fodderlist'|trans }}
+                        </label>
+                      </div>
+                    </div>
+                    {% endif %}
+                    {% if web~'_fodderadd' in userrole %}
+                    <div class="col-xs-6 col-md-3">
+                      <div class="checkbox">
+                        <label>
+                        <input type="checkbox" name="power[]" class="minimal" value="{{web}}_fodderadd" {% if web~'_fodderadd' in info.user.roles %}checked="checked"{% endif %}>{{ 'power_base_fodderadd'|trans }}
+                        </label>
+                      </div>
+                    </div>
+                    {% endif %}
+                    {% if web~'_fodderdel' in userrole %}
+                    <div class="col-xs-6 col-md-3">
+                      <div class="checkbox">
+                        <label>
+                        <input type="checkbox" name="power[]" class="minimal" value="{{web}}_fodderdel" {% if web~'_fodderdel' in info.user.roles %}checked="checked"{% endif %}>{{ 'power_base_fodderdel'|trans }}
+                        </label>
+                      </div>
+                    </div>
+                    {% endif %}
+                  </div>
+              </dd>
+            </dl>
+            {% endif %}
+            {% if web~'_sueradd' in userrole or web~'_suserup' in userrole or web~'_suserdel' in userrole or web~'_suserclist' in userrole or web~'_suserslist' in userrole or web~'_suserllist' in userrole or web~'_suserzlist' in userrole or web~'_suserplist' in userrole %}
+            <dl class="dl-horizontal">
+              <dt>{{ 'power_siteuser_manage'|trans }}</dt>
+              <dd>
+                  <div class="form-group">
+                  {% if web~'_sueradd' in userrole %}
+                    <div class="col-xs-6 col-md-3">
+                      <div class="checkbox">
+                        <label>
+                        <input type="checkbox" name="power[]" class="minimal" value="{{web}}_sueradd" {% if web~'_sueradd' in info.user.roles %}checked="checked"{% endif %}>{{ 'power_siteuser_add'|trans }}
+                        </label>
+                      </div>
+                    </div>
+                    {% endif %}
+                    {% if web~'_suserup' in userrole %}
+                    <div class="col-xs-6 col-md-3">
+                      <div class="checkbox">
+                        <label>
+                        <input type="checkbox" name="power[]" class="minimal" value="{{web}}_suserup" {% if web~'_suserup' in info.user.roles %}checked="checked"{% endif %}>{{ 'power_siteuser_edit'|trans }}
+                        </label>
+                      </div>
+                    </div>
+                    {% endif %}
+                    {% if web~'_suserdel' in userrole %}
+                    <div class="col-xs-6 col-md-3">
+                      <div class="checkbox">
+                        <label>
+                        <input type="checkbox" name="power[]" class="minimal" value="{{web}}_suserdel" {% if web~'_suserdel' in info.user.roles %}checked="checked"{% endif %}>{{ 'power_siteuser_del'|trans }}
+                        </label>
+                      </div>
+                    </div>
+                    {% endif %}
+                    {% if web~'_suserclist' in userrole %}
+                    <div class="col-xs-6 col-md-3">
+                      <div class="checkbox">
+                        <label>
+                        <input type="checkbox" name="power[]" class="minimal" value="{{web}}_suserclist" {% if web~'_suserclist' in info.user.roles %}checked="checked"{% endif %}>{{ 'power_siteuser_clist'|trans }}
+                        </label>
+                      </div>
+                    </div>
+                    {% endif %}
+                    {% if web~'_suserslist' in userrole %}
+                    <div class="col-xs-6 col-md-3">
+                      <div class="checkbox">
+                        <label>
+                        <input type="checkbox" name="power[]" class="minimal" value="{{web}}_suserslist" {% if web~'_suserslist' in info.user.roles %}checked="checked"{% endif %}>{{ 'power_siteuser_slist'|trans }}
+                        </label>
+                      </div>
+                    </div>
+                    {% endif %}
+                    {% if web~'_suserllist' in userrole %}
+                    <div class="col-xs-6 col-md-3">
+                      <div class="checkbox">
+                        <label>
+                        <input type="checkbox" name="power[]" class="minimal" value="{{web}}_suserllist" {% if web~'_suserllist' in info.user.roles %}checked="checked"{% endif %}>{{ 'power_siteuser_llist'|trans }}
+                        </label>
+                      </div>
+                    </div>
+                    {% endif %}
+                    {% if web~'_suserzlist' in userrole %}
+                    <div class="col-xs-6 col-md-3">
+                      <div class="checkbox">
+                        <label>
+                        <input type="checkbox" name="power[]" class="minimal" value="{{web}}_suserzlist" {% if web~'_suserzlist' in info.user.roles %}checked="checked"{% endif %}>{{ 'power_siteuser_zlist'|trans }}
+                        </label>
+                      </div>
+                    </div>
+                    {% endif %}
+                    {% if web~'_suserplist' in userrole %}
+                    <div class="col-xs-6 col-md-3">
+                      <div class="checkbox">
+                        <label>
+                        <input type="checkbox" name="power[]" class="minimal" value="{{web}}_suserplist" {% if web~'_suserplist' in info.user.roles %}checked="checked"{% endif %}>{{ 'power_siteuser_plist'|trans }}
+                        </label>
+                      </div>
+                    </div>
+                    {% endif %}
+                  </div>
+              </dd>
+            </dl>
+            {% endif %}
+        </div>
+        <div class="box-footer text-center">
+          <input type="hidden" name="_token" value="{{ csrf_token('asupower') }}">
+          <button type="button" class="btn btn-primary butup">{{ 'subbut'|trans }}</button>
+        </div>
+      </form>
+    </div>
+{% endblock %}
+
+{% block bjs %}
+{{ parent() }}
+<script src="{{ asset('plugins/iCheck/icheck.min.js') }}"></script>
+<script src="{{ asset('plugins/cryptojs/md5.js') }}"></script>
+<script src="{{ asset('plugins/select2/select2.full.min.js') }}"></script>
+<script src="{{ asset('plugins/iCheck/icheck.min.js') }}"></script>
+<script type="text/javascript">
+  $(function () {
+    $(".select2").select2();
+
+    $('input[type="checkbox"].minimal, input[type="radio"].minimal').iCheck({
+        checkboxClass: 'icheckbox_square-blue',
+        radioClass: 'iradio_square-blue'
+      });
+
+        $('.butup').click(function() {
+          subbox();
+        });
+    });
+
+document.onkeydown=function(){
+ if (event.keyCode == 13){
+    subbox();
+ }
+}
+
+  function subbox() {
+    if($('[name="username"]').val()=='')
+    {
+      $('[name="username"]').focus();
+      return false;
+    }
+    if($('[name="newuser"]:checked').val()=='1'){
+      if($('[name="email"]').val()=='')
+      {
+        $('[name="email"]').focus();
+        return false;
+      }
+      if($('[name="password"]').val()!=$('[name="npassword"]').val()||$('[name="password"]').val()=='')
+      {
+        $('[name="password"]').focus();
+        return false;
+      }
+      $('[name="password"]').val(String(CryptoJS.MD5($('[name="password"]').val())).substr(6,13));
+      $('[name="npassword"]').val(String(CryptoJS.MD5($('[name="npassword"]').val())).substr(6,13));
+    }
+    $('[name="form"]').submit();
+  }
+</script>
+{% endblock %}

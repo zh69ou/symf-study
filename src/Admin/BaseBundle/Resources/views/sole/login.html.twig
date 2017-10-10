@@ -1,0 +1,67 @@
+{% extends 'admin/base.html.twig' %}
+
+{% block title %}管理员登陆{{ parent() }}{% endblock %}
+
+{% block tcss %}
+{{ parent() }}
+<link href="{{ asset('plugins/iCheck/square/blue.css') }}" rel="stylesheet" />
+{% endblock %}
+
+{% block body %}
+	<div class="login-box">
+      <div class="login-logo">
+        <b>管理系统</b>
+      </div>
+      <div class="login-box-body">
+        <p class="login-box-msg">请正确输入账号</p>
+        <form action="{{path('ad_land')}}" method="post" name="form">
+          <div class="form-group has-feedback">
+            <input type="text" name="username" class="form-control" placeholder="账号">
+            <span class="fa fa-user form-control-feedback"></span>
+          </div>
+          <div class="form-group has-feedback">
+            <input type="password" name="password" class="form-control" placeholder="密码">
+            <span class="fa fa-lock form-control-feedback"></span>
+          </div>
+          <div class="row">
+            <div class="col-xs-12 text-center">
+              <button type="button" class="btn btn-primary butland">&nbsp;登&nbsp;&nbsp;录&nbsp;</button>
+            </div>
+          </div>
+          <input type="hidden" name="_token" value="{{ csrf_token('adlandcsrf') }}">
+        </form>
+      </div>
+	</div>
+{% endblock %}
+
+{% block bjs %}
+{{ parent() }}
+<script src="{{ asset('plugins/iCheck/icheck.min.js') }}"></script>
+<script src="{{ asset('plugins/cryptojs/md5.js') }}"></script>
+<script type="text/javascript">
+	$('body').addClass('login-page');
+
+	$(function () {
+        $('.butland').click(function() {
+          subbox();
+        });
+    });
+
+document.onkeydown=function(){
+  if (event.keyCode == 13){
+    subbox();
+  }
+}
+
+  function subbox() {
+    var name = $('[name="username"]').val();
+    var psw = $('[name="password"]').val();
+    if(name!=''&&psw!=''){
+          $('[name="password"]').val(String(CryptoJS.MD5($('[name="password"]').val())).substr(6,13));
+          $('[name="form"]').submit();
+    }else{
+      $('[name="username"]').focus();
+    }
+  }
+</script>
+{% endblock %}

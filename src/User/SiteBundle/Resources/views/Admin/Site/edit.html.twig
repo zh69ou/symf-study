@@ -1,0 +1,103 @@
+{% extends 'admin/index.html.twig' %}
+{% block title %}{{ 'ad.site_edit'|trans }}{{parent()}}{% endblock %}
+{% block tcss %}
+{{ parent() }}
+{% endblock %}
+{% block contentheader %}
+<section class="content-header">
+  <h1>
+    {{ 'ad.site_edit'|trans }}
+    <small>{{ 'ad.site_edit'|trans }}</small>
+  </h1>
+  <ol class="breadcrumb">
+    <li><a href="{{path('adindex')}}"><i class="fa fa-dashboard"></i>{{ 'ad.index'|trans }}</a></li>
+    <li class="active"><a href="{{path('adsitelist')}}">{{ 'ad.site_list'|trans }}</a></li>
+    <li class="active">{{ 'ad.site_edit'|trans }}</li>
+  </ol>
+</section>
+{% endblock %}
+{% block content %}
+    <div class="box box-primary">
+      <div class="box-header with-border">
+        <h3 class="box-title">{{ 'ad.site_edit'|trans }}</h3>
+      </div>
+      <form role="form" action="" method="post" name="form" enctype="multipart/form-data">
+        <div class="box-body">
+          <div class="col-md-6">
+            <dl class="dl-horizontal">
+              <dt>{{ 'name'|trans }}</dt>
+              <dd>
+                <div class="form-group">
+                  <input type="text" name="name" class="form-control" value="{{sites.name}}" >
+                </div>
+              </dd>
+            </dl>
+            <dl class="dl-horizontal">
+              <dt>{{ 'title'|trans }}</dt>
+              <dd>
+                <div class="form-group">
+                  <input type="text" name="title" class="form-control" value="{{sites.title}}" >
+                </div>
+              </dd>
+            </dl>
+            <dl class="dl-horizontal">
+              <dt>{{ 'kword'|trans }}</dt>
+              <dd>
+                <div class="form-group">
+                  <input type="text" name="kword" class="form-control" value="{{sites.kword}}" >
+                </div>
+              </dd>
+            </dl>
+          </div>
+          <div class="col-md-6">
+            <dl class="dl-horizontal">
+              <dt>{{ 'etime'|trans }}</dt>
+              <dd>
+                <div class="form-group">
+                  <input type="text" name="endtime" class="form-control" value="{% if sites.endtime.date != '-0001-11-30 00:00:00' %}{{sites.endtime|date('Y-m-d')}}{% endif%}" data-inputmask="'alias': 'mm/dd/yyyy'" >
+                </div>
+              </dd>
+            </dl>
+            <dl class="dl-horizontal">
+              <dt>{{ 'state'|trans }}</dt>
+              <dd>
+                  <div class="form-group">
+                    <input type="radio" name="state" class="minimal" value="0" {% if sites.state == 0 %}checked="checked"{% endif %}>{{ 'nouse'|trans }}
+                    <input type="radio" name="state" class="minimal" value="1" {% if sites.state == 1 %}checked="checked"{% endif %}>{{ 'use'|trans }}
+                  </div>
+              </dd>
+            </dl>
+          </div>
+        </div>
+        <div class="box-footer text-center">
+          <input type="hidden" name="_token" value="{{ csrf_token('adedsite') }}">
+          <button type="button" class="btn btn-primary butup">{{ 'subbut'|trans }}</button>
+        </div>
+      </form>
+    </div>
+{% endblock %}
+
+{% block bjs %}
+{{ parent() }}
+<script src="{{ asset('plugins/input-mask/jquery.inputmask.js') }}"></script>
+<script src="{{ asset('plugins/input-mask/jquery.inputmask.date.extensions.js') }}"></script>
+<script type="text/javascript">
+  $(function(){
+    $("[name='endtime']").inputmask("yyyy-mm-dd", {"placeholder": "yyyy-mm-dd"});
+    $('.butup').click(function() {
+      subbox();
+    });
+  })
+
+  document.onkeydown=function(){
+   if (event.keyCode == 13){
+      subbox();
+   }
+  }
+
+  function subbox() {
+    $('[name="form"]').submit();
+  }
+
+</script>
+{% endblock %}
