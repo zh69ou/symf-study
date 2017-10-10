@@ -2,8 +2,8 @@
 
 namespace Index\BaseBundle\Controller\web;
 
-use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
+use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 
 // use Admin\BaseBundle\Entity\Aduser;
 // use User\BaseBundle\Entity\User;
