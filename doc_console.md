@@ -25,6 +25,8 @@ php bin/console security:check
 
 php bin/console cache:clear
 
+composer dump-autoload
+
 -------------------------------------list--------------
 Available commands:
   help                                    显示命令的帮助信息
