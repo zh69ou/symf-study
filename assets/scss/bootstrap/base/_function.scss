@@ -1,0 +1,753 @@
+// alert
+@mixin alert-variant($background, $border, $color) {
+  color: $color;
+  background-color: $background;
+  border-color: $border;
+
+  hr {
+    border-top-color: darken($border, 5%);
+  }
+
+  .alert-link {
+    color: darken($color, 10%);
+  }
+}
+
+// background-variant
+@mixin bg-variant($parent, $color) {
+  #{$parent} {
+    background-color: $color !important;
+  }
+  a#{$parent} {
+    @include hover-focus {
+      background-color: darken($color, 10%) !important;
+    }
+  }
+}
+
+// badge
+@mixin badge-variant($bg) {
+  @include color-yiq($bg);
+  background-color: $bg;
+
+  &[href] {
+    @include hover-focus {
+      @include color-yiq($bg);
+      text-decoration: none;
+      background-color: darken($bg, 10%);
+    }
+  }
+}
+
+// border-radius
+@mixin border-radius($radius: $border-radius) {
+  @if $enable-rounded {
+    border-radius: $radius;
+  }
+}
+
+@mixin border-top-radius($radius) {
+  @if $enable-rounded {
+    border-top-left-radius: $radius;
+    border-top-right-radius: $radius;
+  }
+}
+
+@mixin border-right-radius($radius) {
+  @if $enable-rounded {
+    border-top-right-radius: $radius;
+    border-bottom-right-radius: $radius;
+  }
+}
+
+@mixin border-bottom-radius($radius) {
+  @if $enable-rounded {
+    border-bottom-right-radius: $radius;
+    border-bottom-left-radius: $radius;
+  }
+}
+
+@mixin border-left-radius($radius) {
+  @if $enable-rounded {
+    border-top-left-radius: $radius;
+    border-bottom-left-radius: $radius;
+  }
+}
+
+// box-shadow
+@mixin box-shadow($shadow...) {
+  @if $enable-shadows {
+    box-shadow: $shadow;
+  }
+}
+
+// breakpoints
+@function breakpoint-next($name, $breakpoints: $grid-breakpoints, $breakpoint-names: map-keys($breakpoints)) {
+  $n: index($breakpoint-names, $name);
+  @return if($n < length($breakpoint-names), nth($breakpoint-names, $n + 1), null);
+}
+
+@function breakpoint-min($name, $breakpoints: $grid-breakpoints) {
+  $min: map-get($breakpoints, $name);
+  @return if($min != 0, $min, null);
+}
+
+@function breakpoint-max($name, $breakpoints: $grid-breakpoints) {
+  $next: breakpoint-next($name, $breakpoints);
+  @return if($next, breakpoint-min($next, $breakpoints) - 1px, null);
+}
+
+@function breakpoint-infix($name, $breakpoints: $grid-breakpoints) {
+  @return if(breakpoint-min($name, $breakpoints) == null, "", "-#{$name}");
+}
+
+@mixin media-breakpoint-up($name, $breakpoints: $grid-breakpoints) {
+  $min: breakpoint-min($name, $breakpoints);
+  @if $min {
+    @media (min-width: $min) {
+      @content;
+    }
+  } @else {
+    @content;
+  }
+}
+
+@mixin media-breakpoint-down($name, $breakpoints: $grid-breakpoints) {
+  $max: breakpoint-max($name, $breakpoints);
+  @if $max {
+    @media (max-width: $max) {
+      @content;
+    }
+  } @else {
+    @content;
+  }
+}
+
+@mixin media-breakpoint-between($lower, $upper, $breakpoints: $grid-breakpoints) {
+  $min: breakpoint-min($lower, $breakpoints);
+  $max: breakpoint-max($upper, $breakpoints);
+
+  @media (min-width: $min) and (max-width: $max) {
+    @content;
+  }
+}
+
+@mixin media-breakpoint-only($name, $breakpoints: $grid-breakpoints) {
+  $min: breakpoint-min($name, $breakpoints);
+  $max: breakpoint-max($name, $breakpoints);
+
+  @if $min != null and $max != null {
+    @media (min-width: $min) and (max-width: $max) {
+      @content;
+    }
+  } @else if $max == null {
+    @include media-breakpoint-up($name)
+  } @else if $min == null {
+    @include media-breakpoint-down($name)
+  }
+}
+
+// buttons
+@mixin button-variant($background, $border, $active-background: darken($background, 7.5%), $active-border: darken($border, 10%)) {
+  @include color-yiq($background);
+  background-color: $background;
+  border-color: $border;
+  @include box-shadow($btn-box-shadow);
+
+  &:hover {
+    @include color-yiq($background);
+    background-color: $active-background;
+    border-color: $active-border;
+  }
+
+  &:focus,
+  &.focus {
+    @if $enable-shadows {
+      box-shadow: $btn-box-shadow, 0 0 0 3px rgba($border, .5);
+    } @else {
+      box-shadow: 0 0 0 3px rgba($border, .5);
+    }
+  }
+
+  &.disabled,
+  &:disabled {
+    background-color: $background;
+    border-color: $border;
+  }
+
+  &:active,
+  &.active,
+  .show > &.dropdown-toggle {
+    background-color: $active-background;
+    background-image: none;
+    border-color: $active-border;
+    @include box-shadow($btn-active-box-shadow);
+  }
+}
+
+@mixin button-outline-variant($color, $color-hover: #fff) {
+  color: $color;
+  background-color: transparent;
+  background-image: none;
+  border-color: $color;
+
+  @include hover {
+    color: $color-hover;
+    background-color: $color;
+    border-color: $color;
+  }
+
+  &:focus,
+  &.focus {
+    box-shadow: 0 0 0 3px rgba($color, .5);
+  }
+
+  &.disabled,
+  &:disabled {
+    color: $color;
+    background-color: transparent;
+  }
+
+  &:active,
+  &.active,
+  .show > &.dropdown-toggle {
+    color: $color-hover;
+    background-color: $color;
+    border-color: $color;
+  }
+}
+
+@mixin button-size($padding-y, $padding-x, $font-size, $line-height, $border-radius) {
+  padding: $padding-y $padding-x;
+  font-size: $font-size;
+  line-height: $line-height;
+  @include border-radius($border-radius);
+}
+
+// clearfix
+@mixin clearfix() {
+  &::after {
+    display: block;
+    clear: both;
+    content: "";
+  }
+}
+
+// float
+@mixin float-left {
+  float: left !important;
+}
+@mixin float-right {
+  float: right !important;
+}
+@mixin float-none {
+  float: none !important;
+}
+
+// forms
+@mixin form-control-focus() {
+  &:focus {
+    color: $input-focus-color;
+    background-color: $input-focus-bg;
+    border-color: $input-focus-border-color;
+    outline: none;
+    @include box-shadow($input-focus-box-shadow);
+  }
+}
+
+@mixin form-validation-state($state, $color) {
+
+  .form-control,
+  .custom-select {
+    .was-validated &:#{$state},
+    &.is-#{$state} {
+      border-color: $color;
+
+      &:focus {
+        box-shadow: 0 0 0 .2rem rgba($color,.25);
+      }
+
+      ~ .invalid-feedback,
+      ~ .invalid-tooltip {
+        display: block;
+      }
+    }
+  }
+
+  .form-check-input {
+    .was-validated &:#{$state},
+    &.is-#{$state} {
+      + .form-check-label {
+        color: $color;
+      }
+    }
+  }
+
+  .custom-control-input {
+    .was-validated &:#{$state},
+    &.is-#{$state} {
+      ~ .custom-control-indicator {
+        background-color: rgba($color, .25);
+      }
+      ~ .custom-control-description {
+        color: $color;
+      }
+    }
+  }
+
+  .custom-file-input {
+    .was-validated &:#{$state},
+    &.is-#{$state} {
+      ~ .custom-file-control {
+        border-color: $color;
+
+        &::before { border-color: inherit; }
+      }
+      &:focus {
+        box-shadow: 0 0 0 .2rem rgba($color,.25);
+      }
+    }
+  }
+}
+
+// functions
+@mixin _assert-ascending($map, $map-name) {
+  $prev-key: null;
+  $prev-num: null;
+  @each $key, $num in $map {
+    @if $prev-num == null {
+    } @else if not comparable($prev-num, $num) {
+      @warn "Potentially invalid value for #{$map-name}: This map must be in ascending order, but key '#{$key}' has value #{$num} whose unit makes it incomparable to #{$prev-num}, the value of the previous key '#{$prev-key}' !";
+    } @else if $prev-num >= $num {
+      @warn "Invalid value for #{$map-name}: This map must be in ascending order, but key '#{$key}' has value #{$num} which isn't greater than #{$prev-num}, the value of the previous key '#{$prev-key}' !";
+    }
+    $prev-key: $key;
+    $prev-num: $num;
+  }
+}
+
+@mixin _assert-starts-at-zero($map) {
+  $values: map-values($map);
+  $first-value: nth($values, 1);
+  @if $first-value != 0 {
+    @warn "First breakpoint in `$grid-breakpoints` must start at 0, but starts at #{$first-value}.";
+  }
+}
+
+@function str-replace($string, $search, $replace: "") {
+  $index: str-index($string, $search);
+
+  @if $index {
+    @return str-slice($string, 1, $index - 1) + $replace + str-replace(str-slice($string, $index + str-length($search)), $search, $replace);
+  }
+
+  @return $string;
+}
+
+@mixin color-yiq($color) {
+  $r: red($color);
+  $g: green($color);
+  $b: blue($color);
+
+  $yiq: (($r * 299) + ($g * 587) + ($b * 114)) / 1000;
+
+  @if ($yiq >= 150) {
+    color: #111;
+  } @else {
+    color: #fff;
+  }
+}
+
+@function color($key: "blue") {
+  @return map-get($colors, $key);
+}
+
+@function theme-color($key: "primary") {
+  @return map-get($theme-colors, $key);
+}
+
+@function grayscale($key: "100") {
+  @return map-get($grays, $key);
+}
+
+@function theme-color-level($color-name: "primary", $level: 0) {
+  $color: theme-color($color-name);
+  $color-base: if($level > 0, #000, #fff);
+
+  @if $level < 0 {
+    @return mix($color-base, $color, $level * -1 * $theme-color-interval);
+  } @else {
+    @return mix($color-base, $color, $level * $theme-color-interval);
+  }
+}
+
+// gradients
+@mixin gradient-x($start-color: #555, $end-color: #333, $start-percent: 0%, $end-percent: 100%) {
+  background-image: linear-gradient(to right, $start-color $start-percent, $end-color $end-percent);
+  background-repeat: repeat-x;
+}
+
+@mixin gradient-y($start-color: #555, $end-color: #333, $start-percent: 0%, $end-percent: 100%) {
+  background-image: linear-gradient(to bottom, $start-color $start-percent, $end-color $end-percent);
+  background-repeat: repeat-x;
+}
+
+@mixin gradient-directional($start-color: #555, $end-color: #333, $deg: 45deg) {
+  background-image: linear-gradient($deg, $start-color, $end-color);
+  background-repeat: repeat-x;
+}
+@mixin gradient-x-three-colors($start-color: #00b3ee, $mid-color: #7a43b6, $color-stop: 50%, $end-color: #c3325f) {
+  background-image: linear-gradient(to right, $start-color, $mid-color $color-stop, $end-color);
+  background-repeat: no-repeat;
+}
+@mixin gradient-y-three-colors($start-color: #00b3ee, $mid-color: #7a43b6, $color-stop: 50%, $end-color: #c3325f) {
+  background-image: linear-gradient($start-color, $mid-color $color-stop, $end-color);
+  background-repeat: no-repeat;
+}
+@mixin gradient-radial($inner-color: #555, $outer-color: #333) {
+  background-image: radial-gradient(circle, $inner-color, $outer-color);
+  background-repeat: no-repeat;
+}
+@mixin gradient-striped($color: rgba(255,255,255,.15), $angle: 45deg) {
+  background-image: linear-gradient($angle, $color 25%, transparent 25%, transparent 50%, $color 50%, $color 75%, transparent 75%, transparent);
+}
+
+// grid-framework
+@mixin make-grid-columns($columns: $grid-columns, $gutter: $grid-gutter-width, $breakpoints: $grid-breakpoints) {
+  %grid-column {
+    position: relative;
+    width: 100%;
+    min-height: 1px;
+    padding-right: ($gutter / 2);
+    padding-left:  ($gutter / 2);
+  }
+
+  @each $breakpoint in map-keys($breakpoints) {
+    $infix: breakpoint-infix($breakpoint, $breakpoints);
+
+    @for $i from 1 through $columns {
+      .col#{$infix}-#{$i} {
+        @extend %grid-column;
+      }
+    }
+    .col#{$infix},
+    .col#{$infix}-auto {
+      @extend %grid-column;
+    }
+
+    @include media-breakpoint-up($breakpoint, $breakpoints) {
+      .col#{$infix} {
+        flex-basis: 0;
+        flex-grow: 1;
+        max-width: 100%;
+      }
+      .col#{$infix}-auto {
+        flex: 0 0 auto;
+        width: auto;
+        max-width: none;
+      }
+
+      @for $i from 1 through $columns {
+        .col#{$infix}-#{$i} {
+          @include make-col($i, $columns);
+        }
+      }
+
+      @for $i from 1 through $columns {
+        .order#{$infix}-#{$i} {
+          order: $i;
+        }
+      }
+    }
+  }
+}
+
+// grid
+@mixin make-container() {
+  margin-right: auto;
+  margin-left: auto;
+  padding-right: ($grid-gutter-width / 2);
+  padding-left:  ($grid-gutter-width / 2);
+  width: 100%;
+}
+
+@mixin make-container-max-widths($max-widths: $container-max-widths, $breakpoints: $grid-breakpoints) {
+  @each $breakpoint, $container-max-width in $max-widths {
+    @include media-breakpoint-up($breakpoint, $breakpoints) {
+      max-width: $container-max-width;
+    }
+  }
+}
+
+@mixin make-row() {
+  display: flex;
+  flex-wrap: wrap;
+  margin-right: ($grid-gutter-width / -2);
+  margin-left:  ($grid-gutter-width / -2);
+}
+
+@mixin make-col-ready() {
+  position: relative;
+  width: 100%;
+  min-height: 1px;
+  padding-right: ($grid-gutter-width / 2);
+  padding-left:  ($grid-gutter-width / 2);
+}
+
+@mixin make-col($size, $columns: $grid-columns) {
+  flex: 0 0 percentage($size / $columns);
+  max-width: percentage($size / $columns);
+}
+
+// hover
+@mixin hover {
+    &:hover { @content }
+}
+
+
+@mixin hover-focus {
+  @if $enable-hover-media-query {
+    &:focus { @content }
+    @include hover { @content }
+  } @else {
+    &:focus,
+    &:hover {
+      @content
+    }
+  }
+}
+
+@mixin plain-hover-focus {
+  @if $enable-hover-media-query {
+    &,
+    &:focus {
+      @content
+    }
+    @include hover { @content }
+  } @else {
+    &,
+    &:focus,
+    &:hover {
+      @content
+    }
+  }
+}
+
+@mixin hover-focus-active {
+  @if $enable-hover-media-query {
+    &:focus,
+    &:active {
+      @content
+    }
+    @include hover { @content }
+  } @else {
+    &:focus,
+    &:active,
+    &:hover {
+      @content
+    }
+  }
+}
+
+// image
+@mixin img-fluid {
+  // Part 1: Set a maximum relative to the parent
+  max-width: 100%;
+  height: auto;
+}
+
+@mixin img-retina($file-1x, $file-2x, $width-1x, $height-1x) {
+  background-image: url($file-1x);
+  @media
+  only screen and (min-resolution: 192dpi),
+  only screen and (min-resolution: 2dppx) {
+    background-image: url($file-2x);
+    background-size: $width-1x $height-1x;
+  }
+}
+
+// list-group
+@mixin list-group-item-variant($state, $background, $color) {
+  .list-group-item-#{$state} {
+    color: $color;
+    background-color: $background;
+  }
+
+  a.list-group-item-#{$state},
+  button.list-group-item-#{$state} {
+    color: $color;
+
+    @include hover-focus {
+      color: $color;
+      background-color: darken($background, 5%);
+    }
+
+    &.active {
+      color: #fff;
+      background-color: $color;
+      border-color: $color;
+    }
+  }
+}
+
+// lists
+@mixin list-unstyled {
+  padding-left: 0;
+  list-style: none;
+}
+
+// nav-divider
+@mixin nav-divider($color: #e5e5e5) {
+  height: 0;
+  margin: ($spacer / 2) 0;
+  overflow: hidden;
+  border-top: 1px solid $color;
+}
+
+// pagination
+@mixin pagination-size($padding-y, $padding-x, $font-size, $line-height, $border-radius) {
+  .page-link {
+    padding: $padding-y $padding-x;
+    font-size: $font-size;
+    line-height: $line-height;
+  }
+
+  .page-item {
+    &:first-child {
+      .page-link {
+        @include border-left-radius($border-radius);
+      }
+    }
+    &:last-child {
+      .page-link {
+        @include border-right-radius($border-radius);
+      }
+    }
+  }
+}
+
+// reset-text
+@mixin reset-text {
+  font-family: $font-family-base;
+  font-style: normal;
+  font-weight: $font-weight-normal;
+  line-height: $line-height-base;
+  text-align: left;
+  text-align: start;
+  text-decoration: none;
+  text-shadow: none;
+  text-transform: none;
+  letter-spacing: normal;
+  word-break: normal;
+  word-spacing: normal;
+  white-space: normal;
+  line-break: auto;
+}
+
+// resize
+@mixin resizable($direction) {
+  overflow: auto;
+  resize: $direction;
+}
+
+// screen-reader
+@mixin sr-only {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  overflow: hidden;
+  clip: rect(0,0,0,0);
+  white-space: nowrap;
+  clip-path: inset(50%);
+  border: 0;
+}
+
+@mixin sr-only-focusable {
+  &:active,
+  &:focus {
+    position: static;
+    width: auto;
+    height: auto;
+    overflow: visible;
+    clip: auto;
+    white-space: normal;
+    clip-path: none;
+  }
+}
+
+// size
+@mixin size($width, $height: $width) {
+  width: $width;
+  height: $height;
+}
+
+// table-row
+@mixin table-row-variant($state, $background) {
+  .table-#{$state} {
+    &,
+    > th,
+    > td {
+      background-color: $background;
+    }
+  }
+
+  .table-hover {
+    $hover-background: darken($background, 5%);
+
+    .table-#{$state} {
+      @include hover {
+        background-color: $hover-background;
+
+        > td,
+        > th {
+          background-color: $hover-background;
+        }
+      }
+    }
+  }
+}
+
+// text-emphasis
+@mixin text-emphasis-variant($parent, $color) {
+  #{$parent} {
+    color: $color !important;
+  }
+  a#{$parent} {
+    @include hover-focus {
+      color: darken($color, 10%) !important;
+    }
+  }
+}
+
+// text-hide
+@mixin text-hide() {
+  font: 0/0 a;
+  color: transparent;
+  text-shadow: none;
+  background-color: transparent;
+  border: 0;
+}
+
+// text-truncate
+@mixin text-truncate() {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+// transition
+@mixin transition($transition...) {
+  @if $enable-transitions {
+    @if length($transition) == 0 {
+      transition: $transition-base;
+    } @else {
+      transition: $transition;
+    }
+  }
+}
+
+// visibility
+@mixin invisible($visibility) {
+  visibility: $visibility !important;
+}
