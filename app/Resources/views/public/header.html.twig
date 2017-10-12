@@ -1,1 +1,50 @@
-头
+{% set route = app.request.attributes.get('_route') %}
+<div class="navbar navbar-expand-md navbar-dark fixed-top bg-dark">
+  <a class="navbar-brand" href="/">A6VI</a>
+  <button class="navbar-toggler" type="button">
+    <span class="navbar-toggler-icon"></span>
+  </button>
+  <div class="collapse navbar-collapse" id="navbarCollapse">
+    <ul class="navbar-nav mr-auto">
+      <li class="nav-item active">
+        <a class="nav-link" href="/">首页 <span class="sr-only">(current)</span></a>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link" href="#">实用功能</a>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link disabled" href="#">新闻资讯</a>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link disabled" href="#">帮助中心</a>
+      <li>
+      <li class="nav-item">
+        <a class="nav-link disabled" href="#">会员中心</a>
+      <li>
+      <li class="nav-item">
+        <a class="nav-link disabled" href="#">企业站点</a>
+      <li>
+    </ul>
+      <ul class="navbar-nav navbar-right">
+        {% if not(app.user) %}
+        <li class="nav-item">
+        {% if route=='login' or route=='register'%}
+          <a class="nav-link" href="{{path('login',{'web':'index'})}}">登录</a>
+        {% else %}
+          <a class="nav-link" data-target="#loginbox" role="button" data-toggle="modal">登录</a>
+        {% endif %}
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" href="{{path('register',{'web':'index'})}}">注册</a>
+        </li>
+        {% else %}
+        <li class="nav-item">
+          <a class="nav-link" href="{{path('siteuser',{'web':'index'})}}">{{ app.user.username }}</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" href="{{path('logou',{'web':'index'})}}">{{ app.user.username }}</a>
+        </li>
+        {% endif %}
+      </ul>
+  </div>
+</div>
