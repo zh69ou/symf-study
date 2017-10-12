@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html>
+<html lang="zh_CN">
     <head>
         <meta charset="utf-8"/>
         <meta http-equiv="X-UA-Compatible" content="IE=edge"/>
@@ -9,28 +9,14 @@
         </title>
         <meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" name="viewport"/>
         {% block tcss %}
-        <link href="{{ asset('css/bootstrap.min.css') }}" rel="stylesheet" />
-        <link href="{{ asset('css/font-awesome.min.css') }}" rel="stylesheet" />
+        <link href="{{ asset('css/pub.css') }}" rel="stylesheet" />
         {% endblock %}
-        <!--[if lt IE 9]>
-            <script src="{{ asset('js/html5shiv.min.js') }}">
-            </script>
-            <script src="{{ asset('js/respond.min.js') }}">
-            </script>
-        <![endif]-->
     </head>
-    <body class="hold-transition skin-black sidebar-mini">
+    <body>
         {% block body %}
         {% endblock %}
         {% block bjs %}
-        <script src="{{ asset('plugins/jQuery/jQuery-2.1.4.min.js') }}">
-        </script>
-        <script src="{{ asset('plugins/jQueryUI/jquery-ui.min.js') }}">
-        </script>
-        <script src="{{ asset('js/bootstrap.min.js') }}">
-        </script>
-        <script src="{{ asset('js/app.min.js') }}">
-        </script>
+        <script src="{{ asset('js/pub.js') }}"></script>
         {% endblock %}
     </body>
 </html>

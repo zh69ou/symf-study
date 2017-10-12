@@ -1,5 +1,8 @@
 {% extends 'base.html.twig' %}
-{% block title %}联盟平台{% endblock %}
-{% block tcss %}
-{{ parent() }}
+{% block title %}测试-{{ parent() }}{% endblock %}
+{% block body %}
+	{{ include('public/header.html.twig') }}
+	{% block content %}
+	{% endblock %}
+	{{ include('public/foot.html.twig') }}
 {% endblock %}
