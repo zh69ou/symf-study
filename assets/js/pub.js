@@ -1,3 +1,3 @@
-// @koala-prepend "plugs/vue.js"
-// @koala-prepend "plugs/md5.js"
-// @koala-prepend "plugs/tool.js"
+// @koala-prepend "plugs/tool/jquery-slim.min.js"
+// @koala-prepend "plugs/tool/popper.min.js"
+// @koala-prepend "plugs/bootstrap/bootstrap.js"
