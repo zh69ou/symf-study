@@ -57,7 +57,8 @@ $colors: (
 ) !default;
 
 $theme-colors: (
-  primary: $blue,
+  // primary: $blue,
+  primary: $gray-800,
   secondary: $gray-600,
   success: $green,
   info: $cyan,
@@ -113,7 +114,7 @@ $sizes: (
 // Settings for the `<body>` element.
 
 $body-bg:       $white !default;
-$body-color:    $gray-900 !default;
+$body-color:    $gray-600 !default;
 
 // Links
 //
