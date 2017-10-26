@@ -5,8 +5,15 @@ namespace Index\BaseBundle\Controller\web;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 
+use Symfony\Component\Security\Core\Role\RoleHierarchy;
+use Symfony\Bundle\SecurityBundle\DataCollector\SecurityDataCollector;
+// use Symfony\Component\Security\Core\User\User;
+use Symfony\Component\DependencyInjection\Container;
+use Symfony\Component\Security\Core\Authentication\Token\Storage\TokenStorage;
+use Symfony\Component\Security\Core\Authentication\Token\UsernamePasswordToken;
+
 // use Admin\BaseBundle\Entity\Aduser;
-// use User\BaseBundle\Entity\User;
+use User\BaseBundle\Entity\User;
 // use User\SiteBundle\Entity\Site;
 // use User\SiteBundle\Entity\Fodder;
 
@@ -17,7 +24,12 @@ class IndexController extends Controller
      */
     public function indexAction()
     {
-        // $fodder = $this->getDoctrine()->getRepository('UserSiteBundle:Fodder')->findOneBy(array('site'=>'index','id'=>'1'));
+        $user = $this->getDoctrine()->getRepository('UserBaseBundle:User')->find(1);
+        $tokenStorage = new TokenStorage();
+        $tokenStorage->setToken(new UsernamePasswordToken($user, 'pass', 'UserArea', array('ROLE_USER')));
+        $this->container->set('security.token_storage', $tokenStorage);
+        $this->setContainer($this->container);
+        // $this->session->set('_locale', $user->getLocale());
         // var_dump($fodder);exit;
         return $this->render('IndexBaseBundle:Web:index.html.twig');
     }

@@ -17,11 +17,11 @@
         <span class="icon-bar"></span>
         <span class="icon-bar"></span>
       </button>
-      <a class="navbar-brand" href="{{ path('siteindex',{'web':web}) }}">{{winfo.title}}</a>
+      <a class="navbar-brand" href="{{ path('siteindex',{'web':web}) }}">{% if winfo and winfo.title %}{{winfo.title}}{% endif %}</a>
     </div>
     <div class="collapse navbar-collapse" id="header-navbar">
       <ul class="nav navbar-nav">
-      {% if winfo.menuls %}
+      {% if winfo and winfo.menuls %}
         {% set i=0 %}
         {% for k,me in winfo.menuls.cnum%}
           <li class="{% if route==winfo.menuls.selurl[k] %}active{% endif %} {% if winfo.menuls.seltype[k]=='sel' %}dropdown{% endif %}">
@@ -55,7 +55,7 @@
         <li class="dropdown">
           <a href="#" class="dropdown-toggle" data-toggle="dropdown">
             {% if not(app.user) %}
-            欢迎来到{{winfo.title}}
+            欢迎来到{% if winfo and winfo.title %}{{winfo.title}}{% endif %}
             {% else %}
             {{ app.user.username }}
             {% endif %}
@@ -80,6 +80,7 @@
     </div>
   </div>
 </nav>
+{% if winfo and winfo.setcon.flashnum %}
 <div class="box">
   <div class="box-header">
     <a>&nbsp;</a>
@@ -114,6 +115,8 @@
     </div>
   </div>
 </div>
+{% endif %}
+{% if winfo and winfo.setcon.trnum %}
 {% set i=0 %}
 <div class="container">
   {% for k,si in winfo.setcon.trnum%}
@@ -158,5 +161,6 @@
   </div>
   {% endfor %}
 </div>
+{% endif %}
 
 {% endblock %}
