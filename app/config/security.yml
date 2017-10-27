@@ -53,7 +53,7 @@ security:
                 post_only: true
             logout:
                 path: logout
-                target: login
+                target: index
             remember_me:
                 secret: '%secret%'
                 lifetime: 604800

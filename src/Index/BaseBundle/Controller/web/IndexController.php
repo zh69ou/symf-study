@@ -24,11 +24,11 @@ class IndexController extends Controller
      */
     public function indexAction()
     {
-        $user = $this->getDoctrine()->getRepository('UserBaseBundle:User')->find(1);
-        $tokenStorage = new TokenStorage();
-        $tokenStorage->setToken(new UsernamePasswordToken($user, 'pass', 'UserArea', array('ROLE_USER')));
-        $this->container->set('security.token_storage', $tokenStorage);
-        $this->setContainer($this->container);
+        // $user = $this->getDoctrine()->getRepository('UserBaseBundle:User')->find(1);
+        // $tokenStorage = new TokenStorage();
+        // $tokenStorage->setToken(new UsernamePasswordToken($user, 'pass', 'UserArea', array('ROLE_USER')));
+        // $this->container->set('security.token_storage', $tokenStorage);
+        // $this->setContainer($this->container);
         // $this->session->set('_locale', $user->getLocale());
         // var_dump($fodder);exit;
         return $this->render('IndexBaseBundle:Web:index.html.twig');

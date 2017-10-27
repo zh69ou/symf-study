@@ -1,6 +1,8 @@
 {% set route = app.request.attributes.get('_route') %}
 {% if not(app.user) and route!='login' and route!='register' %}
+<div class="modal" id="landbox">
 	{{ include('public/login.html.twig') }}
+</div>
 {% endif %}
 <div class="text-center">
   <ul class="list-inline">
@@ -10,6 +12,5 @@
   	<li class="list-inline-item initialism"><a class="muted">&middot;</a></li>
   	<li class="list-inline-item initialism"><a href="#">网站公告</a></li>
   </ul>
-  <p>© {{ "now"|date("Y") }} a6vi</p>
-  <small>如果您有好的意见或建议，请联系<a href="#" onclick="javascript:window.open('http://wpa.qq.com/msgrd?v=3&uin=380493570&site=qq&menu=yes', '_blank', 'height=502, width=644,toolbar=no,scrollbars=no,menubar=no,status=no');">我们</a>。</small>
+  <p>© {{ "now"|date("Y") }} a6vi <small>如果您有好的意见或建议，请联系<a href="#" onclick="javascript:window.open('http://wpa.qq.com/msgrd?v=3&uin=380493570&site=qq&menu=yes', '_blank', 'height=502, width=644,toolbar=no,scrollbars=no,menubar=no,status=no');">我们</a>。</small></p>
 </div>
